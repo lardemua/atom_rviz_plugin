@@ -1,0 +1,8 @@
+<library path="libcalibration">
+  <!-- Calibration Panel -->
+  <class name="calibration/CalibrationPanel" type="calibration::CalibrationPanel" base_class_type="rviz::Panel">
+    <description>
+      Calibration Panel plugin.
+    </description>
+  </class>
+</library>
