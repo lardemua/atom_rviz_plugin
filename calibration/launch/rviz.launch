@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="rviz"
+	type="rviz"
+	name="rviz"
+	args="-d /home/miguel/catkin_ws/src/RVIZ_Plugin_SensorCalibration/calibration/rviz/panel_plugin.rviz"/>
+</launch>
