@@ -4,17 +4,9 @@ project(calibration)
 ###################
 # compile options #
 ###################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++17 -DEIGEN_RUNTIME_NO_MALLOC")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -fno-asm")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
 
-#############
-## Library ##
-#############
-## Eigen ##
-find_package(Eigen3 REQUIRED)
-include_directories(${EIGEN3_INCLUDE_DIR})
-link_directories(${EIGEN3_LIBRARY_DIRS})
 
 # Qt settings #
 find_package(Qt5 ${rviz_QT_VERSION} REQUIRED Core Widgets)
@@ -50,7 +42,6 @@ catkin_package(
   CATKIN_DEPENDS
   ${DEPEND_ROS_PKGS}
   DEPENDS
-  EIGEN3
   )
 
 #########

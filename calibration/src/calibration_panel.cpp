@@ -1,6 +1,5 @@
 #include <calibration/calibration_panel.h>
 #include <pluginlib/class_list_macros.h>
-#include <std_msgs/Float64.h>
 
 #include "ui_calibration_panel.h"
 

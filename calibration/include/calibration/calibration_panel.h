@@ -28,10 +28,5 @@ private Q_SLOTS:
 
 protected:
   Ui::CalibUI* ui_;
-  int value_{0};
-  std::string topic_name_{"calibration"};
-
-  ros::NodeHandle nh_;
-  ros::Publisher pub_;
 };
 } // end namespace calibration
