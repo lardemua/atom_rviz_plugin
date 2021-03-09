@@ -1,9 +1,9 @@
-#include <calibration/calibration_panel.h>
+#include <atom_rviz_plugin/calibration_panel.h>
 #include <pluginlib/class_list_macros.h>
 
 #include "ui_calibration_panel.h"
 
-namespace calibration
+namespace atom_rviz_plugin
 {
 CalibrationPanel::CalibrationPanel(QWidget* parent) : Panel(parent),  ui_(new Ui::CalibUI())
 {
@@ -26,4 +26,4 @@ void CalibrationPanel::buttonClicked()
 
 }  //namespace calibration
 
-PLUGINLIB_EXPORT_CLASS(calibration::CalibrationPanel, rviz::Panel )
+PLUGINLIB_EXPORT_CLASS(atom_rviz_plugin::CalibrationPanel, rviz::Panel )

@@ -1,5 +1,5 @@
 <package format="2">
-  <name>calibration</name>
+  <name>atom_rviz_plugin</name>
   <version>1.0.0</version>
   <description>Plugin for ATOM Calibration</description>
 

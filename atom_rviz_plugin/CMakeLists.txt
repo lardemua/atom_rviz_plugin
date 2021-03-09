@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(calibration)
+project(atom_rviz_plugin)
 
 ###################
 # compile options #
@@ -57,7 +57,7 @@ link_directories(${catkin_LIBRARY_DIRS})
 
 # source codes #
 set(HEADERS
-  include/calibration/calibration_panel.h
+  include/atom_rviz_plugin/calibration_panel.h
   )
 qt5_wrap_ui(UIC_FILES
   src/ui/calibration_panel.ui
