@@ -24,6 +24,6 @@ void CalibrationPanel::buttonClicked()
   ROS_INFO("Button pushed");
 }
 
-}  // namespace calibration
+}  //namespace calibration
 
 PLUGINLIB_EXPORT_CLASS(calibration::CalibrationPanel, rviz::Panel )
