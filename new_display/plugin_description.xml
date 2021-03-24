@@ -1,5 +1,5 @@
-<library path="lib/libnew_display">
-  <class name="new_display/atom_calibration"
+<library path="libnew_display">
+  <class name="new_display/DisplayTemplate"
          type="new_display::DisplayTemplate"
          base_class_type="rviz::Display">
     <description>

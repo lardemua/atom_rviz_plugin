@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <launch>
+	<rosparam file="$(find mmtbot_calibration)/calibration/config.yml"
+			  command="load"/>
 	<node pkg="rviz"
-	type="rviz"
-	name="rviz"
-	args="-d /home/miguel/catkin_ws/src/RVIZ_Plugin_SensorCalibration/calibration/rviz/panel_plugin.rviz"/>
+		  type="rviz"
+		  name="rviz"
+		  args="--display-config $(find atom_rviz_plugin)/rviz/panel_plugin.rviz"
+		  required="false"
+		  output="screen"/>
 </launch>

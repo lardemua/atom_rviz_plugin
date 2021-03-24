@@ -1,5 +1,10 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.2)
 project(new_display)
+
+# cmake settings #
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 ###################
 # compile options #
@@ -16,10 +21,7 @@ endmacro()
 include_directories(${Qt5Core_INCLUDE_DIRS})
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 add_definitions(-DQT_NO_KEYWORDS)
-# cmake settings #
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+
 
 # catkin #
 set(DEPEND_ROS_PKGS
@@ -60,6 +62,7 @@ set(SRC_FILES
         
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
+target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${OGRE_PREFIX_DIR}/include")
 
@@ -105,7 +108,7 @@ endif()
 add_definitions(-DQT_NO_KEYWORDS)
 
 ## Here we specify the list of source files.
-## The generated MOC files are included automatically as headers.
+## The generated MOC files are included automatically as include.
 set(HEADERS
         include/new_display/imu_display.h
         )

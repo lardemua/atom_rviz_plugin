@@ -16,6 +16,7 @@ class CalibrationPanel: public rviz::Panel
 {
   Q_OBJECT
  public:
+  ros::NodeHandle nh;
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
 
@@ -24,9 +25,11 @@ class CalibrationPanel: public rviz::Panel
   void onDisable();
 
 private Q_SLOTS:
-  void buttonClicked();
+  void readButtonClicked();
+  void writeButtonClicked();
 
 protected:
   Ui::CalibUI* ui_;
+
 };
 } // end namespace calibration
