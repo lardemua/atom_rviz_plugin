@@ -32,4 +32,4 @@ protected:
   Ui::CalibUI* ui_;
 
 };
-} // end namespace calibration
+} // end namespace atom_rviz_plugin
