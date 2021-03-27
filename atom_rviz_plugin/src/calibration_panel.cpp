@@ -76,6 +76,8 @@ void CalibrationPanel::readButtonClicked()
   int max_duration_between_msgs;
   this->nh.getParam("/max_duration_between_msgs", max_duration_between_msgs);
   std::string max_duration_between_msgs_str = std::to_string(max_duration_between_msgs);
+  misc_params_content.push_back(max_duration_between_msgs_str);
+
 
 
 // *********************************
@@ -103,28 +105,65 @@ void CalibrationPanel::readButtonClicked()
   for (size_t i = 0; i < calib_patt_params_int.size(); i++) {
     double param_content;
     this->nh.getParam(calib_patt_params_int[i], param_content);
-    calib_patt_params_int[i] = std::to_string(param_content);
+    calib_patt_params_content.push_back(std::to_string(param_content));
   }
 
 // Boolean parameter
   bool calib_fixed;
   this->nh.getParam("/calibration_pattern/fixed", calib_fixed);
   std::string calib_patt_params_bool = calib_fixed ? "true":"false";
+  calib_patt_params_content.push_back(calib_patt_params_bool);
 
 
-// Dictionary Parameters ?????
+
+// Dictionary Parameters
+// /calibration_pattern/border_size parameter:
+// Check Type
 /*
-  XmlRpc::XmlRpcValue my_dict;
-  nh.getParam("/calibration_pattern/fixed", my_dict);
-  ROS_ASSERT(my_dict.getType() == XmlRpc::XmlRpcValue::TypeStruct);
+  std::map<std::string, double> border_size_dict;
+  nh.getParam("/calibration_pattern/border_size", border_size_dict);
 
-  for (int32_t i = 0; i < my_dict.size(); ++i)
+  std::string border_size_content;
+  std::map<std::string, double>::iterator it = border_size_dict.begin();
+  while(it != border_size_dict.end())
   {
-    ROS_ASSERT(my_dict[i].getType() == XmlRpc::XmlRpcValue::TypeDouble);
-    sum += static_cast<double>(my_list[i]);
+    border_size_content = border_size_content + std::to_string(it->first) + ": " + std::to_string(it->second) + ", ";
+    it++;
   }
 */
 
+  /*  ROS_INFO_STREAM(border_size_dict.begin()->first);
+  ROS_INFO_STREAM(border_size_dict.begin()->second);*/
+
+// /calibration_pattern/dimension parameter:
+/*  std::map<std::string, int> dimension_dict;
+  nh.getParam("/calibration_pattern/dimension", dimension_dict);
+
+  std::vector<std::string> calib_patt_dimension_content;
+  std::map<std::string, int>::iterator it_2 = dimension_dict.begin();
+  while(it_2 != dimension_dict.end())
+  {
+    calib_patt_dimension_content.push_back(it_2->first);
+    calib_patt_dimension_content.push_back(std::to_string(it_2->second));
+    it_2++;
+  }
+  calib_patt_params_content.push_back("{" + calib_patt_dimension_content[0] + ":" +
+                                      calib_patt_dimension_content[1] + ",   " +
+                                      calib_patt_dimension_content[2] + ":" +
+                                      calib_patt_dimension_content[3] + "}");*/
+
+  std::vector<std::string> calib_patt_dict = {"/calibration_pattern/dimension/x",
+                                              "/calibration_pattern/dimension/y"};
+  std::vector<std::string> calib_patt_dimension_content;
+
+  for (size_t i = 0; i < calib_patt_dict.size(); i++) {
+    std::string param_i = calib_patt_dict[i];
+    int param_content;
+    this->nh.getParam(param_i, param_content);
+    calib_patt_dimension_content.push_back(std::to_string(param_content));
+  }
+  calib_patt_params_content.push_back("{x:" + calib_patt_dimension_content[0] + ",   " +
+                                       "y:" + calib_patt_dimension_content[1] + "}");
 
 // *********************
 // * Sensors Parameter *
@@ -154,16 +193,17 @@ void CalibrationPanel::readButtonClicked()
   ui_->paramBagFileTextEdit->setText(QString::fromUtf8(misc_params_content[1].c_str()));
   ui_->paramWorldLinkTextEdit->setText(QString::fromUtf8(misc_params_content[2].c_str()));
   ui_->paramAnchoredSensorTextEdit->setText(QString::fromUtf8(misc_params_content[3].c_str()));
-  ui_->paramMaxDurationTextEdit->setText(QString::fromUtf8(max_duration_between_msgs_str.c_str()));
+  ui_->paramMaxDurationTextEdit->setText(QString::fromUtf8(misc_params_content[4].c_str()));
 
   ui_->paramCalibPatLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[0].c_str()));
   ui_->paramCalibPatParentLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[1].c_str()));
   ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
   ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
   ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
-  ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_int[0].c_str()));
-  ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_int[1].c_str()));
-  ui_->paramCalibPatFixedTextEdit->setText(QString::fromUtf8(calib_patt_params_bool.c_str()));
+  ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
+  ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
+  ui_->paramCalibPatFixedTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
+  ui_->paramCalibPatDimensionTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
 
   ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
   ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
@@ -229,6 +269,19 @@ void CalibrationPanel::writeButtonClicked() {
   std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedTextEdit->toPlainText().toUtf8().constData();
   bool misc_new_param_bool = calib_patt_new_param_bool_str.compare("true") ? true : false;
   this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool_str);
+
+  // Dictionary parameters
+  // /calibration_pattern/dimension parameter:
+  std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
+  int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:")+2,
+                                                                     calib_patt_new_dict_str.find(",") - (calib_patt_new_dict_str.find("x:") +2)));
+  int dimension_y_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("y:")+2,
+                                                                     calib_patt_new_dict_str.find("}") - (calib_patt_new_dict_str.find("y:") +2)));
+  this->nh.setParam("/calibration_pattern/dimension/x", dimension_x_parameter);
+  this->nh.setParam("/calibration_pattern/dimension/y", dimension_y_parameter);
+  /*  ROS_INFO_STREAM(calib_patt_new_dict_str);
+  ROS_INFO_STREAM(dimension_x_parameter);
+  ROS_INFO_STREAM(dimension_y_parameter);*/
 
 
 // *********************
