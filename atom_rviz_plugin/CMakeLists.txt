@@ -64,6 +64,7 @@ qt5_wrap_ui(UIC_FILES
   )
 set(SOURCE_FILES
   src/calibration_panel.cpp
+        src/read_write_config.cpp
   )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
@@ -71,12 +72,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERS
 target_include_directories(${PROJECT_NAME} PRIVATE "${OGRE_PREFIX_DIR}/include")
 
 
-add_executable(test_read_param_node src/test_read_param.cpp)
+#[[add_executable(test_read_param_node src/test_read_param.cpp)
 
  target_link_libraries(test_read_param_node
    ${catkin_LIBRARIES}
-   yaml-cpp
- )
+ )]]
 ###########
 # Install #
 ###########
