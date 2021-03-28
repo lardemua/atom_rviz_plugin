@@ -63,7 +63,8 @@ qt5_wrap_ui(UIC_FILES
   src/ui/calibration_panel.ui
   )
 set(SOURCE_FILES
-  src/calibration_panel.cpp
+        src/plugin_load.cpp
+        src/calibration_panel.cpp
         src/read_write_config.cpp
   )
 

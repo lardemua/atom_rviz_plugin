@@ -1,5 +1,4 @@
 #include <atom_rviz_plugin/calibration_panel.h>
-#include <pluginlib/class_list_macros.h>
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
@@ -16,14 +15,13 @@ namespace atom_rviz_plugin
       int argc = 0;
       char** argv;
       ros::init(argc, NULL, "talker");
-
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
 
     void CalibrationPanel::onInitialize()
     {
-// Get number of sensors to put on ComboBox for the configuration file
+      // Get number of sensors to put on ComboBox for the configuration file
       std::vector<std::string> parameters;
       nh.getParamNames(parameters);
 
@@ -49,5 +47,3 @@ namespace atom_rviz_plugin
       parentWidget()->setVisible(true);
     }
 }  //namespace atom_rviz_plugin
-
-PLUGINLIB_EXPORT_CLASS(atom_rviz_plugin::CalibrationPanel, rviz::Panel )
