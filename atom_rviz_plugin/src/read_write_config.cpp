@@ -5,20 +5,18 @@
 
 #include "ui_calibration_panel.h"
 
-namespace atom_rviz_plugin
-{
-    void CalibrationPanel::readButtonClicked()
-    {
+namespace atom_rviz_plugin {
+    void CalibrationPanel::configReadButtonClicked() {
 // *************************************
 // * Config Parameters (Miscellaneous) *
 // *************************************
 
 // String parameters
-      std::vector<std::string> misc_params = {"/description_file",
-                                              "/bag_file",
-                                              "/world_link",
-                                              "/anchored_sensor"};
-      std::vector<std::string> misc_params_content;
+      std::vector <std::string> misc_params = {"/description_file",
+                                               "/bag_file",
+                                               "/world_link",
+                                               "/anchored_sensor"};
+      std::vector <std::string> misc_params_content;
 
       for (size_t i = 0; i < misc_params.size(); i++) {
         std::string param_i = misc_params[i];
@@ -42,12 +40,12 @@ namespace atom_rviz_plugin
 // *********************************
 
 //String parameters
-      std::vector<std::string> calib_patt_params = {"/calibration_pattern/link",
-                                                    "/calibration_pattern/parent_link",
-                                                    "/calibration_pattern/pattern_link",
-                                                    "/calibration_pattern/dictionary",
-                                                    "/calibration_pattern/mesh_file"};
-      std::vector<std::string> calib_patt_params_content;
+      std::vector <std::string> calib_patt_params = {"/calibration_pattern/link",
+                                                     "/calibration_pattern/parent_link",
+                                                     "/calibration_pattern/pattern_link",
+                                                     "/calibration_pattern/dictionary",
+                                                     "/calibration_pattern/mesh_file"};
+      std::vector <std::string> calib_patt_params_content;
 
       for (size_t i = 0; i < calib_patt_params.size(); i++) {
         std::string param_i = calib_patt_params[i];
@@ -57,8 +55,8 @@ namespace atom_rviz_plugin
       }
 
 // Int parameters
-      std::vector<std::string> calib_patt_params_int = {"/calibration_pattern/size",
-                                                        "/calibration_pattern/inner_size"};
+      std::vector <std::string> calib_patt_params_int = {"/calibration_pattern/size",
+                                                         "/calibration_pattern/inner_size"};
       for (size_t i = 0; i < calib_patt_params_int.size(); i++) {
         double param_content;
         this->nh.getParam(calib_patt_params_int[i], param_content);
@@ -68,15 +66,15 @@ namespace atom_rviz_plugin
 // Boolean parameter
       bool calib_fixed;
       this->nh.getParam("/calibration_pattern/fixed", calib_fixed);
-      std::string calib_patt_params_bool = calib_fixed ? "true":"false";
+      std::string calib_patt_params_bool = calib_fixed ? "true" : "false";
       calib_patt_params_content.push_back(calib_patt_params_bool);
 
 
 
 // Dictionary Parameters
-      std::vector<std::string> calib_patt_dict = {"/calibration_pattern/dimension/x",
-                                                  "/calibration_pattern/dimension/y"};
-      std::vector<std::string> calib_patt_dimension_content;
+      std::vector <std::string> calib_patt_dict = {"/calibration_pattern/dimension/x",
+                                                   "/calibration_pattern/dimension/y"};
+      std::vector <std::string> calib_patt_dimension_content;
 
       for (size_t i = 0; i < calib_patt_dict.size(); i++) {
         std::string param_i = calib_patt_dict[i];
@@ -94,11 +92,11 @@ namespace atom_rviz_plugin
 //  ROS_INFO_STREAM(sensor_to_read);
 
       //String parameters
-      std::vector<std::string> sensors_params = {"/sensors/" + sensor_to_read + "/link",
-                                                 "/sensors/" + sensor_to_read + "/parent_link",
-                                                 "/sensors/" + sensor_to_read + "/child_link",
-                                                 "/sensors/" + sensor_to_read + "/topic_name"};
-      std::vector<std::string> sensors_params_content;
+      std::vector <std::string> sensors_params = {"/sensors/" + sensor_to_read + "/link",
+                                                  "/sensors/" + sensor_to_read + "/parent_link",
+                                                  "/sensors/" + sensor_to_read + "/child_link",
+                                                  "/sensors/" + sensor_to_read + "/topic_name"};
+      std::vector <std::string> sensors_params_content;
 
       for (size_t i = 0; i < sensors_params.size(); i++) {
         std::string param_i = sensors_params[i];
@@ -133,20 +131,21 @@ namespace atom_rviz_plugin
       ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
     } // function readButtonClicked
 
-    void CalibrationPanel::writeButtonClicked() {
+    void CalibrationPanel::configWriteButtonClicked() {
 // *************************************
 // * Config Parameters (Miscellaneous) *
 // *************************************
 
 // String parameters
-      std::vector<std::string> misc_params = {"/description_file",
-                                              "/bag_file",
-                                              "/world_link",
-                                              "/anchored_sensor"};
-      std::vector <std::string> misc_new_param_str = {ui_->paramDescriptionFileTextEdit->toPlainText().toUtf8().constData(),
-                                                      ui_->paramBagFileTextEdit->toPlainText().toUtf8().constData(),
-                                                      ui_->paramWorldLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                      ui_->paramAnchoredSensorTextEdit->toPlainText().toUtf8().constData()};
+      std::vector <std::string> misc_params = {"/description_file",
+                                               "/bag_file",
+                                               "/world_link",
+                                               "/anchored_sensor"};
+      std::vector <std::string> misc_new_param_str = {
+          ui_->paramDescriptionFileTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramBagFileTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramWorldLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramAnchoredSensorTextEdit->toPlainText().toUtf8().constData()};
 
       for (size_t i = 0; i < misc_new_param_str.size(); i++) {
         this->nh.setParam(misc_params[i], misc_new_param_str[i]);
@@ -163,25 +162,27 @@ namespace atom_rviz_plugin
 // *********************************
 
 //String parameters
-      std::vector<std::string> calib_patt_params = {"/calibration_pattern/link",
-                                                    "/calibration_pattern/parent_link",
-                                                    "/calibration_pattern/pattern_type",
-                                                    "/calibration_pattern/dictionary",
-                                                    "/calibration_pattern/mesh_file"};
-      std::vector<std::string> calib_patt_new_param_str = {ui_->paramCalibPatLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                           ui_->paramCalibPatParentLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                           ui_->paramCalibPatPatternTypeTextEdit->toPlainText().toUtf8().constData(),
-                                                           ui_->paramCalibPatDictionaryTextEdit->toPlainText().toUtf8().constData(),
-                                                           ui_->paramCalibPatMeshFileTextEdit->toPlainText().toUtf8().constData()};
+      std::vector <std::string> calib_patt_params = {"/calibration_pattern/link",
+                                                     "/calibration_pattern/parent_link",
+                                                     "/calibration_pattern/pattern_type",
+                                                     "/calibration_pattern/dictionary",
+                                                     "/calibration_pattern/mesh_file"};
+      std::vector <std::string> calib_patt_new_param_str = {
+          ui_->paramCalibPatLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatParentLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatPatternTypeTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatDictionaryTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatMeshFileTextEdit->toPlainText().toUtf8().constData()};
       for (size_t i = 0; i < calib_patt_new_param_str.size(); i++) {
         this->nh.setParam(calib_patt_params[i], calib_patt_new_param_str[i]);
       }
 
       // Int parameter
-      std::vector<std::string> calib_patt_int_params = {"/calibration_pattern/size",
-                                                        "/calibration_pattern/inner_size"};
-      std::vector<std::string> calib_patt_new_int_param_str = {ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData(),
-                                                               ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData()};
+      std::vector <std::string> calib_patt_int_params = {"/calibration_pattern/size",
+                                                         "/calibration_pattern/inner_size"};
+      std::vector <std::string> calib_patt_new_int_param_str = {
+          ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData()};
       for (size_t i = 0; i < calib_patt_new_int_param_str.size(); i++) {
         double calib_patt_new_param_int = std::stod(calib_patt_new_int_param_str[i]);
         this->nh.setParam(calib_patt_int_params[i], calib_patt_new_param_int);
@@ -195,10 +196,12 @@ namespace atom_rviz_plugin
       // Dictionary parameters
       // /calibration_pattern/dimension parameter:
       std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
-      int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:")+2,
-                                                                      calib_patt_new_dict_str.find(",") - (calib_patt_new_dict_str.find("x:") +2)));
-      int dimension_y_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("y:")+2,
-                                                                      calib_patt_new_dict_str.find("}") - (calib_patt_new_dict_str.find("y:") +2)));
+      int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:") + 2,
+                                                                      calib_patt_new_dict_str.find(",") -
+                                                                      (calib_patt_new_dict_str.find("x:") + 2)));
+      int dimension_y_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("y:") + 2,
+                                                                      calib_patt_new_dict_str.find("}") -
+                                                                      (calib_patt_new_dict_str.find("y:") + 2)));
       this->nh.setParam("/calibration_pattern/dimension/x", dimension_x_parameter);
       this->nh.setParam("/calibration_pattern/dimension/y", dimension_y_parameter);
       /*  ROS_INFO_STREAM(calib_patt_new_dict_str);
@@ -212,17 +215,17 @@ namespace atom_rviz_plugin
       std::string sensor_to_write = ui_->sensorsComboBox->currentText().toUtf8().constData();
 
       //String parameters
-      std::vector<std::string> sensors_params = {"/sensors/" + sensor_to_write + "/link",
-                                                 "/sensors/" + sensor_to_write + "/parent_link",
-                                                 "/sensors/" + sensor_to_write + "/child_link",
-                                                 "/sensors/" + sensor_to_write + "/topic_name"};
-      std::vector<std::string> sensors_new_param_str = {ui_->paramSensorsLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                        ui_->paramSensorsParentLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                        ui_->paramSensorsChildLinkTextEdit->toPlainText().toUtf8().constData(),
-                                                        ui_->paramSensorsTopicNameTextEdit->toPlainText().toUtf8().constData()};
+      std::vector <std::string> sensors_params = {"/sensors/" + sensor_to_write + "/link",
+                                                  "/sensors/" + sensor_to_write + "/parent_link",
+                                                  "/sensors/" + sensor_to_write + "/child_link",
+                                                  "/sensors/" + sensor_to_write + "/topic_name"};
+      std::vector <std::string> sensors_new_param_str = {
+          ui_->paramSensorsLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsParentLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsChildLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsTopicNameTextEdit->toPlainText().toUtf8().constData()};
       for (size_t i = 0; i < sensors_new_param_str.size(); i++) {
         this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
       }
-
     }  // function writeButtonClicked
-}  //namespace atom_rviz_plugin
+}

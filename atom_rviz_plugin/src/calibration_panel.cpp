@@ -35,15 +35,20 @@ namespace atom_rviz_plugin
             std::string sensor_name = parameters_i.substr(std::string("/sensors/").length(),sensor_length);
             QString str_to_combo_box = QString::fromUtf8(sensor_name.c_str());
             ui_->sensorsComboBox->addItem(str_to_combo_box);
+            ui_->initEstimateSensorsComboBox->addItem(str_to_combo_box);
 /*        ROS_INFO_STREAM("Reading parameter " << parameters_i);
         ROS_INFO_STREAM("Sensor " << sensor_name);*/
           }
         }
       }
 
-      connect(ui_->readButton, SIGNAL(clicked()), this, SLOT(readButtonClicked()));
-      connect(ui_->writeButton, SIGNAL(clicked()), this, SLOT(writeButtonClicked()));
+      connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
+      connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
+
+      connect(ui_->initialEstimateCheckBox, SIGNAL(clicked(bool)), this, SLOT(initEstimateCheckbox()));
 
       parentWidget()->setVisible(true);
+
     }
+
 }  //namespace atom_rviz_plugin

@@ -66,6 +66,7 @@ set(SOURCE_FILES
         src/plugin_load.cpp
         src/calibration_panel.cpp
         src/read_write_config.cpp
+        src/set_initial_estimate.cpp
   )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})

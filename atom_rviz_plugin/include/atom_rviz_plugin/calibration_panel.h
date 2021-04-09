@@ -21,12 +21,11 @@ class CalibrationPanel: public rviz::Panel
   ~CalibrationPanel() override;
 
   void onInitialize() override;
-  void onEnable();
-  void onDisable();
 
 private Q_SLOTS:
-  void readButtonClicked();
-  void writeButtonClicked();
+  void configReadButtonClicked();
+  void configWriteButtonClicked();
+  void initEstimateCheckbox();
 
 protected:
   Ui::CalibUI* ui_;

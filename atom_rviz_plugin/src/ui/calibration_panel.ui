@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -989,7 +989,7 @@ between_msgs
       </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="readButton">
+    <widget class="QPushButton" name="configReadButton">
      <property name="geometry">
       <rect>
        <x>80</x>
@@ -1002,7 +1002,7 @@ between_msgs
       <string>Read</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="writeButton">
+    <widget class="QPushButton" name="configWriteButton">
      <property name="geometry">
       <rect>
        <x>300</x>
@@ -1018,8 +1018,31 @@ between_msgs
    </widget>
    <widget class="QWidget" name="tab_1">
     <attribute name="title">
-     <string>Tab 2</string>
+     <string>Initial Estimate</string>
     </attribute>
+    <widget class="QCheckBox" name="initialEstimateCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>30</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show/Hide</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="initEstimateSensorsComboBox">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>30</y>
+       <width>161</width>
+       <height>25</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
