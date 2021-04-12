@@ -26,9 +26,8 @@ private Q_SLOTS:
   void getSensors();
   void configReadButtonClicked();
   void configWriteButtonClicked();
-  void initEstimateCheckboxChanged();
   void initEstimateComboBoxTextChanged();
-  void initEstimateSpinBoxInputChanged();
+  void initEstimateCheckboxOrSpinBoxInputChanged();
   void initEstimateSaveButtonClicked();
   void initEstimateResetButtonClicked();
 
