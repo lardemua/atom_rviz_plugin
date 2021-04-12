@@ -44,6 +44,9 @@ catkin_package(
   DEPENDS
   )
 
+
+
+
 #########
 # Build #
 #########
@@ -72,6 +75,7 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${OGRE_PREFIX_DIR}/include")
+
 
 
 #[[add_executable(test_read_param_node src/test_read_param.cpp)

@@ -23,9 +23,15 @@ class CalibrationPanel: public rviz::Panel
   void onInitialize() override;
 
 private Q_SLOTS:
+  void getSensors();
   void configReadButtonClicked();
   void configWriteButtonClicked();
-  void initEstimateCheckbox();
+  void initEstimateCheckboxChanged();
+  void initEstimateComboBoxTextChanged();
+  void initEstimateSpinBoxInputChanged();
+  void initEstimateSaveButtonClicked();
+  void initEstimateResetButtonClicked();
+
 
 protected:
   Ui::CalibUI* ui_;

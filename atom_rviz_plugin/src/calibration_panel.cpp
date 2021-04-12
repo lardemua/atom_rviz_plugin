@@ -14,17 +14,37 @@ namespace atom_rviz_plugin
       ui_->setupUi(this);
       int argc = 0;
       char** argv;
-      ros::init(argc, NULL, "talker");
+      ros::init(argc, NULL, "rviz_panel");
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
 
     void CalibrationPanel::onInitialize()
     {
+      // Functions to run when rviz opens
+      getSensors();
+
+      // Qt events for buttons, checkboxes, combobox,...
+      connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
+      connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
+
+      connect(ui_->initEstimateSensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(initEstimateComboBoxTextChanged()));
+      connect(ui_->initialEstimateCheckBox, SIGNAL(clicked(bool)), this, SLOT(initEstimateCheckboxChanged()));
+      connect(ui_->initialEstimateSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinBoxInputChanged()));
+      connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
+      connect(ui_->initEstimateResetButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
+
+      parentWidget()->setVisible(true);
+
+    } //function onInitialize()
+
+    void CalibrationPanel::getSensors()
+    {
       // Get number of sensors to put on ComboBox for the configuration file
       std::vector<std::string> parameters;
       nh.getParamNames(parameters);
 
+      ui_->initEstimateSensorsComboBox->addItem("");
       for (size_t i = 0; i < parameters.size(); i++) {
         std::string parameters_i = parameters[i];
         size_t idx = parameters_i.find("/sensors/");
@@ -36,19 +56,9 @@ namespace atom_rviz_plugin
             QString str_to_combo_box = QString::fromUtf8(sensor_name.c_str());
             ui_->sensorsComboBox->addItem(str_to_combo_box);
             ui_->initEstimateSensorsComboBox->addItem(str_to_combo_box);
-/*        ROS_INFO_STREAM("Reading parameter " << parameters_i);
-        ROS_INFO_STREAM("Sensor " << sensor_name);*/
+//            ROS_INFO_STREAM(sensor_name);
           }
         }
       }
-
-      connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
-      connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
-
-      connect(ui_->initialEstimateCheckBox, SIGNAL(clicked(bool)), this, SLOT(initEstimateCheckbox()));
-
-      parentWidget()->setVisible(true);
-
-    }
-
+    } //function getSensors()
 }  //namespace atom_rviz_plugin
