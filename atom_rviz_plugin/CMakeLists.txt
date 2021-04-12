@@ -28,6 +28,7 @@ set(DEPEND_ROS_PKGS
   roscpp
   rviz
   std_msgs
+  atom_msgs
   )
 find_package(catkin REQUIRED
   COMPONENTS

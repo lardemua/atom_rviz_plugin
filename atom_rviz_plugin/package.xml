@@ -19,8 +19,10 @@
   <depend>eigen</depend>
   <depend>qtbase5-dev</depend>
 
-  <exec_depend>atom</exec_depend>
-  <build_depend>atom</build_depend>
+  <exec_depend>atom_calibration</exec_depend>
+  <exec_depend>atom_msgs</exec_depend>
+  <build_depend>atom_calibration</build_depend>
+  <build_depend>atom_msgs</build_depend>
 
   <export>
     <rviz plugin="${prefix}/plugin_description.xml"/>
