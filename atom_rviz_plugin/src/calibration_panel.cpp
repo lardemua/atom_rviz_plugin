@@ -23,6 +23,7 @@ namespace atom_rviz_plugin
     {
       // Functions to run when rviz opens
       getSensors();
+      initEstimateComboBoxTextChanged();
 
       // Qt events for buttons, checkboxes, combobox,...
       connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
@@ -44,7 +45,7 @@ namespace atom_rviz_plugin
       std::vector<std::string> parameters;
       nh.getParamNames(parameters);
 
-      ui_->initEstimateSensorsComboBox->addItem("");
+//      ui_->initEstimateSensorsComboBox->addItem("");
       for (size_t i = 0; i < parameters.size(); i++) {
         std::string parameters_i = parameters[i];
         size_t idx = parameters_i.find("/sensors/");
