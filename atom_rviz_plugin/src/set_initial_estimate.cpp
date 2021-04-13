@@ -1,11 +1,11 @@
 #include <atom_rviz_plugin/calibration_panel.h>
 
+#include <visualization_msgs/InteractiveMarkerFeedback.h>
+
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <atom_msgs/SetSensorInteractiveMarker.h>
 #include <atom_msgs/GetSensorInteractiveMarker.h>
-
-#include <map>
 
 #include "ui_calibration_panel.h"
 
@@ -13,8 +13,6 @@ namespace atom_rviz_plugin
 {
     void CalibrationPanel::initEstimateComboBoxTextChanged()
     {
-      ROS_INFO_STREAM("Read the sensor on combobox;then, read the service to check scale of the marker and if its visible or not");
-
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/get_sensor_interactive_marker";
 
@@ -23,7 +21,7 @@ namespace atom_rviz_plugin
       atom_msgs::GetSensorInteractiveMarker srv;
       //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
-      int ret = client.call(srv);
+      client.call(srv);
 
       ui_->initialEstimateCheckBox->setChecked(srv.response.visible); //change 'false' for the value read from service
       ui_->initialEstimateSpinBox->setValue(srv.response.scale); //change '1' for the value read from service
@@ -44,13 +42,44 @@ namespace atom_rviz_plugin
       srv.request.visible = ui_->initialEstimateCheckBox->isChecked();
       srv.request.scale = ui_->initialEstimateSpinBox->value();
 
-      int ret = client2.call(srv);
-      std::cout << ret << std::endl;
+      client2.call(srv);
+
     } // function initEstimateCheckboxOrSpinBoxInputChanged()
 
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
-      ROS_INFO_STREAM("Save");
+      ros::Publisher interactive_marker_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
+
+      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      visualization_msgs::InteractiveMarkerFeedback save_marker;
+
+      // Set the frame ID and timestamp.  See the TF tutorials for information on these.
+      save_marker.header.frame_id = "ee_link";
+      save_marker.header.stamp = ros::Time::now();
+
+      save_marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
+      save_marker.marker_name = combobox_sensor;
+      save_marker.control_name = "";
+      save_marker.event_type = 2;
+
+      // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
+      save_marker.pose.position.x = -0.02;
+      save_marker.pose.position.y = 0.05;
+      save_marker.pose.position.z = 0.07;
+      save_marker.pose.orientation.x = 0.0;
+      save_marker.pose.orientation.y = 0.0;
+      save_marker.pose.orientation.z = 0.0;
+      save_marker.pose.orientation.w = 1.0;
+
+      save_marker.menu_entry_id = 1;
+
+/*      save_marker.mouse_point.x = 0.0;
+      save_marker.mouse_point.y = 0.0;
+      save_marker.mouse_point.z = 0.0;*/
+
+      save_marker.mouse_point_valid = 1;
+
+      interactive_marker_pub.publish(save_marker);
     } // function initEstimateSaveButtonClicked()
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
