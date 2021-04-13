@@ -16,18 +16,17 @@ namespace atom_rviz_plugin
       ROS_INFO_STREAM("Read the sensor on combobox;then, read the service to check scale of the marker and if its visible or not");
 
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/set_sensor_interactive_marker";
+      std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/get_sensor_interactive_marker";
 
       ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
 
       atom_msgs::GetSensorInteractiveMarker srv;
       //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
-/*      std::map<bool, double> state;
-//      std::cout << ret << std::endl;
+      int ret = client.call(srv);
 
-      ui_->initialEstimateCheckBox->setChecked(state(0)); //change 'false' for the value read from service
-      ui_->initialEstimateSpinBox->setValue(state(1)); //change '1' for the value read from service*/
+      ui_->initialEstimateCheckBox->setChecked(srv.response.visible); //change 'false' for the value read from service
+      ui_->initialEstimateSpinBox->setValue(srv.response.scale); //change '1' for the value read from service
 
     } // function initEstimateComboBoxTextChanged()
 
@@ -37,7 +36,7 @@ namespace atom_rviz_plugin
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/set_sensor_interactive_marker";
 
-      ros::ServiceClient client = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
+      ros::ServiceClient client2 = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
 
       atom_msgs::SetSensorInteractiveMarker srv;
       //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
@@ -45,7 +44,7 @@ namespace atom_rviz_plugin
       srv.request.visible = ui_->initialEstimateCheckBox->isChecked();
       srv.request.scale = ui_->initialEstimateSpinBox->value();
 
-      int ret = client.call(srv);
+      int ret = client2.call(srv);
       std::cout << ret << std::endl;
     } // function initEstimateCheckboxOrSpinBoxInputChanged()
 
