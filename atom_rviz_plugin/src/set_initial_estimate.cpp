@@ -48,12 +48,14 @@ namespace atom_rviz_plugin
 
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
+      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      if (combobox_sensor.empty()){ return;}
+
       ros::Publisher interactive_marker_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
 
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       visualization_msgs::InteractiveMarkerFeedback save_marker;
 
-      // Set the frame ID and timestamp.  See the TF tutorials for information on these.
+      // Set the frame ID and timestamp
       save_marker.header.frame_id = "ee_link";
       save_marker.header.stamp = ros::Time::now();
 
@@ -62,7 +64,7 @@ namespace atom_rviz_plugin
       save_marker.control_name = "";
       save_marker.event_type = 2;
 
-      // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
+      // Set the pose of the marker
       save_marker.pose.position.x = -0.02;
       save_marker.pose.position.y = 0.05;
       save_marker.pose.position.z = 0.07;
@@ -82,7 +84,41 @@ namespace atom_rviz_plugin
       interactive_marker_pub.publish(save_marker);
     } // function initEstimateSaveButtonClicked()
 
+
     void CalibrationPanel::initEstimateResetButtonClicked() {
-      ROS_INFO_STREAM("Reset");
+      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      if (combobox_sensor.empty()){ return;}
+
+      ros::Publisher interactive_marker_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
+
+      visualization_msgs::InteractiveMarkerFeedback reset_marker;
+
+      // Set the frame ID and timestamp
+      reset_marker.header.frame_id = "ee_link";
+      reset_marker.header.stamp = ros::Time::now();
+
+      reset_marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
+      reset_marker.marker_name = combobox_sensor;
+      reset_marker.control_name = "";
+      reset_marker.event_type = 2;
+
+      // Set the pose of the marker
+      reset_marker.pose.position.x = -0.02;
+      reset_marker.pose.position.y = 0.05;
+      reset_marker.pose.position.z = 0.07;
+      reset_marker.pose.orientation.x = 0.0;
+      reset_marker.pose.orientation.y = 0.0;
+      reset_marker.pose.orientation.z = 0.0;
+      reset_marker.pose.orientation.w = 1.0;
+
+      reset_marker.menu_entry_id = 2;
+
+/*      reset_marker.mouse_point.x = 0.0;
+      reset_marker.mouse_point.y = 0.0;
+      reset_marker.mouse_point.z = 0.0;*/
+
+      reset_marker.mouse_point_valid = 1;
+
+      interactive_marker_pub.publish(reset_marker);
     } // function initEstimateResetButtonClicked()
 }  //namespace atom_rviz_plugin
