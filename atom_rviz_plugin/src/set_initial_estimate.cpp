@@ -3,6 +3,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <atom_msgs/SetSensorInteractiveMarker.h>
+#include <atom_msgs/GetSensorInteractiveMarker.h>
 
 #include <map>
 
