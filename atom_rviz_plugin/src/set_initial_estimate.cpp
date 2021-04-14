@@ -1,11 +1,10 @@
 #include <atom_rviz_plugin/calibration_panel.h>
 
-#include <visualization_msgs/InteractiveMarkerFeedback.h>
-
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <atom_msgs/SetSensorInteractiveMarker.h>
 #include <atom_msgs/GetSensorInteractiveMarker.h>
+#include <visualization_msgs/InteractiveMarkerFeedback.h>
 
 #include "ui_calibration_panel.h"
 
@@ -51,8 +50,6 @@ namespace atom_rviz_plugin
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       if (combobox_sensor.empty()){ return;}
 
-      ros::Publisher interactive_marker_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
-
       visualization_msgs::InteractiveMarkerFeedback save_marker;
 
       // Set the frame ID and timestamp
@@ -81,15 +78,13 @@ namespace atom_rviz_plugin
 
       save_marker.mouse_point_valid = 1;
 
-      interactive_marker_pub.publish(save_marker);
+      initial_estimate_pub.publish(save_marker);
     } // function initEstimateSaveButtonClicked()
 
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       if (combobox_sensor.empty()){ return;}
-
-      ros::Publisher interactive_marker_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
 
       visualization_msgs::InteractiveMarkerFeedback reset_marker;
 
@@ -119,6 +114,6 @@ namespace atom_rviz_plugin
 
       reset_marker.mouse_point_valid = 1;
 
-      interactive_marker_pub.publish(reset_marker);
+      initial_estimate_pub.publish(reset_marker);
     } // function initEstimateResetButtonClicked()
 }  //namespace atom_rviz_plugin

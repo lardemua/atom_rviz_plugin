@@ -5,6 +5,7 @@
 #endif
 
 #include <rviz/panel.h>
+#include <visualization_msgs/InteractiveMarkerFeedback.h>
 
 namespace Ui {
 class CalibUI;
@@ -17,6 +18,7 @@ class CalibrationPanel: public rviz::Panel
   Q_OBJECT
  public:
   ros::NodeHandle nh;
+  ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
 

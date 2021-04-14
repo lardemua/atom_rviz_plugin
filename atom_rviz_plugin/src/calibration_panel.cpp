@@ -1,7 +1,5 @@
 #include <atom_rviz_plugin/calibration_panel.h>
 
-#include <visualization_msgs/InteractiveMarkerFeedback.h>
-
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
