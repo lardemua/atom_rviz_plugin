@@ -60,23 +60,7 @@ namespace atom_rviz_plugin
       save_marker.marker_name = combobox_sensor;
       save_marker.control_name = "";
       save_marker.event_type = 2;
-
-      // Set the pose of the marker
-      save_marker.pose.position.x = -0.02;
-      save_marker.pose.position.y = 0.05;
-      save_marker.pose.position.z = 0.07;
-      save_marker.pose.orientation.x = 0.0;
-      save_marker.pose.orientation.y = 0.0;
-      save_marker.pose.orientation.z = 0.0;
-      save_marker.pose.orientation.w = 1.0;
-
       save_marker.menu_entry_id = 1;
-
-/*      save_marker.mouse_point.x = 0.0;
-      save_marker.mouse_point.y = 0.0;
-      save_marker.mouse_point.z = 0.0;*/
-
-      save_marker.mouse_point_valid = 1;
 
       initial_estimate_pub.publish(save_marker);
     } // function initEstimateSaveButtonClicked()
@@ -96,23 +80,7 @@ namespace atom_rviz_plugin
       reset_marker.marker_name = combobox_sensor;
       reset_marker.control_name = "";
       reset_marker.event_type = 2;
-
-      // Set the pose of the marker
-      reset_marker.pose.position.x = -0.02;
-      reset_marker.pose.position.y = 0.05;
-      reset_marker.pose.position.z = 0.07;
-      reset_marker.pose.orientation.x = 0.0;
-      reset_marker.pose.orientation.y = 0.0;
-      reset_marker.pose.orientation.z = 0.0;
-      reset_marker.pose.orientation.w = 1.0;
-
       reset_marker.menu_entry_id = 2;
-
-/*      reset_marker.mouse_point.x = 0.0;
-      reset_marker.mouse_point.y = 0.0;
-      reset_marker.mouse_point.z = 0.0;*/
-
-      reset_marker.mouse_point_valid = 1;
 
       initial_estimate_pub.publish(reset_marker);
     } // function initEstimateResetButtonClicked()
