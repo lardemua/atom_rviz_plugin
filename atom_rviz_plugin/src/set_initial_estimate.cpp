@@ -44,7 +44,7 @@ namespace atom_rviz_plugin
       ros::ServiceClient client2 = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
 
       atom_msgs::SetSensorInteractiveMarker srv;
-      // Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+      //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
       srv.request.visible = ui_->initialEstimateCheckBox->isChecked();
       srv.request.scale = ui_->initialEstimateSpinBox->value();
