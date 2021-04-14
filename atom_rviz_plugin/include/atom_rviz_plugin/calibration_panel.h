@@ -32,6 +32,7 @@ private Q_SLOTS:
   void initEstimateCheckboxOrSpinBoxInputChanged();
   void initEstimateSaveButtonClicked();
   void initEstimateResetButtonClicked();
+  void pubSaveResetMsg(int menu_entry);
 
 
 protected:

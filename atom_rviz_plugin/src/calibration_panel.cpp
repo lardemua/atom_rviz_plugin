@@ -25,7 +25,7 @@ namespace atom_rviz_plugin
       getSensors();
       initEstimateComboBoxTextChanged();
 
-      // Qt events for buttons, checkboxes, combobox,...
+      // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
 

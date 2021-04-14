@@ -13,6 +13,12 @@ namespace atom_rviz_plugin
     void CalibrationPanel::initEstimateComboBoxTextChanged()
     {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      if (combobox_sensor.empty()){
+        ui_->init_estimate_sensor_label->setVisible(true);
+      } else {
+        ui_->init_estimate_sensor_label->setVisible(false);
+      }
+
       std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/get_sensor_interactive_marker";
 
       ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
@@ -47,26 +53,16 @@ namespace atom_rviz_plugin
 
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      if (combobox_sensor.empty()){ return;}
-
-      visualization_msgs::InteractiveMarkerFeedback save_marker;
-
-      // Set the frame ID and timestamp
-      save_marker.header.frame_id = "ee_link";
-      save_marker.header.stamp = ros::Time::now();
-
-      save_marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
-      save_marker.marker_name = combobox_sensor;
-      save_marker.control_name = "";
-      save_marker.event_type = 2;
-      save_marker.menu_entry_id = 1;
-
-      initial_estimate_pub.publish(save_marker);
+      pubSaveResetMsg(1);
     } // function initEstimateSaveButtonClicked()
 
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
+      pubSaveResetMsg(2);
+    } // function initEstimateResetButtonClicked()
+
+
+    void CalibrationPanel::pubSaveResetMsg(int menu_entry) {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       if (combobox_sensor.empty()){ return;}
 
@@ -80,8 +76,8 @@ namespace atom_rviz_plugin
       reset_marker.marker_name = combobox_sensor;
       reset_marker.control_name = "";
       reset_marker.event_type = 2;
-      reset_marker.menu_entry_id = 2;
+      reset_marker.menu_entry_id = menu_entry;
 
       initial_estimate_pub.publish(reset_marker);
-    } // function initEstimateResetButtonClicked()
+    } // function pubSaveResetMsg(int menu_entry)
 }  //namespace atom_rviz_plugin
