@@ -37,6 +37,8 @@ namespace atom_rviz_plugin
     void CalibrationPanel::initEstimateCheckboxOrSpinBoxInputChanged() {
       // Code to call the service (client)
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      if (combobox_sensor.empty()){ return;}
+
       std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/set_sensor_interactive_marker";
 
       ros::ServiceClient client2 = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
@@ -55,7 +57,6 @@ namespace atom_rviz_plugin
     void CalibrationPanel::initEstimateSaveButtonClicked() {
       pubSaveResetMsg(1);
     } // function initEstimateSaveButtonClicked()
-
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
       pubSaveResetMsg(2);
