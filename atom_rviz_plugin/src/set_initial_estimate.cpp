@@ -67,18 +67,13 @@ namespace atom_rviz_plugin
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       if (combobox_sensor.empty()){ return;}
 
-      visualization_msgs::InteractiveMarkerFeedback reset_marker;
+      visualization_msgs::InteractiveMarkerFeedback marker;
 
-      // Set the frame ID and timestamp
-      reset_marker.header.frame_id = "ee_link";
-      reset_marker.header.stamp = ros::Time::now();
+      marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
+      marker.marker_name = combobox_sensor;
+      marker.event_type = 2;
+      marker.menu_entry_id = menu_entry;
 
-      reset_marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
-      reset_marker.marker_name = combobox_sensor;
-      reset_marker.control_name = "";
-      reset_marker.event_type = 2;
-      reset_marker.menu_entry_id = menu_entry;
-
-      initial_estimate_pub.publish(reset_marker);
+      initial_estimate_pub.publish(marker);
     } // function pubSaveResetMsg(int menu_entry)
 }  //namespace atom_rviz_plugin
