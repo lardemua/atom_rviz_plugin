@@ -65,7 +65,7 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::pubSaveResetMsg(int menu_entry) {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      if (combobox_sensor.empty()){ return;}
+//      if (combobox_sensor.empty()){ return;}
 
       visualization_msgs::InteractiveMarkerFeedback marker;
 
