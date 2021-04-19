@@ -50,9 +50,7 @@ namespace atom_rviz_plugin
       srv.request.scale = ui_->initialEstimateSpinBox->value();
 
       client2.call(srv);
-
     } // function initEstimateCheckboxOrSpinBoxInputChanged()
-
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
@@ -78,5 +76,5 @@ namespace atom_rviz_plugin
       marker.menu_entry_id = menu_entry;
 
       initial_estimate_pub.publish(marker);
-    } // function pubSaveResetMsg(int menu_entry)
-}  //namespace atom_rviz_plugin
+    } // function pubSaveResetMsg(int menu_entry, const std::string& marker_event)
+}  // namespace atom_rviz_plugin
