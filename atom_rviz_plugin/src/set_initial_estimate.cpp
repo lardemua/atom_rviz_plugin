@@ -62,6 +62,7 @@ namespace atom_rviz_plugin
       pubSaveResetMsg(2, combobox_sensor);
     } // function initEstimateResetButtonClicked()
 
+
     void CalibrationPanel::initEstimateResetAllButtonClicked() {
       pubSaveResetMsg(2, "menu");
     } // function initEstimateResetAllButtonClicked()
@@ -76,5 +77,5 @@ namespace atom_rviz_plugin
       marker.menu_entry_id = menu_entry;
 
       initial_estimate_pub.publish(marker);
-    } // function pubSaveResetMsg(int menu_entry, const std::string& marker_event)
+    } //  function pubSaveResetMsg(int menu_entry, const std::string& marker_event)
 }  // namespace atom_rviz_plugin
