@@ -55,22 +55,25 @@ namespace atom_rviz_plugin
 
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
-      pubSaveResetMsg(1);
+      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      pubSaveResetMsg(1, combobox_sensor);
     } // function initEstimateSaveButtonClicked()
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
-      pubSaveResetMsg(2);
+      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
+      pubSaveResetMsg(2, combobox_sensor);
     } // function initEstimateResetButtonClicked()
 
+    void CalibrationPanel::initEstimateResetAllButtonClicked() {
+      pubSaveResetMsg(2, "menu");
+    } // function initEstimateResetAllButtonClicked()
 
-    void CalibrationPanel::pubSaveResetMsg(int menu_entry) {
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-//      if (combobox_sensor.empty()){ return;}
 
+    void CalibrationPanel::pubSaveResetMsg(int menu_entry, const std::string& marker_event) {
       visualization_msgs::InteractiveMarkerFeedback marker;
 
       marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
-      marker.marker_name = combobox_sensor;
+      marker.marker_name = marker_event;
       marker.event_type = 2;
       marker.menu_entry_id = menu_entry;
 

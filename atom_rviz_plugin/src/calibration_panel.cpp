@@ -33,7 +33,8 @@ namespace atom_rviz_plugin
       connect(ui_->initialEstimateCheckBox, SIGNAL(clicked(bool)), this, SLOT(initEstimateCheckboxOrSpinBoxInputChanged()));
       connect(ui_->initialEstimateSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxOrSpinBoxInputChanged()));
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
-      connect(ui_->initEstimateResetButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
+      connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
+      connect(ui_->initEstimateResetAllButton, SIGNAL(clicked()), this, SLOT(initEstimateResetAllButtonClicked()));
 
       parentWidget()->setVisible(true);
 

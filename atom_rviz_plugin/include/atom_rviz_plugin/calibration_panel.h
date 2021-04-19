@@ -32,7 +32,8 @@ private Q_SLOTS:
   void initEstimateCheckboxOrSpinBoxInputChanged();
   void initEstimateSaveButtonClicked();
   void initEstimateResetButtonClicked();
-  void pubSaveResetMsg(int menu_entry);
+  void initEstimateResetAllButtonClicked();
+  void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
 
 
 protected:

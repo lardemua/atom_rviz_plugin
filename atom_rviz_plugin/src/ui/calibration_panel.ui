@@ -1096,7 +1096,7 @@ between_msgs
     <widget class="QPushButton" name="initEstimateSaveButton">
      <property name="geometry">
       <rect>
-       <x>120</x>
+       <x>30</x>
        <y>230</y>
        <width>89</width>
        <height>25</height>
@@ -1106,17 +1106,17 @@ between_msgs
       <string>Save</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="initEstimateResetButton">
+    <widget class="QPushButton" name="initEstimateResetAllButton">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>160</x>
        <y>230</y>
        <width>89</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>Reset</string>
+      <string>Reset All</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -1146,6 +1146,19 @@ between_msgs
      </property>
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#cc0000;&quot;&gt;Choose a sensor&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="initEstimateResetSensorButton">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>230</y>
+       <width>101</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Reset Sensor</string>
      </property>
     </widget>
    </widget>
