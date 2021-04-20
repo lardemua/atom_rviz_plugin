@@ -71,6 +71,7 @@ set(SOURCE_FILES
         src/calibration_panel.cpp
         src/read_write_config.cpp
         src/set_initial_estimate.cpp
+        src/data_collect.cpp
   )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})

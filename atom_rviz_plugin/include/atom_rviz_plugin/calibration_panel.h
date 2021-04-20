@@ -26,6 +26,7 @@ class CalibrationPanel: public rviz::Panel
 
 private Q_SLOTS:
   void getSensors();
+  void setTable(std::vector <QString> sensors_for_table);
   void configReadButtonClicked();
   void configWriteButtonClicked();
   void initEstimateComboBoxTextChanged();
@@ -34,7 +35,6 @@ private Q_SLOTS:
   void initEstimateResetButtonClicked();
   void initEstimateResetAllButtonClicked();
   void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
-
 
 protected:
   Ui::CalibUI* ui_;

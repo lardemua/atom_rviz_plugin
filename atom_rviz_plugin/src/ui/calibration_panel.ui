@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -1016,15 +1016,15 @@ between_msgs
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_1">
+   <widget class="QWidget" name="initEstimateTab">
     <attribute name="title">
      <string>Initial Estimate</string>
     </attribute>
     <widget class="QCheckBox" name="initialEstimateCheckBox">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>20</y>
+       <x>360</x>
+       <y>10</y>
        <width>111</width>
        <height>23</height>
       </rect>
@@ -1051,8 +1051,8 @@ between_msgs
     <widget class="QComboBox" name="initEstimateSensorsComboBox">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>20</y>
+       <x>350</x>
+       <y>50</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -1061,9 +1061,9 @@ between_msgs
     <widget class="QDoubleSpinBox" name="initialEstimateSpinBox">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>60</y>
-       <width>69</width>
+       <x>260</x>
+       <y>200</y>
+       <width>91</width>
        <height>26</height>
       </rect>
      </property>
@@ -1080,12 +1080,12 @@ between_msgs
       <double>0.050000000000000</double>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="initEstimateMarkerScaleLabel">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>60</y>
-       <width>111</width>
+       <x>260</x>
+       <y>180</y>
+       <width>91</width>
        <height>17</height>
       </rect>
      </property>
@@ -1097,7 +1097,7 @@ between_msgs
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>230</y>
+       <y>240</y>
        <width>89</width>
        <height>25</height>
       </rect>
@@ -1109,8 +1109,8 @@ between_msgs
     <widget class="QPushButton" name="initEstimateResetAllButton">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>230</y>
+       <x>180</x>
+       <y>240</y>
        <width>89</width>
        <height>25</height>
       </rect>
@@ -1119,11 +1119,11 @@ between_msgs
       <string>Reset All</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="initEstimateSensorLabel">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>20</y>
+       <x>350</x>
+       <y>30</y>
        <width>67</width>
        <height>17</height>
       </rect>
@@ -1132,11 +1132,11 @@ between_msgs
       <string>Sensor:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="init_estimate_sensor_label">
+    <widget class="QLabel" name="initEstimateChooseSensorLabel">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>50</y>
+       <x>360</x>
+       <y>80</y>
        <width>131</width>
        <height>17</height>
       </rect>
@@ -1151,14 +1151,104 @@ between_msgs
     <widget class="QPushButton" name="initEstimateResetSensorButton">
      <property name="geometry">
       <rect>
-       <x>310</x>
-       <y>230</y>
+       <x>320</x>
+       <y>240</y>
        <width>101</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>Reset Sensor</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>81</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show/Hide</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="dataCollectTab">
+    <attribute name="title">
+     <string>Collect Data</string>
+    </attribute>
+    <widget class="QPushButton" name="collectDataSaveButton">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>230</y>
+       <width>121</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save Collection</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="collectDataDeleteButton">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>230</y>
+       <width>141</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Delete Collection</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Test</string>
+    </attribute>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>150</y>
+       <width>251</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>190</y>
+       <width>91</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>New Column</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QListWidget" name="initEstimateSensorListWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>171</width>
+       <height>121</height>
+      </rect>
      </property>
     </widget>
    </widget>

@@ -14,9 +14,9 @@ namespace atom_rviz_plugin
     {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       if (combobox_sensor.empty()){
-        ui_->init_estimate_sensor_label->setVisible(true);
+        ui_->initEstimateChooseSensorLabel->setVisible(true);
       } else {
-        ui_->init_estimate_sensor_label->setVisible(false);
+        ui_->initEstimateChooseSensorLabel->setVisible(false);
       }
 
       std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/get_sensor_interactive_marker";
@@ -54,12 +54,12 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      pubSaveResetMsg(1, combobox_sensor);
+      pubSaveResetMsg(1, "menu");
     } // function initEstimateSaveButtonClicked()
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      pubSaveResetMsg(2, combobox_sensor);
+      pubSaveResetMsg(1, combobox_sensor + "_menu");
     } // function initEstimateResetButtonClicked()
 
 
