@@ -8,6 +8,8 @@
 
 #include "ui_calibration_panel.h"
 
+using namespace std;
+
 namespace atom_rviz_plugin
 {
     void CalibrationPanel::setTable(std::vector <QString> sensors_for_table){
@@ -24,13 +26,21 @@ namespace atom_rviz_plugin
 
         // Get State of sensor marker (visibility and scale)
         std::string service_name = "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
-
         ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
 
         atom_msgs::GetSensorInteractiveMarker srv;
         //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
-        client.call(srv);
+        client.waitForExistence(); // Wait for the service to be available before calling
+        if (client.call(srv)){
+         ROS_INFO("Service %s called successfully.", service_name.c_str() );
+       }
+       else{
+        ROS_ERROR("Failed to call service %s", service_name.c_str());
+        return; // perhaps here we should do a shutdown or an exit?
+       }
+//       cout <<  << srv.response.visible << endl;
+       ROS_INFO("srv.response.visible=%d", srv.response.visible); // just for testing, return visible=1 so it should be fine
 
         //Add row
         ui_->tableWidget->insertRow( ui_->tableWidget->rowCount() );
