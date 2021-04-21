@@ -70,7 +70,7 @@ namespace atom_rviz_plugin
         pCheckBox->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
         ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,1,pWidget);
 
-        // Third column of the table (spinbox for the scale of the marker)
+        // Third column of the table  (spinbox for the scale of the marker)
         QWidget *spinBoxWidget = new QWidget();
         QDoubleSpinBox *pSpinBox = new QDoubleSpinBox();
         QHBoxLayout *spinBoxLayout = new QHBoxLayout(pWidget);
