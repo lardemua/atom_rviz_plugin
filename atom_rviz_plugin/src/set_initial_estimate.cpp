@@ -6,6 +6,8 @@
 #include <atom_msgs/GetSensorInteractiveMarker.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 
+#include <QHBoxLayout>
+
 #include "ui_calibration_panel.h"
 
 using namespace std;
@@ -16,9 +18,11 @@ namespace atom_rviz_plugin
 
       // TableWidget for sensors in the initial estimate tab
       ui_->tableWidget->verticalHeader()->setVisible(false);
-      ui_->tableWidget->setColumnCount(2);
-      ui_->tableWidget->setColumnWidth(0, 175);
-      ui_->tableWidget->horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Stretch );
+      ui_->tableWidget->setShowGrid(false);
+      ui_->tableWidget->setColumnCount(3);
+      ui_->tableWidget->setColumnWidth(0, 125);
+      ui_->tableWidget->setColumnWidth(1, 85);
+      ui_->tableWidget->horizontalHeader()->setSectionResizeMode( 2, QHeaderView::Stretch );
 
       for (size_t i = 0; i < sensors_for_table.size(); i++) {
         QString sensor = sensors_for_table[i];
@@ -34,35 +38,50 @@ namespace atom_rviz_plugin
         client.waitForExistence(); // Wait for the service to be available before calling
         if (client.call(srv)){
          ROS_INFO("Service %s called successfully.", service_name.c_str() );
-       }
-       else{
+        }
+        else{
         ROS_ERROR("Failed to call service %s", service_name.c_str());
         return; // perhaps here we should do a shutdown or an exit?
-       }
+        }
 //       cout <<  << srv.response.visible << endl;
-       ROS_INFO("srv.response.visible=%d", srv.response.visible); // just for testing, return visible=1 so it should be fine
+        ROS_INFO("srv.response.visible=%d", srv.response.visible); // just for testing, return visible=1 so it should be fine
 
         //Add row
         ui_->tableWidget->insertRow( ui_->tableWidget->rowCount() );
 
-        //Table Headers
-        QTableWidgetItem *sensors_header = new QTableWidgetItem();
-        sensors_header->setText("Sensors");
-        ui_->tableWidget->setHorizontalHeaderItem(0,sensors_header);
+        // Table Headers
+        ui_->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Sensors"));
+        ui_->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Hide/Show"));
+        ui_->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Scale"));
 
-        QTableWidgetItem *scale_header = new QTableWidgetItem();
-        scale_header->setText("Scale");
-        ui_->tableWidget->setHorizontalHeaderItem(1,scale_header);
-
-        // First column of the table (checkboxes for the sensors)
+        // First column: sensor names
         QTableWidgetItem *sensor_item = new QTableWidgetItem(sensor);
-        sensor_item->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
         sensor_item->setFlags(sensor_item->flags() ^ Qt::ItemIsEditable);
         ui_->tableWidget->setItem(ui_->tableWidget->rowCount()-1, 0, sensor_item);
 
-        // Second column of the table (spinbox for the scale of the marker)
-        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1, 1, new QSpinBox);
-        ui_->initialEstimateSpinBox->setValue(srv.response.scale);
+        // Second column of the table (checkboxes for the sensors visibility)
+        QWidget *pWidget = new QWidget();
+        QCheckBox *pCheckBox = new QCheckBox();
+        QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
+        pLayout->addWidget(pCheckBox);
+        pLayout->setAlignment(Qt::AlignCenter);
+        pLayout->setContentsMargins(0,0,0,0);
+        pWidget->setLayout(pLayout);
+        pCheckBox->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
+        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,1,pWidget);
+
+        // Third column of the table (spinbox for the scale of the marker)
+        QWidget *spinBoxWidget = new QWidget();
+        QDoubleSpinBox *pSpinBox = new QDoubleSpinBox();
+        QHBoxLayout *spinBoxLayout = new QHBoxLayout(pWidget);
+        spinBoxLayout->addWidget(pSpinBox);
+        spinBoxLayout->setContentsMargins(0,0,0,0);
+        spinBoxWidget->setLayout(spinBoxLayout);
+        pSpinBox->setDecimals(2);
+        pSpinBox->setSingleStep(0.05);
+        pSpinBox->setMinimum(0.05);
+        pSpinBox->setValue(srv.response.scale);
+        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,2,spinBoxWidget);
       }
     } //function setTable()
 
