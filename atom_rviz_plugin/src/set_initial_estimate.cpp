@@ -10,6 +10,52 @@
 
 namespace atom_rviz_plugin
 {
+    void CalibrationPanel::setTable(std::vector <QString> sensors_for_table){
+
+      // TableWidget for sensors in the initial estimate tab
+      ui_->tableWidget->verticalHeader()->setVisible(false);
+      ui_->tableWidget->setColumnCount(2);
+      ui_->tableWidget->setColumnWidth(0, 175);
+      ui_->tableWidget->horizontalHeader()->setSectionResizeMode( 1, QHeaderView::Stretch );
+
+      for (size_t i = 0; i < sensors_for_table.size(); i++) {
+        QString sensor = sensors_for_table[i];
+        std::string sensor_str = sensor.toUtf8().constData();
+
+        // Get State of sensor marker (visibility and scale)
+        std::string service_name = "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
+
+        ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
+
+        atom_msgs::GetSensorInteractiveMarker srv;
+        //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+
+        client.call(srv);
+
+        //Add row
+        ui_->tableWidget->insertRow( ui_->tableWidget->rowCount() );
+
+        //Table Headers
+        QTableWidgetItem *sensors_header = new QTableWidgetItem();
+        sensors_header->setText("Sensors");
+        ui_->tableWidget->setHorizontalHeaderItem(0,sensors_header);
+
+        QTableWidgetItem *scale_header = new QTableWidgetItem();
+        scale_header->setText("Scale");
+        ui_->tableWidget->setHorizontalHeaderItem(1,scale_header);
+
+        // First column of the table (checkboxes for the sensors)
+        QTableWidgetItem *sensor_item = new QTableWidgetItem(sensor);
+        sensor_item->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
+        sensor_item->setFlags(sensor_item->flags() ^ Qt::ItemIsEditable);
+        ui_->tableWidget->setItem(ui_->tableWidget->rowCount()-1, 0, sensor_item);
+
+        // Second column of the table (spinbox for the scale of the marker)
+        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1, 1, new QSpinBox);
+        ui_->initialEstimateSpinBox->setValue(srv.response.scale);
+      }
+    } //function setTable()
+
     void CalibrationPanel::initEstimateComboBoxTextChanged()
     {
       std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();

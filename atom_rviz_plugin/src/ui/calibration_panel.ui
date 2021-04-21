@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -1051,8 +1051,8 @@ between_msgs
     <widget class="QComboBox" name="initEstimateSensorsComboBox">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>50</y>
+       <x>20</x>
+       <y>20</y>
        <width>161</width>
        <height>25</height>
       </rect>
@@ -1061,8 +1061,8 @@ between_msgs
     <widget class="QDoubleSpinBox" name="initialEstimateSpinBox">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>200</y>
+       <x>360</x>
+       <y>60</y>
        <width>91</width>
        <height>26</height>
       </rect>
@@ -1083,8 +1083,8 @@ between_msgs
     <widget class="QLabel" name="initEstimateMarkerScaleLabel">
      <property name="geometry">
       <rect>
-       <x>260</x>
-       <y>180</y>
+       <x>360</x>
+       <y>40</y>
        <width>91</width>
        <height>17</height>
       </rect>
@@ -1122,8 +1122,8 @@ between_msgs
     <widget class="QLabel" name="initEstimateSensorLabel">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>30</y>
+       <x>20</x>
+       <y>0</y>
        <width>67</width>
        <height>17</height>
       </rect>
@@ -1135,8 +1135,8 @@ between_msgs
     <widget class="QLabel" name="initEstimateChooseSensorLabel">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>80</y>
+       <x>20</x>
+       <y>50</y>
        <width>131</width>
        <height>17</height>
       </rect>
@@ -1159,19 +1159,6 @@ between_msgs
      </property>
      <property name="text">
       <string>Reset Sensor</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>10</y>
-       <width>81</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Show/Hide</string>
      </property>
     </widget>
    </widget>
@@ -1213,9 +1200,9 @@ between_msgs
     <widget class="QTableWidget" name="tableWidget">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>150</y>
-       <width>251</width>
+       <x>10</x>
+       <y>130</y>
+       <width>271</width>
        <height>121</height>
       </rect>
      </property>
@@ -1249,6 +1236,41 @@ between_msgs
        <width>171</width>
        <height>121</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="initEstimateMarkerScaleLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>70</y>
+       <width>91</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Marker Scale</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="initialEstimateSpinBox_2">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>90</y>
+       <width>91</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="buttonSymbols">
+      <enum>QAbstractSpinBox::UpDownArrows</enum>
+     </property>
+     <property name="decimals">
+      <number>2</number>
+     </property>
+     <property name="minimum">
+      <double>0.050000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.050000000000000</double>
      </property>
     </widget>
    </widget>
