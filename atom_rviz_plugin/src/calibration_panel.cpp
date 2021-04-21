@@ -8,6 +8,8 @@
 
 #define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
 
+using namespace std;
+
 namespace atom_rviz_plugin
 {
     CalibrationPanel::CalibrationPanel(QWidget* parent) : Panel(parent),  ui_(new Ui::CalibUI())
@@ -16,6 +18,7 @@ namespace atom_rviz_plugin
       int argc = 0;
       char** argv;
       ros::init(argc, NULL, "rviz_panel");
+      PFLN
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
@@ -23,6 +26,7 @@ namespace atom_rviz_plugin
     void CalibrationPanel::onInitialize()
     {
       // Functions to run when rviz opens
+      PFLN
       getSensors();
       initEstimateComboBoxTextChanged();
 
@@ -71,6 +75,13 @@ namespace atom_rviz_plugin
             item->setCheckState(Qt::Unchecked); // AND initialize check state
           }
         }
+      }
+
+
+      cout << "list of sensors is:" << endl;
+      for (size_t i=0; i< sensors.size(); ++i)
+      {
+        cout << sensors[i].toStdString() << endl;
       }
       setTable(sensors);
     } //function getSensors()
