@@ -29,8 +29,8 @@ private Q_SLOTS:
   void setTable(std::vector <QString> sensors_for_table);
   void configReadButtonClicked();
   void configWriteButtonClicked();
-  void initEstimateComboBoxTextChanged();
-  void initEstimateCheckboxOrSpinBoxInputChanged();
+  void initEstimateCheckboxSpinBoxChanged();
+  void sensorsCellClicked(int row,int col);
   void initEstimateSaveButtonClicked();
   void initEstimateResetButtonClicked();
   void initEstimateResetAllButtonClicked();

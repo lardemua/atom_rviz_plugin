@@ -7,6 +7,8 @@
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 
 #include <QHBoxLayout>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QCheckBox>
 
 #include "ui_calibration_panel.h"
 
@@ -51,7 +53,7 @@ namespace atom_rviz_plugin
 
         // Table Headers
         ui_->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Sensors"));
-        ui_->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Hide/Show"));
+        ui_->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Show/Hide"));
         ui_->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Scale"));
 
         // First column: sensor names
@@ -69,6 +71,8 @@ namespace atom_rviz_plugin
         pWidget->setLayout(pLayout);
         pCheckBox->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
         ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,1,pWidget);
+        connect(pCheckBox,SIGNAL(clicked()),this,SLOT(initEstimateCheckboxSpinBoxChanged()));
+
 
         // Third column of the table  (spinbox for the scale of the marker)
         QWidget *spinBoxWidget = new QWidget();
@@ -82,59 +86,62 @@ namespace atom_rviz_plugin
         pSpinBox->setMinimum(0.05);
         pSpinBox->setValue(srv.response.scale);
         ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,2,spinBoxWidget);
+        connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
       }
     } //function setTable()
 
-    void CalibrationPanel::initEstimateComboBoxTextChanged()
-    {
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      if (combobox_sensor.empty()){
-        ui_->initEstimateChooseSensorLabel->setVisible(true);
-      } else {
-        ui_->initEstimateChooseSensorLabel->setVisible(false);
+
+    void CalibrationPanel::initEstimateCheckboxSpinBoxChanged() {
+
+      std::string service_name;
+
+      for (int i = 0; i < ui_->tableWidget->rowCount(); i++) {
+        // Get sensor
+        QTableWidgetItem *temp = ui_->tableWidget->item(i, 0);
+        QString str = temp->text();
+        std::string sensor_name = str.toUtf8().constData();
+
+        service_name = "/set_initial_estimate/" + sensor_name + "/set_sensor_interactive_marker";
+
+        // Get Checkbox state
+        QWidget *pWidget = ui_->tableWidget->cellWidget(i, 1);
+        QCheckBox *checkbox = pWidget->findChild<QCheckBox *>();
+
+        // Get SpinBox value
+        QWidget *pWidget2 = ui_->tableWidget->cellWidget(i, 2);
+        QDoubleSpinBox *spinbox = pWidget2->findChild<QDoubleSpinBox *>();
+
+        ros::ServiceClient client = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
+
+        atom_msgs::SetSensorInteractiveMarker srv;
+        //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+
+        srv.request.visible = checkbox->isChecked();
+        srv.request.scale = spinbox->value();
+
+        client.call(srv);
       }
-
-      std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/get_sensor_interactive_marker";
-
-      ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
-
-      atom_msgs::GetSensorInteractiveMarker srv;
-      //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
-
-      client.call(srv);
-
-      ui_->initialEstimateCheckBox->setChecked(srv.response.visible); //change 'false' for the value read from service
-      ui_->initialEstimateSpinBox->setValue(srv.response.scale); //change '1' for the value read from service
-
-    } // function initEstimateComboBoxTextChanged()
+    } // function initEstimateCheckboxSpinBoxChanged()
 
 
-    void CalibrationPanel::initEstimateCheckboxOrSpinBoxInputChanged() {
-      // Code to call the service (client)
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      if (combobox_sensor.empty()){ return;}
+    void CalibrationPanel::sensorsCellClicked(int row,int col) {
+      if (col != 0) { return; }
 
-      std::string service_name = "/set_initial_estimate/" + combobox_sensor + "/set_sensor_interactive_marker";
+      // Get sensor
+      QTableWidgetItem *temp = ui_->tableWidget->item(row, col);
+      QString sensor_str = temp->text();
 
-      ros::ServiceClient client2 = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
+      ui_->initEstimateSensorLabel2->setText(sensor_str);
 
-      atom_msgs::SetSensorInteractiveMarker srv;
-      //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
-
-      srv.request.visible = ui_->initialEstimateCheckBox->isChecked();
-      srv.request.scale = ui_->initialEstimateSpinBox->value();
-
-      client2.call(srv);
-    } // function initEstimateCheckboxOrSpinBoxInputChanged()
+    } // function sensorsCellClicked(int row,int col)
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
       pubSaveResetMsg(1, "menu");
     } // function initEstimateSaveButtonClicked()
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
-      std::string combobox_sensor = ui_->initEstimateSensorsComboBox->currentText().toUtf8().constData();
-      pubSaveResetMsg(1, combobox_sensor + "_menu");
+      std::string sensor = ui_->initEstimateSensorLabel2->text().toUtf8().constData();
+      pubSaveResetMsg(1, sensor + "_menu");
     } // function initEstimateResetButtonClicked()
 
 
