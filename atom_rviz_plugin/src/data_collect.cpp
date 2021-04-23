@@ -17,5 +17,5 @@ namespace atom_rviz_plugin
       marker.menu_entry_id = 1;
 
       data_collect_pub.publish(marker);
-    } // function collectDataSaveButtonClicked()
+    } //  function collectDataSaveButtonClicked()
 }  // namespace atom_rviz_plugin
