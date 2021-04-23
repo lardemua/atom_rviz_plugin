@@ -12,11 +12,16 @@
 
 #include "ui_calibration_panel.h"
 
-using namespace std;
-
 namespace atom_rviz_plugin
 {
-    void CalibrationPanel::setTable(std::vector <QString> sensors_for_table){
+    void CalibrationPanel::setTable(){
+
+      QTableWidgetItem *item0(ui_->tableWidget->item(0,0));
+      if (item0 != 0) {
+        return;
+      }
+
+      std::vector <QString> sensors_for_table = getSensors();
 
       // TableWidget for sensors in the initial estimate tab
       ui_->tableWidget->verticalHeader()->setVisible(false);

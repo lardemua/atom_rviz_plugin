@@ -26,8 +26,9 @@ class CalibrationPanel: public rviz::Panel
   void onInitialize() override;
 
 private Q_SLOTS:
-  void getSensors();
-  void setTable(std::vector <QString> sensors_for_table);
+  std::vector <QString> getSensors();
+  void handleTabs();
+  void setTable();
   void configReadButtonClicked();
   void configWriteButtonClicked();
   void initEstimateCheckboxSpinBoxChanged();
