@@ -34,12 +34,12 @@ namespace atom_rviz_plugin
       connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
 
-
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
       connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
       connect(ui_->initEstimateResetAllButton, SIGNAL(clicked()), this, SLOT(initEstimateResetAllButtonClicked()));
       connect(ui_->tableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(sensorsCellClicked(int,int)));
 
+      connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       parentWidget()->setVisible(true);
 
     } //function onInitialize()
@@ -75,6 +75,6 @@ namespace atom_rviz_plugin
           }
         }
       }
-      setTable(sensors);
+//      setTable(sensors);
     } //function getSensors()
 }  //namespace atom_rviz_plugin
