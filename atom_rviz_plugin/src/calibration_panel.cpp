@@ -26,12 +26,14 @@ namespace atom_rviz_plugin
       // Functions to run when rviz opens
       PFLN
       handleTabs();
+      getSensors();
 
       // Qt events for buttons, checkboxes, labels, combobox,...
-      connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(setTable()));
+      connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
       connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
+      connect(ui_->configLoadButton, SIGNAL(clicked()), this, SLOT(configLoadButtonClicked()));
 
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
       connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
@@ -46,11 +48,9 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::handleTabs() {
       if (ui_->mainTabs->currentWidget() == ui_->configTab) {
-        getSensors();
+//        getSensors();
       } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
-        setTable();
-      } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
-        return;
+//        setTable();
       }
     } // function handleTabs()
 
@@ -80,6 +80,5 @@ namespace atom_rviz_plugin
         }
       }
       return sensors;
-//      setTable(sensors);
     } //function getSensors()
 }  //namespace atom_rviz_plugin

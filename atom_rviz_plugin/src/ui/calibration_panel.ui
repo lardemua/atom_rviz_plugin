@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>519</width>
-    <height>328</height>
+    <width>532</width>
+    <height>332</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -989,30 +989,43 @@ between_msgs
       </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="configReadButton">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>260</y>
-       <width>89</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Read</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="configWriteButton">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>40</x>
        <y>260</y>
-       <width>89</width>
+       <width>51</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>Write</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="configLoadButton">
+     <property name="geometry">
+      <rect>
+       <x>408</x>
+       <y>260</y>
+       <width>101</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Load file</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="configReadButton">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>260</y>
+       <width>41</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Read</string>
      </property>
     </widget>
    </widget>

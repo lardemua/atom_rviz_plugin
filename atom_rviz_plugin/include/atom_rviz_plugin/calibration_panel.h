@@ -31,6 +31,7 @@ private Q_SLOTS:
   void setTable();
   void configReadButtonClicked();
   void configWriteButtonClicked();
+  void configLoadButtonClicked();
   void initEstimateCheckboxSpinBoxChanged();
   void sensorsCellClicked(int row,int col);
   void initEstimateSaveButtonClicked();

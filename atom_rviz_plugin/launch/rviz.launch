@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-	<rosparam file="$(find mmtbot_calibration)/calibration/config.yml"
-			  command="load"/>
+<!--	<rosparam file="$(find mmtbot_calibration)/calibration/config.yml"-->
+<!--			  command="load"/>-->
 	<node pkg="rviz"
 		  type="rviz"
 		  name="rviz"

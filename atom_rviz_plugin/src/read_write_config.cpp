@@ -5,6 +5,11 @@
 
 #include "ui_calibration_panel.h"
 
+#include <fstream>
+#include "yaml-cpp/yaml.h"
+
+#define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
+
 namespace atom_rviz_plugin {
     void CalibrationPanel::configReadButtonClicked() {
 // *************************************
@@ -42,7 +47,7 @@ namespace atom_rviz_plugin {
 //String parameters
       std::vector <std::string> calib_patt_params = {"/calibration_pattern/link",
                                                      "/calibration_pattern/parent_link",
-                                                     "/calibration_pattern/pattern_link",
+                                                     "/calibration_pattern/pattern_type",
                                                      "/calibration_pattern/dictionary",
                                                      "/calibration_pattern/mesh_file"};
       std::vector <std::string> calib_patt_params_content;
@@ -228,4 +233,65 @@ namespace atom_rviz_plugin {
         this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
       }
     }  // function writeButtonClicked
+
+
+    void CalibrationPanel::configLoadButtonClicked() {
+//      PFLN
+      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+
+      // String parameters for misc and within the calibration_pattern parameter
+      std::vector <std::string> str_params = {"description_file",
+                                              "bag_file",
+                                              "world_link",
+                                              "anchored_sensor"};
+      std::vector <std::string> cal_pat_str_param = {"link",
+                                                     "parent_link",
+                                                     "pattern_type",
+                                                     "dictionary",
+                                                     "mesh_file"};
+
+      YAML::Node calibration_pattern_node = config_params["calibration_pattern"];
+      YAML::Node sensors_node = config_params["sensors"];
+
+      for (YAML::const_iterator it = config_params.begin(); it != config_params.end(); ++it) {
+
+        if (std::find(str_params.begin(), str_params.end(), it->first.as<std::string>()) != str_params.end()) {
+
+          nh.setParam(it->first.as<std::string>(), it->second.as<std::string>());
+//          ROS_INFO_STREAM(it->first.as<std::string>());
+//          ROS_INFO_STREAM(it->second.as<std::string>());
+
+        } else if (it->first.as<std::string>() == "max_duration_between_msgs") {
+
+          nh.setParam(it->first.as<std::string>(), it->second.as<int>());
+//          ROS_INFO_STREAM(it->first.as<std::string>());
+//          ROS_INFO_STREAM(it->second.as<int>());
+
+        } else if (it->first.as<std::string>() == "calibration_pattern") {
+
+          for (YAML::const_iterator it2 = calibration_pattern_node.begin(); it2 != calibration_pattern_node.end(); ++it2) {
+
+            if (std::find(cal_pat_str_param.begin(), cal_pat_str_param.end(), it2->first.as<std::string>()) != cal_pat_str_param.end()) {
+//              ROS_INFO_STREAM(it2->first.as<std::string>());
+//              ROS_INFO_STREAM(it2->second.as<std::string>());
+            } else if (it2->first.as<std::string>() == "fixed") {
+//              ROS_INFO_STREAM(it2->first.as<std::string>());
+//              ROS_INFO_STREAM(it2->second.as<bool>());
+            } else if (it2->first.as<std::string>() == "size" || it2->first.as<std::string>() == "inner_size") {
+//              ROS_INFO_STREAM(it2->first.as<std::string>());
+//              ROS_INFO_STREAM(it2->second.as<double>());
+            }
+          }
+        } else if (it->first.as<std::string>() == "sensors") {
+          for (YAML::const_iterator it3 = sensors_node.begin(); it3 != sensors_node.end(); ++it3) {
+//            ROS_INFO_STREAM(it3->first.as<std::string>());
+            YAML::Node sensor_read_node = sensors_node[it3->first.as<std::string>()];
+            for (YAML::const_iterator it4 = sensor_read_node.begin(); it4 != sensor_read_node.end(); ++it4) {
+              ROS_INFO_STREAM(it4->first.as<std::string>());
+              ROS_INFO_STREAM(it4->second.as<std::string>());
+            }
+          }
+        }
+      }
+    } // function configLoadButtonClicked()
 }
