@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -1108,9 +1108,9 @@ between_msgs
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>240</y>
+       <y>220</y>
        <width>71</width>
-       <height>25</height>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -1121,9 +1121,9 @@ between_msgs
      <property name="geometry">
       <rect>
        <x>100</x>
-       <y>240</y>
+       <y>220</y>
        <width>81</width>
-       <height>25</height>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -1147,9 +1147,9 @@ between_msgs
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>240</y>
+       <y>220</y>
        <width>101</width>
-       <height>25</height>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -1183,6 +1183,224 @@ between_msgs
      </property>
      <property name="text">
       <string>(none)</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="initeEstimateGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>10</y>
+       <width>181</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Sensor Pose</string>
+     </property>
+     <widget class="QLabel" name="initEstimatePoseXLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>35</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>x:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initEstimatePoseYLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>65</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>y:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initEstimatePoseZLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>95</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>z:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initEstimatePoseRollLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>125</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>r:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initEstimatePosePitchLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>155</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>p:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="initEstimatePoseYawLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>185</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>y:</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePoseXDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>30</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePoseYDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>60</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePoseZDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>90</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePoseRollDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>120</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePosePitchDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>150</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="initEstimatePoseYawDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>180</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QPushButton" name="initEstimateSensorPoseButton">
+     <property name="geometry">
+      <rect>
+       <x>398</x>
+       <y>220</y>
+       <width>101</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Set Pose</string>
      </property>
     </widget>
    </widget>
