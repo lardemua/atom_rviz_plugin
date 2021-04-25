@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -994,7 +994,7 @@ between_msgs
       <rect>
        <x>40</x>
        <y>260</y>
-       <width>51</width>
+       <width>81</width>
        <height>25</height>
       </rect>
      </property>
@@ -1013,19 +1013,6 @@ between_msgs
      </property>
      <property name="text">
       <string>Load file</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="configReadButton">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>260</y>
-       <width>41</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Read</string>
      </property>
     </widget>
    </widget>

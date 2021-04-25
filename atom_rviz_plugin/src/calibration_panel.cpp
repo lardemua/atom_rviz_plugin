@@ -16,7 +16,7 @@ namespace atom_rviz_plugin
       int argc = 0;
       char** argv;
       ros::init(argc, NULL, "rviz_panel");
-      PFLN
+//      PFLN
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
@@ -24,16 +24,17 @@ namespace atom_rviz_plugin
     void CalibrationPanel::onInitialize()
     {
       // Functions to run when rviz opens
-      PFLN
+//      PFLN
       handleTabs();
       getSensors();
+      configLoadParameters(false, false);
 
       // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
-      connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
-      connect(ui_->configLoadButton, SIGNAL(clicked()), this, SLOT(configLoadButtonClicked()));
+      connect(ui_->configLoadButton, SIGNAL(clicked(bool)), this, SLOT(configLoadParameters()));
+      connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(ComboBoxChange()));
 
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
       connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
@@ -47,10 +48,8 @@ namespace atom_rviz_plugin
     } //function onInitialize()
 
     void CalibrationPanel::handleTabs() {
-      if (ui_->mainTabs->currentWidget() == ui_->configTab) {
-//        getSensors();
-      } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
-//        setTable();
+      if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
+        setTable();
       }
     } // function handleTabs()
 
@@ -74,7 +73,7 @@ namespace atom_rviz_plugin
                 parameters_i.size() - std::string("/sensors/").size() - std::string("/topic_name").size();
             std::string sensor_name = parameters_i.substr(std::string("/sensors/").length(), sensor_length);
             QString str_to_combo_box = QString::fromUtf8(sensor_name.c_str());
-            ui_->sensorsComboBox->addItem(str_to_combo_box);
+//            ui_->sensorsComboBox->addItem(str_to_combo_box);
             sensors.push_back(str_to_combo_box);
           }
         }
