@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
 
 # Qt settings #
 find_package(Qt5 ${rviz_QT_VERSION} REQUIRED Core Widgets)
+
 macro(qt_wrap_ui)
   qt5_wrap_ui(${ARGN})
 endmacro()
@@ -45,9 +46,6 @@ catkin_package(
   DEPENDS
   )
 
-
-
-
 #########
 # Build #
 #########
@@ -78,10 +76,13 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${OGRE_PREFIX_DIR}/include")
 
-
+# Test Json parser
+add_executable(test_json_parser src/test_json_parser.cpp)
+target_link_libraries(test_json_parser
+   ${catkin_LIBRARIES}
+)
 
 #[[add_executable(test_read_param_node src/test_read_param.cpp)
-
  target_link_libraries(test_read_param_node
    ${catkin_LIBRARIES}
  )]]
