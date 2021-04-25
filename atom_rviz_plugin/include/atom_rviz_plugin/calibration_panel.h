@@ -19,22 +19,26 @@ class CalibrationPanel: public rviz::Panel
  public:
   ros::NodeHandle nh;
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
+  ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
 
   void onInitialize() override;
 
 private Q_SLOTS:
-  void getSensors();
-  void setTable(std::vector <QString> sensors_for_table);
+  std::vector <QString> getSensors();
+  void handleTabs();
+  void setTable();
   void configReadButtonClicked();
   void configWriteButtonClicked();
-  void initEstimateComboBoxTextChanged();
-  void initEstimateCheckboxOrSpinBoxInputChanged();
+  void configLoadButtonClicked();
+  void initEstimateCheckboxSpinBoxChanged();
+  void sensorsCellClicked(int row,int col);
   void initEstimateSaveButtonClicked();
   void initEstimateResetButtonClicked();
   void initEstimateResetAllButtonClicked();
   void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
+  void collectDataSaveButtonClicked();
 
 protected:
   Ui::CalibUI* ui_;

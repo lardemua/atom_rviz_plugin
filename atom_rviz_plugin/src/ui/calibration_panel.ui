@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>519</width>
-    <height>328</height>
+    <width>532</width>
+    <height>332</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -989,25 +989,12 @@ between_msgs
       </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="configReadButton">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>260</y>
-       <width>89</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Read</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="configWriteButton">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>40</x>
        <y>260</y>
-       <width>89</width>
+       <width>51</width>
        <height>25</height>
       </rect>
      </property>
@@ -1015,90 +1002,43 @@ between_msgs
       <string>Write</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="configLoadButton">
+     <property name="geometry">
+      <rect>
+       <x>408</x>
+       <y>260</y>
+       <width>101</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Load file</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="configReadButton">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>260</y>
+       <width>41</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Read</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="initEstimateTab">
     <attribute name="title">
      <string>Initial Estimate</string>
     </attribute>
-    <widget class="QCheckBox" name="initialEstimateCheckBox">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>10</y>
-       <width>111</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Show/Hide</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-     <property name="tristate">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QComboBox" name="initEstimateSensorsComboBox">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>161</width>
-       <height>25</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="initialEstimateSpinBox">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>60</y>
-       <width>91</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::UpDownArrows</enum>
-     </property>
-     <property name="decimals">
-      <number>2</number>
-     </property>
-     <property name="minimum">
-      <double>0.050000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.050000000000000</double>
-     </property>
-    </widget>
-    <widget class="QLabel" name="initEstimateMarkerScaleLabel">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>40</y>
-       <width>91</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Marker Scale</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="initEstimateSaveButton">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>240</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -1109,9 +1049,9 @@ between_msgs
     <widget class="QPushButton" name="initEstimateResetAllButton">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>100</x>
        <y>240</y>
-       <width>89</width>
+       <width>81</width>
        <height>25</height>
       </rect>
      </property>
@@ -1122,36 +1062,20 @@ between_msgs
     <widget class="QLabel" name="initEstimateSensorLabel">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>0</y>
-       <width>67</width>
+       <x>10</x>
+       <y>180</y>
+       <width>121</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>Sensor:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="initEstimateChooseSensorLabel">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>131</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>1</number>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#cc0000;&quot;&gt;Choose a sensor&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Selected Sensor:</string>
      </property>
     </widget>
     <widget class="QPushButton" name="initEstimateResetSensorButton">
      <property name="geometry">
       <rect>
-       <x>320</x>
+       <x>200</x>
        <y>240</y>
        <width>101</width>
        <height>25</height>
@@ -1159,6 +1083,35 @@ between_msgs
      </property>
      <property name="text">
       <string>Reset Sensor</string>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>291</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+    </widget>
+    <widget class="QLabel" name="initEstimateSensorLabel2">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>180</y>
+       <width>171</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>(none)</string>
      </property>
     </widget>
    </widget>
@@ -1197,80 +1150,14 @@ between_msgs
     <attribute name="title">
      <string>Test</string>
     </attribute>
-    <widget class="QTableWidget" name="tableWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>271</width>
-       <height>121</height>
-      </rect>
-     </property>
-     <property name="lineWidth">
-      <number>0</number>
-     </property>
-     <attribute name="horizontalHeaderCascadingSectionResizes">
-      <bool>false</bool>
-     </attribute>
-    </widget>
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="geometry">
-      <rect>
-       <x>410</x>
-       <y>190</y>
-       <width>91</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <column>
-      <property name="text">
-       <string>New Column</string>
-      </property>
-     </column>
-    </widget>
     <widget class="QListWidget" name="initEstimateSensorListWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
        <width>171</width>
-       <height>121</height>
+       <height>101</height>
       </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="initEstimateMarkerScaleLabel_2">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>70</y>
-       <width>91</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Marker Scale</string>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="initialEstimateSpinBox_2">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>90</y>
-       <width>91</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="buttonSymbols">
-      <enum>QAbstractSpinBox::UpDownArrows</enum>
-     </property>
-     <property name="decimals">
-      <number>2</number>
-     </property>
-     <property name="minimum">
-      <double>0.050000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.050000000000000</double>
      </property>
     </widget>
    </widget>

@@ -8,8 +8,6 @@
 
 #define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
 
-using namespace std;
-
 namespace atom_rviz_plugin
 {
     CalibrationPanel::CalibrationPanel(QWidget* parent) : Panel(parent),  ui_(new Ui::CalibUI())
@@ -27,25 +25,37 @@ namespace atom_rviz_plugin
     {
       // Functions to run when rviz opens
       PFLN
+      handleTabs();
       getSensors();
-      initEstimateComboBoxTextChanged();
 
       // Qt events for buttons, checkboxes, labels, combobox,...
+      connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
+
       connect(ui_->configReadButton, SIGNAL(clicked()), this, SLOT(configReadButtonClicked()));
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
+      connect(ui_->configLoadButton, SIGNAL(clicked()), this, SLOT(configLoadButtonClicked()));
 
-      connect(ui_->initEstimateSensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(initEstimateComboBoxTextChanged()));
-      connect(ui_->initialEstimateCheckBox, SIGNAL(clicked(bool)), this, SLOT(initEstimateCheckboxOrSpinBoxInputChanged()));
-      connect(ui_->initialEstimateSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxOrSpinBoxInputChanged()));
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
       connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
       connect(ui_->initEstimateResetAllButton, SIGNAL(clicked()), this, SLOT(initEstimateResetAllButtonClicked()));
+      connect(ui_->tableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(sensorsCellClicked(int,int)));
+
+      connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
 
       parentWidget()->setVisible(true);
 
     } //function onInitialize()
 
-    void CalibrationPanel::getSensors()
+    void CalibrationPanel::handleTabs() {
+      if (ui_->mainTabs->currentWidget() == ui_->configTab) {
+//        getSensors();
+      } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
+//        setTable();
+      }
+    } // function handleTabs()
+
+
+    std::vector <QString> CalibrationPanel::getSensors()
     {
       // Get number of sensors to put on ComboBox for the configuration file
       std::vector<std::string> parameters;
@@ -57,32 +67,18 @@ namespace atom_rviz_plugin
       for (size_t i = 0; i < parameters.size(); i++) {
         std::string parameters_i = parameters[i];
         size_t idx = parameters_i.find("/sensors/");
-        if (idx!=std::string::npos) {
+        if (idx != std::string::npos) {
           size_t idx_2 = parameters_i.find("/topic_name");
-          if (idx_2!=std::string::npos) {
-            int sensor_length = parameters_i.size() - std::string("/sensors/").size() - std::string("/topic_name").size();
-            std::string sensor_name = parameters_i.substr(std::string("/sensors/").length(),sensor_length);
+          if (idx_2 != std::string::npos) {
+            int sensor_length =
+                parameters_i.size() - std::string("/sensors/").size() - std::string("/topic_name").size();
+            std::string sensor_name = parameters_i.substr(std::string("/sensors/").length(), sensor_length);
             QString str_to_combo_box = QString::fromUtf8(sensor_name.c_str());
             ui_->sensorsComboBox->addItem(str_to_combo_box);
-            ui_->initEstimateSensorsComboBox->addItem(str_to_combo_box);
             sensors.push_back(str_to_combo_box);
-
-            // ListWidget for sensors in the initial estimate tab
-            QListWidgetItem* item = new QListWidgetItem("             " + str_to_combo_box, ui_->initEstimateSensorListWidget);
-//            ui_->initEstimateSensorListWidget->addItem(item);
-//            ui_->initEstimateSensorListWidget->setItemWidget(item,new QCheckBox());
-            item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-            item->setCheckState(Qt::Unchecked); // AND initialize check state
           }
         }
       }
-
-
-      cout << "list of sensors is:" << endl;
-      for (size_t i=0; i< sensors.size(); ++i)
-      {
-        cout << sensors[i].toStdString() << endl;
-      }
-      setTable(sensors);
+      return sensors;
     } //function getSensors()
 }  //namespace atom_rviz_plugin
