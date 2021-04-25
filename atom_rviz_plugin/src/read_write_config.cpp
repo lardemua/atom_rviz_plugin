@@ -70,14 +70,10 @@ namespace atom_rviz_plugin {
 
             } else if (it2->first.as<std::string>() == "dimension") {
               for (YAML::const_iterator it5 = calibration_pattern_node["dimension"].begin(); it5 != calibration_pattern_node["dimension"].end(); ++it5) {
-//                ROS_INFO_STREAM(it5->first.as<std::string>());
-//                ROS_INFO_STREAM(it5->second.as<std::string>());
-              }
-//              ROS_INFO_STREAM(calibration_pattern_node["dimension"]["x"]);
-//              ROS_INFO_STREAM(calibration_pattern_node["dimension"]["y"]);
-//              ROS_INFO_STREAM(it2->first.as<std::string>());
-//              ROS_INFO_STREAM(it2->second.as<std::map<std::string,int>>());
 
+                nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it5->first.as<std::string>(), it5->second.as<double>());
+                calib_patt_params_content.push_back(std::to_string(it5->second.as<double>()));
+              }
             } else if (it2->first.as<std::string>() == "border_size") {
               try {
 //                ROS_INFO_STREAM("ola");
@@ -141,10 +137,11 @@ namespace atom_rviz_plugin {
         ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
         ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
         ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
+        ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
+        ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
+        ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
+        ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
         ui_->paramCalibPatBorderSizeTextEdit->setText("Ola");
-        ui_->paramCalibPatDimensionTextEdit->setText("Ola ola");
-        ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
-        ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
 
         ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
         ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
@@ -233,7 +230,7 @@ namespace atom_rviz_plugin {
 
     // Dictionary parameters
     // /calibration_pattern/dimension parameter:
-    std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
+/*    std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
     int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:") + 2,
                                                                     calib_patt_new_dict_str.find(",") -
                                                                     (calib_patt_new_dict_str.find("x:") + 2)));
@@ -242,7 +239,7 @@ namespace atom_rviz_plugin {
                                                                     (calib_patt_new_dict_str.find("y:") + 2)));
     this->nh.setParam("/calibration_pattern/dimension/x", dimension_x_parameter);
     this->nh.setParam("/calibration_pattern/dimension/y", dimension_y_parameter);
-    /*  ROS_INFO_STREAM(calib_patt_new_dict_str);
+      ROS_INFO_STREAM(calib_patt_new_dict_str);
     ROS_INFO_STREAM(dimension_x_parameter);
     ROS_INFO_STREAM(dimension_y_parameter);*/
 
@@ -265,5 +262,12 @@ namespace atom_rviz_plugin {
     for (size_t i = 0; i < sensors_new_param_str.size(); i++) {
       this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
     }
+
+
+/*    YAML::Node baseNode = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+    baseNode["calibration_pattern"]["link"] = "pattern_link2"; // edit one of the nodes
+    std::ofstream fout("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+    fout << baseNode; // dump it back into the file*/
+
   }  // function writeButtonClicked
 }

@@ -42,7 +42,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="miscellaneousParamsTab">
       <attribute name="title">
@@ -214,7 +214,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>91</x>
          <y>15</y>
          <width>121</width>
          <height>31</height>
@@ -271,7 +271,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Link</string>
+        <string>Link:</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="paramCalibPatParentLinkTextEdit">
@@ -280,7 +280,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>91</x>
          <y>55</y>
          <width>121</width>
          <height>31</height>
@@ -327,7 +327,7 @@ between_msgs
         <rect>
          <x>0</x>
          <y>62</y>
-         <width>81</width>
+         <width>91</width>
          <height>17</height>
         </rect>
        </property>
@@ -337,7 +337,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Parent Link</string>
+        <string>Parent Link:</string>
        </property>
       </widget>
       <widget class="QLabel" name="paramCalibPatFixedLabel">
@@ -355,7 +355,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Fixed</string>
+        <string>Fixed:</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="paramCalibPatFixedTextEdit">
@@ -364,7 +364,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>91</x>
          <y>95</y>
          <width>121</width>
          <height>31</height>
@@ -411,7 +411,7 @@ between_msgs
         <rect>
          <x>0</x>
          <y>142</y>
-         <width>91</width>
+         <width>100</width>
          <height>17</height>
         </rect>
        </property>
@@ -421,7 +421,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Pattern Type</string>
+        <string>Pattern Type:</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="paramCalibPatPatternTypeTextEdit">
@@ -430,7 +430,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>91</x>
          <y>135</y>
          <width>121</width>
          <height>31</height>
@@ -496,7 +496,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>91</x>
          <y>175</y>
          <width>121</width>
          <height>31</height>
@@ -543,7 +543,7 @@ between_msgs
         <rect>
          <x>220</x>
          <y>182</y>
-         <width>71</width>
+         <width>91</width>
          <height>17</height>
         </rect>
        </property>
@@ -553,7 +553,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Inner Size</string>
+        <string>Inner Size:</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="paramCalibPatMeshFileTextEdit">
@@ -562,7 +562,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>300</x>
+         <x>301</x>
          <y>15</y>
          <width>201</width>
          <height>31</height>
@@ -609,7 +609,7 @@ between_msgs
         <rect>
          <x>220</x>
          <y>22</y>
-         <width>71</width>
+         <width>81</width>
          <height>17</height>
         </rect>
        </property>
@@ -619,7 +619,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Mesh File</string>
+        <string>Mesh File:</string>
        </property>
       </widget>
       <widget class="QLabel" name="paramCalibPatBorderSizeLabel">
@@ -637,7 +637,7 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Border Size</string>
+        <string>Border Size:</string>
        </property>
       </widget>
       <widget class="QTextEdit" name="paramCalibPatInnerSizeTextEdit">
@@ -646,7 +646,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>300</x>
+         <x>301</x>
          <y>175</y>
          <width>201</width>
          <height>31</height>
@@ -694,7 +694,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>300</x>
+         <x>301</x>
          <y>135</y>
          <width>201</width>
          <height>31</height>
@@ -741,7 +741,7 @@ between_msgs
         <rect>
          <x>220</x>
          <y>102</y>
-         <width>71</width>
+         <width>81</width>
          <height>17</height>
         </rect>
        </property>
@@ -751,18 +751,18 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Dimension</string>
+        <string>Dimension:</string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="paramCalibPatDimensionTextEdit">
+      <widget class="QTextEdit" name="paramCalibPatDimensionXTextEdit">
        <property name="enabled">
         <bool>true</bool>
        </property>
        <property name="geometry">
         <rect>
-         <x>300</x>
-         <y>95</y>
-         <width>201</width>
+         <x>313</x>
+         <y>90</y>
+         <width>81</width>
          <height>31</height>
         </rect>
        </property>
@@ -808,7 +808,7 @@ between_msgs
        </property>
        <property name="geometry">
         <rect>
-         <x>300</x>
+         <x>301</x>
          <y>55</y>
          <width>201</width>
          <height>31</height>
@@ -865,7 +865,91 @@ between_msgs
         </font>
        </property>
        <property name="text">
-        <string>Size</string>
+        <string>Size:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="paramCalibPatDimensionYTextEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>421</x>
+         <y>90</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="sizeIncrement">
+        <size>
+         <width>0</width>
+         <height>-31072</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QLabel" name="paramCalibPatDimensionLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>301</x>
+         <y>102</y>
+         <width>21</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>x:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="paramCalibPatDimensionLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>102</y>
+         <width>21</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>y:</string>
        </property>
       </widget>
      </widget>
