@@ -27,7 +27,7 @@ namespace atom_rviz_plugin
       data_collect_pub.publish(marker);
 
 
-      // Put the collection in a tree widget
+/*      // Put the collection in a tree widget
       std::string service_name = "/collect_data/get_dataset";
       ros::ServiceClient client = nh.serviceClient<atom_msgs::GetDataset>(service_name);
 
@@ -40,10 +40,10 @@ namespace atom_rviz_plugin
       else{
         ROS_ERROR("Failed to call service %s", service_name.c_str());
       }
-      ROS_INFO("srv.response.dataset_json=%s", srv.response.dataset_json.c_str());
+      ROS_INFO("srv.response.dataset_json=%s", srv.response.dataset_json.c_str());*/
 
       // Parse response to call, in order to get json
-      json j = json::parse(srv.response.dataset_json);
+//      json j = json::parse(srv.response.dataset_json);
 
 //      QString treeHeader = ;
 //      ui_->treeWidget->setHeaderLabel("Collections: ");
@@ -51,7 +51,7 @@ namespace atom_rviz_plugin
     } //  function collectDataSaveButtonClicked()
 
     void CalibrationPanel::collectDataGetCollectionButtonClicked(){
-/*      // Put the collection in a tree widget
+      // Put the collection in a tree widget
 
       std::string service_name = "/collect_data/get_dataset";
       ros::ServiceClient client = nh.serviceClient<atom_msgs::GetDataset>(service_name);
@@ -70,7 +70,7 @@ namespace atom_rviz_plugin
       // Parse response to call, in order to get json
       json j = json::parse(srv.response.dataset_json);
 
-      QString treeHeader = ;
+/*      QString treeHeader = ;
       ui_->treeWidget->setHeaderLabel("Collections: ");*/
 
     } //  function collectDataSaveButtonClicked()
