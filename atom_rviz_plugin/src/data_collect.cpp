@@ -7,6 +7,7 @@
 #include "std_msgs/String.h"
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 #include <atom_msgs/GetDataset.h>
+#include <atom_msgs/SaveCollection.h>
 #include <cstdlib>
 
 using json = nlohmann::json;
@@ -16,22 +17,23 @@ using json = nlohmann::json;
 namespace atom_rviz_plugin
 {
     void CalibrationPanel::collectDataSaveButtonClicked(){
-      // Save the collection
-      visualization_msgs::InteractiveMarkerFeedback marker;
 
-      marker.client_id = "/rviz/ManualDataLabeler-InteractiveMarker";
-      marker.marker_name = "menu";
-      marker.event_type = 2;
-      marker.menu_entry_id = 1;
+      // Save the collection (using a publish/subscribe like rviz does)
+//      visualization_msgs::InteractiveMarkerFeedback marker;
+//
+//      marker.client_id = "/rviz/ManualDataLabeler-InteractiveMarker";
+//      marker.marker_name = "menu";
+//      marker.event_type = 2;
+//      marker.menu_entry_id = 1;
+//
+//      data_collect_pub.publish(marker);
 
-      data_collect_pub.publish(marker);
-
-/*      // Put the collection in a tree widget
-      std::string service_name = "/collect_data/get_dataset";
-      ros::ServiceClient client = nh.serviceClient<atom_msgs::GetDataset>(service_name);
+      // Save the collection (using the SaveCollection service)
+      std::string service_name = "/collect_data/save_collection";
+      ros::ServiceClient client = nh.serviceClient<atom_msgs::SaveCollection>(service_name);
 
       // Call getDataset service
-      atom_msgs::GetDataset srv;
+      atom_msgs::SaveCollection srv;
       client.waitForExistence(); // Wait for the service to be available before calling
       if (client.call(srv)){
         ROS_INFO("Service %s called successfully.", service_name.c_str() );
@@ -39,7 +41,25 @@ namespace atom_rviz_plugin
       else{
         ROS_ERROR("Failed to call service %s", service_name.c_str());
       }
-      ROS_INFO("srv.response.dataset_json=%s", srv.response.dataset_json.c_str());*/
+
+      // Now we are sure the save collection finished and can save the get the new state of collections
+      //TODO Miguel, better do it like this if you plan to keep the button ...
+      this->collectDataGetCollectionButtonClicked(); // programmatically click getDataCollection button
+
+///*      // Put the collection in a tree widget
+//      std::string service_name = "/collect_data/get_dataset";
+//      ros::ServiceClient client = nh.serviceClient<atom_msgs::GetDataset>(service_name);
+//
+//      // Call getDataset service
+//      atom_msgs::GetDataset srv;
+//      client.waitForExistence(); // Wait for the service to be available before calling
+//      if (client.call(srv)){
+//        ROS_INFO("Service %s called successfully.", service_name.c_str() );
+//      }
+//      else{
+//        ROS_ERROR("Failed to call service %s", service_name.c_str());
+//      }
+//      ROS_INFO("srv.response.dataset_json=%s", srv.response.dataset_json.c_str());*/
 
       // Parse response to call, in order to get json
 //      json j = json::parse(srv.response.dataset_json);
