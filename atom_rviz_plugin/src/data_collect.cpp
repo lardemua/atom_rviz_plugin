@@ -26,7 +26,6 @@ namespace atom_rviz_plugin
 
       data_collect_pub.publish(marker);
 
-
 /*      // Put the collection in a tree widget
       std::string service_name = "/collect_data/get_dataset";
       ros::ServiceClient client = nh.serviceClient<atom_msgs::GetDataset>(service_name);
@@ -44,9 +43,6 @@ namespace atom_rviz_plugin
 
       // Parse response to call, in order to get json
 //      json j = json::parse(srv.response.dataset_json);
-
-//      QString treeHeader = ;
-//      ui_->treeWidget->setHeaderLabel("Collections: ");
 
     } //  function collectDataSaveButtonClicked()
 
@@ -70,8 +66,6 @@ namespace atom_rviz_plugin
       // Parse response to call, in order to get json
       json j = json::parse(srv.response.dataset_json);
 
-/*      QString treeHeader = ;
-      ui_->treeWidget->setHeaderLabel("Collections: ");*/
 
     } //  function collectDataSaveButtonClicked()
 }  // namespace atom_rviz_plugin
