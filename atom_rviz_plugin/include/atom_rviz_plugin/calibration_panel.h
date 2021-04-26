@@ -39,6 +39,7 @@ private Q_SLOTS:
   void initEstimateResetAllButtonClicked();
   void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
   void collectDataSaveButtonClicked();
+  void collectDataGetCollectionButtonClicked();
 
 protected:
   Ui::CalibUI* ui_;

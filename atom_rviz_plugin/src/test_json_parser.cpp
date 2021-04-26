@@ -29,26 +29,26 @@ int main(int argc, char **argv)
 
     // Parse response to call, in order to get json
     json j = json::parse(srv.response.dataset_json);
-
-    // print entire json content
-    cout << setw(4) << j << endl;
-
-    // Print some fields for testing
-    cout << endl << "TESTING PARSER" << endl;
-
-    string bagfile = j["calibration_config"]["bag_file"];
-    cout << "bagfile is " << bagfile << endl;
-
-    cout << "Number of collections = " << (j["collections"]).size() << endl;
-
-    // Check on which sensors the pattern was detected, for each collection
-    for (auto& collection: j["collections"].items()) // iterates over all collections
-    {
-//      cout << collection.key() << endl; // this prints the key
-//      cout << collection.value() << endl; // this prints the value
-      for (auto& sensor: collection.value().at("labels").items()){ // iterates over all sensors in this label
-        cout << "Collection " << collection.key() <<", sensor " << sensor.key() << " detected=" << sensor.value().at("detected") << endl;
-      }
-    }
+//
+//    // print entire json content
+//    cout << setw(4) << j << endl;
+//
+//    // Print some fields for testing
+//    cout << endl << "TESTING PARSER" << endl;
+//
+//    string bagfile = j["calibration_config"]["bag_file"];
+//    cout << "bagfile is " << bagfile << endl;
+//
+//    cout << "Number of collections = " << (j["collections"]).size() << endl;
+//
+//    // Check on which sensors the pattern was detected, for each collection
+//    for (auto& collection: j["collections"].items()) // iterates over all collections
+//    {
+////      cout << collection.key() << endl; // this prints the key
+////      cout << collection.value() << endl; // this prints the value
+//      for (auto& sensor: collection.value().at("labels").items()){ // iterates over all sensors in this label
+//        cout << "Collection " << collection.key() <<", sensor " << sensor.key() << " detected=" << sensor.value().at("detected") << endl;
+//      }
+//    }
 
 }

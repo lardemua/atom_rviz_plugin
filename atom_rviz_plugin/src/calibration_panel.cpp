@@ -15,7 +15,7 @@ namespace atom_rviz_plugin
       ui_->setupUi(this);
       int argc = 0;
       char** argv;
-      ros::init(argc, NULL, "rviz_panel");
+      ros::init(argc, NULL, "calibration_panel");
 //      PFLN
     }
 
@@ -42,15 +42,18 @@ namespace atom_rviz_plugin
       connect(ui_->tableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(sensorsCellClicked(int,int)));
 
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
+      connect(ui_->collectDataGetCollectionButton, SIGNAL(clicked()), this, SLOT(collectDataGetCollectionButtonClicked()));
+      connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
 
       parentWidget()->setVisible(true);
 
     } //function onInitialize()
 
     void CalibrationPanel::handleTabs() {
-      if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
-        setTable();
-      }
+//      if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
+//        setTable();
+//      }
+      return;
     } // function handleTabs()
 
 

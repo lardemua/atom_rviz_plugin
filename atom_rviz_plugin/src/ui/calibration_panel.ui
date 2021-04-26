@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -1190,7 +1190,7 @@ between_msgs
       <rect>
        <x>320</x>
        <y>10</y>
-       <width>181</width>
+       <width>180</width>
        <height>211</height>
       </rect>
      </property>
@@ -1395,7 +1395,7 @@ between_msgs
       <rect>
        <x>398</x>
        <y>220</y>
-       <width>101</width>
+       <width>102</width>
        <height>30</height>
       </rect>
      </property>
@@ -1411,8 +1411,8 @@ between_msgs
     <widget class="QPushButton" name="collectDataSaveButton">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>230</y>
+       <x>10</x>
+       <y>220</y>
        <width>121</width>
        <height>25</height>
       </rect>
@@ -1425,7 +1425,7 @@ between_msgs
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>230</y>
+       <y>220</y>
        <width>141</width>
        <height>25</height>
       </rect>
@@ -1434,21 +1434,44 @@ between_msgs
       <string>Delete Collection</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Test</string>
-    </attribute>
-    <widget class="QListWidget" name="initEstimateSensorListWidget">
+    <widget class="QTreeWidget" name="treeWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>0</y>
-       <width>171</width>
-       <height>101</height>
+       <y>10</y>
+       <width>301</width>
+       <height>192</height>
       </rect>
      </property>
+     <column>
+      <property name="text">
+       <string>Collections:</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </column>
     </widget>
+    <widget class="QPushButton" name="collectDataGetCollectionButton">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>250</y>
+       <width>141</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Get Collection</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="widget">
+    <attribute name="title">
+     <string>Test</string>
+    </attribute>
    </widget>
   </widget>
  </widget>
