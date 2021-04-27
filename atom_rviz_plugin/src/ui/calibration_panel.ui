@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="configTab">
     <attribute name="title">
@@ -1413,8 +1413,8 @@ between_msgs
       <rect>
        <x>10</x>
        <y>220</y>
-       <width>121</width>
-       <height>25</height>
+       <width>145</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -1424,10 +1424,10 @@ between_msgs
     <widget class="QPushButton" name="collectDataDeleteButton">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>205</x>
        <y>220</y>
-       <width>141</width>
-       <height>25</height>
+       <width>145</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
@@ -1439,33 +1439,238 @@ between_msgs
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>301</width>
+       <width>340</width>
        <height>192</height>
       </rect>
      </property>
      <column>
       <property name="text">
-       <string>Collections:</string>
+       <string>Collections: 0</string>
       </property>
      </column>
-     <column>
+     <item>
       <property name="text">
-       <string>0</string>
+       <string>collections</string>
       </property>
-     </column>
+     </item>
     </widget>
-    <widget class="QPushButton" name="collectDataGetCollectionButton">
+    <widget class="QPushButton" name="collectDataSensorPoseButton">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>250</y>
-       <width>141</width>
-       <height>25</height>
+       <x>408</x>
+       <y>220</y>
+       <width>102</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Get Collection</string>
+      <string>Set Pose</string>
      </property>
+    </widget>
+    <widget class="QGroupBox" name="collectDataGroupBox">
+     <property name="geometry">
+      <rect>
+       <x>359</x>
+       <y>10</y>
+       <width>151</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Sensor Pose</string>
+     </property>
+     <widget class="QLabel" name="collectDataPoseXLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>35</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>x:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="collectDataPoseYLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>65</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>y:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="collectDataPoseZLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>95</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>z:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="collectDataPoseRollLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>125</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>r:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="collectDataPosePitchLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>155</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>p:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="collectDataPoseYawLabel">
+      <property name="geometry">
+       <rect>
+        <x>15</x>
+        <y>185</y>
+        <width>20</width>
+        <height>15</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>y:</string>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPoseXDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>30</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPoseYDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>60</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPoseZDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>90</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPoseRollDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>120</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPosePitchDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>150</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
+     <widget class="QDoubleSpinBox" name="collectDataPoseYawDoubleSpinBox">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>180</y>
+        <width>85</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>0.050000000000000</double>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="widget">

@@ -6,6 +6,7 @@
 
 #include <rviz/panel.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
+#include <QTreeWidgetItem>
 
 namespace Ui {
 class CalibUI;
@@ -19,7 +20,6 @@ class CalibrationPanel: public rviz::Panel
  public:
   ros::NodeHandle nh;
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
-  ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
 
@@ -39,7 +39,8 @@ private Q_SLOTS:
   void initEstimateResetAllButtonClicked();
   void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
   void collectDataSaveButtonClicked();
-  void collectDataGetCollectionButtonClicked();
+  void collectDataDeleteButtonClicked();
+  void CheckItem(QTreeWidgetItem *item, int column);
 
 protected:
   Ui::CalibUI* ui_;
