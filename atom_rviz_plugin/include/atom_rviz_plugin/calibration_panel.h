@@ -41,6 +41,7 @@ private Q_SLOTS:
   void collectDataSaveButtonClicked();
   void collectDataDeleteButtonClicked();
   void CheckItem(QTreeWidgetItem *item, int column);
+  void ReadjustItemsNames();
 
 protected:
   Ui::CalibUI* ui_;

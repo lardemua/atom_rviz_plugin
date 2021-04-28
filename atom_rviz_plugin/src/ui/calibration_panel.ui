@@ -1440,7 +1440,7 @@ between_msgs
        <x>10</x>
        <y>10</y>
        <width>340</width>
-       <height>192</height>
+       <height>171</height>
       </rect>
      </property>
      <column>
@@ -1671,6 +1671,45 @@ between_msgs
        <double>0.050000000000000</double>
       </property>
      </widget>
+    </widget>
+    <widget class="QLabel" name="collectDataSensorLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>182</y>
+       <width>151</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Selected Collection:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="collectDataSensorLabel2">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>182</y>
+       <width>191</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>(none)</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="collectDataDeleteCollectionLabel">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>262</y>
+       <width>201</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#cc0000;&quot;&gt;Choose a collection to delete&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="widget">
