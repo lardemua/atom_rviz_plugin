@@ -27,9 +27,8 @@ namespace atom_rviz_plugin
 //      PFLN
       handleTabs();
       getSensors();
-      configLoadParameters(false, false);
+//      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
-
 
       // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
@@ -45,8 +44,7 @@ namespace atom_rviz_plugin
 
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
-//      connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataCheckOrDeleteItem(QTreeWidgetItem*, int)));
-      connect(ui_->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(CheckItem(QTreeWidgetItem*, int)));
+      connect(ui_->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
 
       parentWidget()->setVisible(true);
 

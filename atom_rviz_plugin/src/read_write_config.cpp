@@ -1,6 +1,7 @@
 #include <atom_rviz_plugin/calibration_panel.h>
 
 #include "ros/ros.h"
+#include <ros/package.h>
 #include "std_msgs/String.h"
 
 #include "ui_calibration_panel.h"
@@ -19,8 +20,12 @@ namespace atom_rviz_plugin {
 
     void CalibrationPanel::configLoadParameters(bool clicked /*= true*/, bool comboBoxChanged /*= false*/) {
 
-      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+      std::string config_file_path = ros::package::getPath("mmtbot_calibration") + "/calibration/config.yml";
+
+      YAML::Node config_params = YAML::LoadFile(config_file_path);
+//      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
 //      YAML::Node config_params = YAML::LoadFile("/home/mike/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+
       YAML::Node calibration_pattern_node = config_params["calibration_pattern"];
       YAML::Node sensors_node = config_params["sensors"];
 

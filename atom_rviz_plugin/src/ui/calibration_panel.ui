@@ -1076,7 +1076,7 @@ between_msgs
     <widget class="QPushButton" name="configWriteButton">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>0</x>
        <y>260</y>
        <width>81</width>
        <height>25</height>

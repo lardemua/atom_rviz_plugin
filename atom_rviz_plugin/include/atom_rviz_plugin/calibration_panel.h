@@ -31,6 +31,7 @@ private Q_SLOTS:
   void setTable();
   void ComboBoxChange();
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
+  void configReadButtonClicked(); //TEST
   void configWriteButtonClicked();
   void initEstimateCheckboxSpinBoxChanged();
   void sensorsCellClicked(int row,int col);
@@ -40,8 +41,8 @@ private Q_SLOTS:
   void pubSaveResetMsg(int menu_entry, const std::string& marker_event);
   void collectDataSaveButtonClicked();
   void collectDataDeleteButtonClicked();
-  void CheckItem(QTreeWidgetItem *item, int column);
-  void ReadjustItemsNames();
+  void collectDataParseJson();
+  void collectDataCheckItem(QTreeWidgetItem *item, int column);
 
 protected:
   Ui::CalibUI* ui_;
