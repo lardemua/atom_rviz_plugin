@@ -8,6 +8,7 @@
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 #include <atom_msgs/GetDataset.h>
 #include <atom_msgs/SaveCollection.h>
+#include <atom_msgs/DeleteCollection.h>
 #include <cstdlib>
 
 using json = nlohmann::json;
@@ -18,17 +19,17 @@ namespace atom_rviz_plugin
 {
     void CalibrationPanel::collectDataSaveButtonClicked(){
 ///*  // Save the collection (using the SaveCollection service)
-      std::string service_name = "/collect_data/save_collection";
-      ros::ServiceClient client = nh.serviceClient<atom_msgs::SaveCollection>(service_name);
+      std::string save_collection_service_name = "/collect_data/save_collection";
+      ros::ServiceClient save_collection_client = nh.serviceClient<atom_msgs::SaveCollection>(save_collection_service_name);
 
       // Call getDataset service
-      atom_msgs::SaveCollection srv;
-      client.waitForExistence(); // Wait for the service to be available before calling
-      if (client.call(srv)){
-        ROS_INFO("Service %s called successfully.", service_name.c_str() );
+      atom_msgs::SaveCollection save_collection_srv;
+      save_collection_client.waitForExistence(); // Wait for the service to be available before calling
+      if (save_collection_client.call(save_collection_srv)){
+        ROS_INFO("Service %s called successfully.", save_collection_service_name.c_str() );
       }
       else{
-        ROS_ERROR("Failed to call service %s", service_name.c_str());
+        ROS_ERROR("Failed to call service %s", save_collection_service_name.c_str());
       }
 
       collectDataParseJson();
@@ -42,7 +43,22 @@ namespace atom_rviz_plugin
       if (text_from_label_str.compare("(none)") != 0) {
         ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
-        // TODO Call Service to Delete collection
+        std::string delete_collection_service_name = "/collect_data/delete_collection";
+
+        ros::ServiceClient delete_collection_client = nh.serviceClient<atom_msgs::DeleteCollection>(delete_collection_service_name);
+
+        atom_msgs::DeleteCollection delete_collection_srv;
+        //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+
+        delete_collection_srv.request.collection_name = text_from_label_str.substr(11);
+
+        delete_collection_client.waitForExistence(); // Wait for the service to be available before calling
+        if (delete_collection_client.call(delete_collection_srv)){
+          ROS_INFO("Service %s called successfully.", delete_collection_service_name.c_str() );
+        }
+        else{
+          ROS_ERROR("Failed to call service %s", delete_collection_service_name.c_str());
+        }
 
         collectDataParseJson();
 
@@ -55,23 +71,23 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::collectDataParseJson() {
 ///*  // Get the collection info (using the GetDataset service)
-      std::string service_name2 = "/collect_data/get_dataset";
-      ros::ServiceClient client2 = nh.serviceClient<atom_msgs::GetDataset>(service_name2);
+      std::string get_dataset_service_name = "/collect_data/get_dataset";
+      ros::ServiceClient get_dataset_client = nh.serviceClient<atom_msgs::GetDataset>(get_dataset_service_name);
 
       // Call getDataset service
-      atom_msgs::GetDataset srv2;
-      client2.waitForExistence(); // Wait for the service to be available before calling
-      if (client2.call(srv2)){
-        ROS_INFO("Service %s called successfully.", service_name2.c_str() );
+      atom_msgs::GetDataset get_dataset_srv;
+      get_dataset_client.waitForExistence(); // Wait for the service to be available before calling
+      if (get_dataset_client.call(get_dataset_srv)){
+        ROS_INFO("Service %s called successfully.", get_dataset_service_name.c_str() );
       }
       else{
-        ROS_ERROR("Failed to call service %s", service_name2.c_str());
+        ROS_ERROR("Failed to call service %s", get_dataset_service_name.c_str());
       }
-      ROS_INFO("srv2.response.dataset_json=%s", srv2.response.dataset_json.c_str());
+//      ROS_INFO("get_dataset_srv.response.dataset_json=%s", get_dataset_srv.response.dataset_json.c_str());
 
 ///*  // Putting the collection in a tree widget
 //    Parse response to call, in order to get json
-      json j = json::parse(srv2.response.dataset_json);
+      json j = json::parse(get_dataset_srv.response.dataset_json);
 
       // Get number of collections and change the header accordingly
       QString number_of_collections = QString::fromUtf8((std::to_string((j["collections"]).size()).c_str()));
@@ -91,7 +107,7 @@ namespace atom_rviz_plugin
 
       for (auto& collection: j["collections"].items()) // iterates over all collections
       {
-        // First level of the tree ("collection 1", "collection 2", ..., "collection X")
+        // First level of the tree ("collection 0", "collection 1", ..., "collection X")
         QTreeWidgetItem *childLevel1TreeItem = new QTreeWidgetItem();
         childLevel1TreeItem->setText(0, "collection " + QString::fromUtf8((collection.key().c_str())));
         topTreeItem->addChild(childLevel1TreeItem);
@@ -100,6 +116,8 @@ namespace atom_rviz_plugin
         QTreeWidgetItem *childLevel2TreeItem = new QTreeWidgetItem();
         childLevel2TreeItem->setText(0, "labels");
         childLevel1TreeItem->addChild(childLevel2TreeItem);
+
+        ROS_INFO_STREAM("Collection " + collection.key());
 
         for (auto& sensor: collection.value().at("labels").items()) { // iterates over all sensors in this label
           // Level three of the tree (sensor)

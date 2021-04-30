@@ -36,22 +36,22 @@ namespace atom_rviz_plugin
         std::string sensor_str = sensor.toUtf8().constData();
 
         // Get State of sensor marker (visibility and scale)
-        std::string service_name = "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
-        ros::ServiceClient client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(service_name);
+        std::string get_sensor_service_name = "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
+        ros::ServiceClient get_sensor_client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(get_sensor_service_name);
 
-        atom_msgs::GetSensorInteractiveMarker srv;
+        atom_msgs::GetSensorInteractiveMarker get_sensor_srv;
         //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
-        client.waitForExistence(); // Wait for the service to be available before calling
-        if (client.call(srv)){
-         ROS_INFO("Service %s called successfully.", service_name.c_str() );
+        get_sensor_client.waitForExistence(); // Wait for the service to be available before calling
+        if (get_sensor_client.call(get_sensor_srv)){
+         ROS_INFO("Service %s called successfully.", get_sensor_service_name.c_str() );
         }
         else{
-        ROS_ERROR("Failed to call service %s", service_name.c_str());
+        ROS_ERROR("Failed to call service %s", get_sensor_service_name.c_str());
         return; // perhaps here we should do a shutdown or an exit?
         }
 //       cout <<  << srv.response.visible << endl;
-        ROS_INFO("srv.response.visible=%d", srv.response.visible); // just for testing, return visible=1 so it should be fine
+        ROS_INFO("get_sensor_srv.response.visible=%d", get_sensor_srv.response.visible); // just for testing, return visible=1 so it should be fine
 
         //Add row
         ui_->tableWidget->insertRow( ui_->tableWidget->rowCount() );
@@ -74,7 +74,7 @@ namespace atom_rviz_plugin
         pLayout->setAlignment(Qt::AlignCenter);
         pLayout->setContentsMargins(0,0,0,0);
         pWidget->setLayout(pLayout);
-        pCheckBox->setCheckState(srv.response.visible ? Qt::Checked : Qt::Unchecked  );
+        pCheckBox->setCheckState(get_sensor_srv.response.visible ? Qt::Checked : Qt::Unchecked  );
         ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,1,pWidget);
         connect(pCheckBox,SIGNAL(clicked()),this,SLOT(initEstimateCheckboxSpinBoxChanged()));
 
@@ -89,7 +89,7 @@ namespace atom_rviz_plugin
         pSpinBox->setDecimals(2);
         pSpinBox->setSingleStep(0.05);
         pSpinBox->setMinimum(0.05);
-        pSpinBox->setValue(srv.response.scale);
+        pSpinBox->setValue(get_sensor_srv.response.scale);
         ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,2,spinBoxWidget);
         connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
       }
@@ -98,15 +98,13 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::initEstimateCheckboxSpinBoxChanged() {
 
-      std::string service_name;
+      std::string set_sensor_service_name;
 
       for (int i = 0; i < ui_->tableWidget->rowCount(); i++) {
         // Get sensor
         QTableWidgetItem *temp = ui_->tableWidget->item(i, 0);
         QString str = temp->text();
         std::string sensor_name = str.toUtf8().constData();
-
-        service_name = "/set_initial_estimate/" + sensor_name + "/set_sensor_interactive_marker";
 
         // Get Checkbox state
         QWidget *pWidget = ui_->tableWidget->cellWidget(i, 1);
@@ -116,15 +114,24 @@ namespace atom_rviz_plugin
         QWidget *pWidget2 = ui_->tableWidget->cellWidget(i, 2);
         QDoubleSpinBox *spinbox = pWidget2->findChild<QDoubleSpinBox *>();
 
-        ros::ServiceClient client = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(service_name);
+        set_sensor_service_name = "/set_initial_estimate/" + sensor_name + "/set_sensor_interactive_marker";
 
-        atom_msgs::SetSensorInteractiveMarker srv;
+        ros::ServiceClient set_sensor_client = nh.serviceClient<atom_msgs::SetSensorInteractiveMarker>(set_sensor_service_name);
+
+        atom_msgs::SetSensorInteractiveMarker set_sensor_srv;
         //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
 
-        srv.request.visible = checkbox->isChecked();
-        srv.request.scale = spinbox->value();
+        set_sensor_srv.request.visible = checkbox->isChecked();
+        set_sensor_srv.request.scale = spinbox->value();
 
-        client.call(srv);
+        set_sensor_client.waitForExistence(); // Wait for the service to be available before calling
+        if (set_sensor_client.call(set_sensor_srv)){
+          ROS_INFO("Service %s called successfully.", set_sensor_service_name.c_str() );
+        }
+        else{
+          ROS_ERROR("Failed to call service %s", set_sensor_service_name.c_str());
+          return; // perhaps here we should do a shutdown or an exit?
+        }
       }
     } // function initEstimateCheckboxSpinBoxChanged()
 
