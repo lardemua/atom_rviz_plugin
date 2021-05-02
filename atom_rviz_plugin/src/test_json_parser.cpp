@@ -31,24 +31,38 @@ int main(int argc, char **argv)
     json j = json::parse(srv.response.dataset_json);
 
     // print entire json content
-    cout << setw(4) << j << endl;
+//    cout << setw(4) << j << endl;
 
     // Print some fields for testing
-    cout << endl << "TESTING PARSER" << endl;
+//    cout << endl << "TESTING PARSER" << endl;
 
     string bagfile = j["calibration_config"]["bag_file"];
-    cout << "bagfile is " << bagfile << endl;
+//    cout << "bagfile is " << bagfile << endl;
 
-    cout << "Number of collections = " << (j["collections"]).size() << endl;
+//    cout << "Number of collections = " << (j["collections"]).size() << endl;
 
     // Check on which sensors the pattern was detected, for each collection
     for (auto& collection: j["collections"].items()) // iterates over all collections
     {
 //      cout << collection.key() << endl; // this prints the key
-//      cout << collection.value() << endl; // this prints the value
+      cout << collection.value() << endl; // this prints the value
       for (auto& sensor: collection.value().at("labels").items()){ // iterates over all sensors in this label
-        cout << "Collection " << collection.key() <<", sensor " << sensor.key() << " detected=" << sensor.value().at("detected") << endl;
+//        cout << "Collection " << collection.key() <<", sensor " << sensor.key() << " detected=" << sensor.value().at("detected") << endl;
       }
     }
+
+  int c = 0;
+  for (auto& collection: j["collections"].items()) // iterates over all collections
+  {
+    c = c+1;
+  }
+
+//  cout << j["collections"].at("1") << endl;
+
+/*  for (int i = 0; i < c; i++) {
+    cout << j["collections"].at("1") << endl; // this prints the valu
+  }*/
+
+
 
 }

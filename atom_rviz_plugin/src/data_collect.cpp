@@ -65,7 +65,6 @@ namespace atom_rviz_plugin
       } else {
         ui_->collectDataDeleteCollectionLabel->setVisible(true);
       }
-
     } //  function collectDataDeleteButtonClicked()
 
 
@@ -94,7 +93,6 @@ namespace atom_rviz_plugin
       ui_->treeWidget->setHeaderLabel("Collections: " + number_of_collections);
 
       // Main item of the tree Widget ("collections")
-//      QTreeWidgetItem *topTreeItem = ui_->treeWidget->topLevelItem(0);
       QTreeWidgetItem *topTreeItem = ui_->treeWidget->topLevelItem(0);
 
       // Cycle to delete all collections and call function to add them all again
@@ -105,11 +103,20 @@ namespace atom_rviz_plugin
         topTreeItem->removeChild(itemLevel2);
       }
 
+      std::vector <int> json_key_int;
       for (auto& collection: j["collections"].items()) // iterates over all collections
       {
+        json_key_int.push_back(std::stoi(collection.key()));
+      }
+      std::sort(std::begin(json_key_int), std::end(json_key_int));
+      std::string json_key;
+
+      for (size_t i = 0; i < json_key_int.size(); i++) {
+        json_key = std::to_string(json_key_int[i]);
+
         // First level of the tree ("collection 0", "collection 1", ..., "collection X")
         QTreeWidgetItem *childLevel1TreeItem = new QTreeWidgetItem();
-        childLevel1TreeItem->setText(0, "collection " + QString::fromUtf8((collection.key().c_str())));
+        childLevel1TreeItem->setText(0, "collection " + QString::fromUtf8((json_key.c_str())));
         topTreeItem->addChild(childLevel1TreeItem);
 
         // Second level of the tree ("labels")
@@ -117,9 +124,7 @@ namespace atom_rviz_plugin
         childLevel2TreeItem->setText(0, "labels");
         childLevel1TreeItem->addChild(childLevel2TreeItem);
 
-        ROS_INFO_STREAM("Collection " + collection.key());
-
-        for (auto& sensor: collection.value().at("labels").items()) { // iterates over all sensors in this label
+        for (auto& sensor: j["collections"].at(json_key).at("labels").items()) { // iterates over all sensors in this label
           // Level three of the tree (sensor)
           QTreeWidgetItem *childLevel3TreeItem = new QTreeWidgetItem();
           childLevel3TreeItem->setText(0, QString::fromUtf8((sensor.key().c_str())));
@@ -134,6 +139,9 @@ namespace atom_rviz_plugin
         }
       }
       ui_->collectDataSensorLabel2->setText("(none)");
+
+
+
     } //  function collectDataParseJson()
 
     void CalibrationPanel::collectDataCheckItem(QTreeWidgetItem *item, int column) {
