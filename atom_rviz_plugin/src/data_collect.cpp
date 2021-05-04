@@ -84,6 +84,7 @@ namespace atom_rviz_plugin
       }
 //      ROS_INFO("get_dataset_srv.response.dataset_json=%s", get_dataset_srv.response.dataset_json.c_str());
 
+
 ///*  // Putting the collection in a tree widget
 //    Parse response to call, in order to get json
       json j = json::parse(get_dataset_srv.response.dataset_json);
