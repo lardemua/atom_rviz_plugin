@@ -20,139 +20,148 @@ namespace atom_rviz_plugin {
 
     void CalibrationPanel::configLoadParameters(bool clicked /*= true*/, bool comboBoxChanged /*= false*/) {
 
-      std::string config_file_path = ros::package::getPath("mmtbot_calibration") + "/calibration/config.yml";
+//      std::string config_file_path = ros::package::getPath("mmtbot_calibration") + "/calibration/config.yml";
 
-      YAML::Node config_params = YAML::LoadFile(config_file_path);
-//      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-//      YAML::Node config_params = YAML::LoadFile("/home/mike/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+      try {
+        std::string config_ros_package = ui_->configPackageLineEdit->toPlainText().toUtf8().constData();
+        std::string config_file_path = ros::package::getPath(config_ros_package) + "/calibration/config.yml";
 
-      YAML::Node calibration_pattern_node = config_params["calibration_pattern"];
-      YAML::Node sensors_node = config_params["sensors"];
+        YAML::Node config_params = YAML::LoadFile(config_file_path);
+  //      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+  //      YAML::Node config_params = YAML::LoadFile("/home/mike/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
 
-      std::vector <std::string> misc_params_content, calib_patt_params_content, sensors_params_content;
+        YAML::Node calibration_pattern_node = config_params["calibration_pattern"];
+        YAML::Node sensors_node = config_params["sensors"];
 
-      // String parameters for misc and within the calibration_pattern parameter
-      std::vector <std::string> str_misc_params = {"description_file",
-                                              "bag_file",
-                                              "world_link",
-                                              "anchored_sensor"};
-      std::vector <std::string> cal_pat_str_param = {"link",
-                                                     "parent_link",
-                                                     "pattern_type",
-                                                     "dictionary",
-                                                     "mesh_file"};
+        std::vector <std::string> misc_params_content, calib_patt_params_content, sensors_params_content;
 
-      // Iterate through all parameters in config.yaml file
-      for (YAML::const_iterator it = config_params.begin(); it != config_params.end(); ++it) {
+        // String parameters for misc and within the calibration_pattern parameter
+        std::vector <std::string> str_misc_params = {"description_file",
+                                                "bag_file",
+                                                "world_link",
+                                                "anchored_sensor"};
+        std::vector <std::string> cal_pat_str_param = {"link",
+                                                       "parent_link",
+                                                       "pattern_type",
+                                                       "dictionary",
+                                                       "mesh_file"};
 
-        if (std::find(str_misc_params.begin(), str_misc_params.end(), it->first.as<std::string>()) != str_misc_params.end()) {
+        // Iterate through all parameters in config.yaml file
+        for (YAML::const_iterator it = config_params.begin(); it != config_params.end(); ++it) {
 
-          nh.setParam("/" + it->first.as<std::string>(), it->second.as<std::string>());
-          misc_params_content.push_back(it->second.as<std::string>());
+          if (std::find(str_misc_params.begin(), str_misc_params.end(), it->first.as<std::string>()) != str_misc_params.end()) {
 
-        } else if (it->first.as<std::string>() == "max_duration_between_msgs") {
+            nh.setParam("/" + it->first.as<std::string>(), it->second.as<std::string>());
+            misc_params_content.push_back(it->second.as<std::string>());
 
-          nh.setParam("/" + it->first.as<std::string>(), it->second.as<int>());
-          misc_params_content.push_back(std::to_string(it->second.as<int>()));
+          } else if (it->first.as<std::string>() == "max_duration_between_msgs") {
 
-        } else if (it->first.as<std::string>() == "calibration_pattern") {
+            nh.setParam("/" + it->first.as<std::string>(), it->second.as<int>());
+            misc_params_content.push_back(std::to_string(it->second.as<int>()));
 
-          for (YAML::const_iterator it2 = calibration_pattern_node.begin(); it2 != calibration_pattern_node.end(); ++it2) {
+          } else if (it->first.as<std::string>() == "calibration_pattern") {
 
-            if (std::find(cal_pat_str_param.begin(), cal_pat_str_param.end(), it2->first.as<std::string>()) != cal_pat_str_param.end()) {
+            for (YAML::const_iterator it2 = calibration_pattern_node.begin(); it2 != calibration_pattern_node.end(); ++it2) {
 
-              nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<std::string>());
-              calib_patt_params_content.push_back(it2->second.as<std::string>());
+              if (std::find(cal_pat_str_param.begin(), cal_pat_str_param.end(), it2->first.as<std::string>()) != cal_pat_str_param.end()) {
 
-            } else if (it2->first.as<std::string>() == "fixed") {
+                nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<std::string>());
+                calib_patt_params_content.push_back(it2->second.as<std::string>());
 
-              nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<bool>());
-              calib_patt_params_content.push_back(it2->second.as<bool>() ? "true" : "false");
+              } else if (it2->first.as<std::string>() == "fixed") {
 
-            } else if (it2->first.as<std::string>() == "size" || it2->first.as<std::string>() == "inner_size") {
+                nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<bool>());
+                calib_patt_params_content.push_back(it2->second.as<bool>() ? "true" : "false");
 
-              nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<double>());
-              calib_patt_params_content.push_back(std::to_string(it2->second.as<double>()));
+              } else if (it2->first.as<std::string>() == "size" || it2->first.as<std::string>() == "inner_size") {
 
-            } else if (it2->first.as<std::string>() == "dimension") {
-              for (YAML::const_iterator it5 = calibration_pattern_node["dimension"].begin(); it5 != calibration_pattern_node["dimension"].end(); ++it5) {
+                nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<double>());
+                calib_patt_params_content.push_back(std::to_string(it2->second.as<double>()));
 
-                nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it5->first.as<std::string>(), it5->second.as<double>());
-                calib_patt_params_content.push_back(std::to_string(it5->second.as<double>()));
-              }
-            } else if (it2->first.as<std::string>() == "border_size") {
-              try {
-//                ROS_INFO_STREAM("ola");
-//                ROS_INFO_STREAM(it2->first.as<std::string>());
-                ROS_INFO_STREAM(it2->second.as<double>());
-              }
-              catch (...) {
-                for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
-//                  ROS_INFO_STREAM(it6->first.as<std::string>());
-//                  ROS_INFO_STREAM(it6->second.as<std::string>());
+              } else if (it2->first.as<std::string>() == "dimension") {
+                for (YAML::const_iterator it5 = calibration_pattern_node["dimension"].begin(); it5 != calibration_pattern_node["dimension"].end(); ++it5) {
+
+                  nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it5->first.as<std::string>(), it5->second.as<double>());
+                  calib_patt_params_content.push_back(std::to_string(it5->second.as<double>()));
                 }
-//                ROS_INFO_STREAM("adeus");
-//                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["x"]);
-//                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["y"]);
+              } else if (it2->first.as<std::string>() == "border_size") {
+                try {
+  //                ROS_INFO_STREAM("ola");
+  //                ROS_INFO_STREAM(it2->first.as<std::string>());
+                  ROS_INFO_STREAM(it2->second.as<double>());
+                }
+                catch (...) {
+                  for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
+  //                  ROS_INFO_STREAM(it6->first.as<std::string>());
+  //                  ROS_INFO_STREAM(it6->second.as<std::string>());
+                  }
+  //                ROS_INFO_STREAM("adeus");
+  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["x"]);
+  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["y"]);
+                }
               }
             }
-          }
-        } else if (it->first.as<std::string>() == "sensors") {
+          } else if (it->first.as<std::string>() == "sensors") {
 
-          std::string sensor_to_read;
-          bool something_in_combobox = false;
+            std::string sensor_to_read;
+            bool something_in_combobox = false;
 
-          for (YAML::const_iterator it3 = sensors_node.begin(); it3 != sensors_node.end(); ++it3) {
+            for (YAML::const_iterator it3 = sensors_node.begin(); it3 != sensors_node.end(); ++it3) {
 
-            if (it3 == sensors_node.begin() && ui_->sensorsComboBox->count() == 0)
-            {
-              something_in_combobox = true;
-            }
-            if (something_in_combobox){
-              QString str_to_combo_box = QString::fromUtf8(it3->first.as<std::string>().c_str());
-              ui_->sensorsComboBox->addItem(str_to_combo_box);
-            }
-            sensor_to_read = ui_->sensorsComboBox->currentText().toUtf8().constData();
-
-            YAML::Node sensor_read_node = sensors_node[it3->first.as<std::string>()];
-
-            for (YAML::const_iterator it4 = sensor_read_node.begin(); it4 != sensor_read_node.end(); ++it4) {
-
-              nh.setParam("/" + it->first.as<std::string>() + "/" + it3->first.as<std::string>() + "/" + it4->first.as<std::string>(), it4->second.as<std::string>());
-
-              if (it3->first.as<std::string>() == sensor_to_read ){
-                sensors_params_content.push_back(it4->second.as<std::string>());
+              if (it3 == sensors_node.begin() && ui_->sensorsComboBox->count() == 0)
+              {
+                something_in_combobox = true;
               }
+              if (something_in_combobox){
+                QString str_to_combo_box = QString::fromUtf8(it3->first.as<std::string>().c_str());
+                ui_->sensorsComboBox->addItem(str_to_combo_box);
+              }
+              sensor_to_read = ui_->sensorsComboBox->currentText().toUtf8().constData();
 
+              YAML::Node sensor_read_node = sensors_node[it3->first.as<std::string>()];
+
+              for (YAML::const_iterator it4 = sensor_read_node.begin(); it4 != sensor_read_node.end(); ++it4) {
+
+                nh.setParam("/" + it->first.as<std::string>() + "/" + it3->first.as<std::string>() + "/" + it4->first.as<std::string>(), it4->second.as<std::string>());
+
+                if (it3->first.as<std::string>() == sensor_to_read ){
+                  sensors_params_content.push_back(it4->second.as<std::string>());
+                }
+
+              }
             }
           }
         }
-      }
 
-// Show read parameters on all respective TextEdit boxes
-      if (clicked || comboBoxChanged) {
-        ui_->paramDescriptionFileTextEdit->setText(QString::fromUtf8(misc_params_content[0].c_str()));
-        ui_->paramBagFileTextEdit->setText(QString::fromUtf8(misc_params_content[1].c_str()));
-        ui_->paramWorldLinkTextEdit->setText(QString::fromUtf8(misc_params_content[2].c_str()));
-        ui_->paramAnchoredSensorTextEdit->setText(QString::fromUtf8(misc_params_content[3].c_str()));
-        ui_->paramMaxDurationTextEdit->setText(QString::fromUtf8(misc_params_content[4].c_str()));
+  // Show read parameters on all respective TextEdit boxes
+        if (clicked || comboBoxChanged) {
+          ui_->paramDescriptionFileTextEdit->setText(QString::fromUtf8(misc_params_content[0].c_str()));
+          ui_->paramBagFileTextEdit->setText(QString::fromUtf8(misc_params_content[1].c_str()));
+          ui_->paramWorldLinkTextEdit->setText(QString::fromUtf8(misc_params_content[2].c_str()));
+          ui_->paramAnchoredSensorTextEdit->setText(QString::fromUtf8(misc_params_content[3].c_str()));
+          ui_->paramMaxDurationTextEdit->setText(QString::fromUtf8(misc_params_content[4].c_str()));
 
-        ui_->paramCalibPatLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[0].c_str()));
-        ui_->paramCalibPatParentLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[1].c_str()));
-        ui_->paramCalibPatFixedTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
-        ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
-        ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
-        ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
-        ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
-        ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
-        ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
-        ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
-        ui_->paramCalibPatBorderSizeTextEdit->setText("Ola");
+          ui_->paramCalibPatLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[0].c_str()));
+          ui_->paramCalibPatParentLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[1].c_str()));
+          ui_->paramCalibPatFixedTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
+          ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
+          ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
+          ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
+          ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
+          ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
+          ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
+          ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
+          ui_->paramCalibPatBorderSizeTextEdit->setText("Ola");
 
-        ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
-        ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
-        ui_->paramSensorsChildLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[2].c_str()));
-        ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
+          ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
+          ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
+          ui_->paramSensorsChildLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[2].c_str()));
+          ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
+        }
+
+
+      } catch (...) {
+        return;
       }
     } // function configLoadButtonClicked()
 

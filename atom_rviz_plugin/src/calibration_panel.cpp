@@ -58,7 +58,7 @@ namespace atom_rviz_plugin
       connect(ui_->initEstimatePosePitchDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
       connect(ui_->initEstimatePoseYawDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
 
-
+      // Collect Data Tab
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
       connect(ui_->collectDataTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
@@ -75,6 +75,7 @@ namespace atom_rviz_plugin
 
     } //function onInitialize()
 
+    // Function to control what happens every time each tab of the panel is opened
     void CalibrationPanel::handleTabs() {
       if (ui_->mainTabs->currentWidget() == ui_->configTab){
 
@@ -97,7 +98,7 @@ namespace atom_rviz_plugin
       return;
     } // function handleTabs()
 
-
+    // Function to get the sensors of the robotic system
     std::vector <QString> CalibrationPanel::getSensors()
     {
       // Get number of sensors to put on ComboBox for the configuration file

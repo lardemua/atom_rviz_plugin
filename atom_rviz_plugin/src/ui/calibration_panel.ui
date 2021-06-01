@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -1077,10 +1077,10 @@ between_msgs
       <widget class="QPushButton" name="configWriteButton">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>449</x>
          <y>260</y>
-         <width>80</width>
-         <height>25</height>
+         <width>91</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
@@ -1090,7 +1090,7 @@ between_msgs
       <widget class="QPushButton" name="configLoadButton">
        <property name="geometry">
         <rect>
-         <x>360</x>
+         <x>290</x>
          <y>260</y>
          <width>80</width>
          <height>25</height>
@@ -1098,6 +1098,67 @@ between_msgs
        </property>
        <property name="text">
         <string>Load file</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>260</y>
+         <width>101</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>ROS package:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="configPackageLineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>255</y>
+         <width>181</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="sizeIncrement">
+        <size>
+         <width>0</width>
+         <height>-31072</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
        </property>
       </widget>
      </widget>
