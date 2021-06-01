@@ -16,7 +16,7 @@ namespace atom_rviz_plugin
 {
     void CalibrationPanel::setTable(){
 
-      QTableWidgetItem *item0(ui_->tableWidget->item(0,0));
+      QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0,0));
       if (item0 != 0) {
         return;
       }
@@ -24,12 +24,12 @@ namespace atom_rviz_plugin
       std::vector <QString> sensors_for_table = getSensors();
 
       // TableWidget for sensors in the initial estimate tab
-      ui_->tableWidget->verticalHeader()->setVisible(false);
-      ui_->tableWidget->setShowGrid(false);
-      ui_->tableWidget->setColumnCount(3);
-      ui_->tableWidget->setColumnWidth(0, 125);
-      ui_->tableWidget->setColumnWidth(1, 85);
-      ui_->tableWidget->horizontalHeader()->setSectionResizeMode( 2, QHeaderView::Stretch );
+      ui_->initEstimateTableWidget->verticalHeader()->setVisible(false);
+      ui_->initEstimateTableWidget->setShowGrid(false);
+      ui_->initEstimateTableWidget->setColumnCount(3);
+      ui_->initEstimateTableWidget->setColumnWidth(0, 125);
+      ui_->initEstimateTableWidget->setColumnWidth(1, 85);
+      ui_->initEstimateTableWidget->horizontalHeader()->setSectionResizeMode( 2, QHeaderView::Stretch );
 
       for (size_t i = 0; i < sensors_for_table.size(); i++) {
         QString sensor = sensors_for_table[i];
@@ -54,17 +54,17 @@ namespace atom_rviz_plugin
         ROS_INFO("get_sensor_srv.response.visible=%d", get_sensor_srv.response.visible); // just for testing, return visible=1 so it should be fine
 
         //Add row
-        ui_->tableWidget->insertRow( ui_->tableWidget->rowCount() );
+        ui_->initEstimateTableWidget->insertRow( ui_->initEstimateTableWidget->rowCount() );
 
         // Table Headers
-        ui_->tableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Sensors"));
-        ui_->tableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Show/Hide"));
-        ui_->tableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Scale"));
+        ui_->initEstimateTableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Sensors"));
+        ui_->initEstimateTableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Show/Hide"));
+        ui_->initEstimateTableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Scale"));
 
         // First column: sensor names
         QTableWidgetItem *sensor_item = new QTableWidgetItem(sensor);
         sensor_item->setFlags(sensor_item->flags() ^ Qt::ItemIsEditable);
-        ui_->tableWidget->setItem(ui_->tableWidget->rowCount()-1, 0, sensor_item);
+        ui_->initEstimateTableWidget->setItem(ui_->initEstimateTableWidget->rowCount()-1, 0, sensor_item);
 
         // Second column of the table (checkboxes for the sensors visibility)
         QWidget *pWidget = new QWidget();
@@ -75,7 +75,7 @@ namespace atom_rviz_plugin
         pLayout->setContentsMargins(0,0,0,0);
         pWidget->setLayout(pLayout);
         pCheckBox->setCheckState(get_sensor_srv.response.visible ? Qt::Checked : Qt::Unchecked  );
-        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,1,pWidget);
+        ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount()-1,1,pWidget);
         connect(pCheckBox,SIGNAL(clicked()),this,SLOT(initEstimateCheckboxSpinBoxChanged()));
 
 
@@ -90,7 +90,7 @@ namespace atom_rviz_plugin
         pSpinBox->setSingleStep(0.05);
         pSpinBox->setMinimum(0.05);
         pSpinBox->setValue(get_sensor_srv.response.scale);
-        ui_->tableWidget->setCellWidget(ui_->tableWidget->rowCount()-1,2,spinBoxWidget);
+        ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount()-1,2,spinBoxWidget);
         connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
       }
     } //function setTable()
@@ -100,18 +100,18 @@ namespace atom_rviz_plugin
 
       std::string set_sensor_service_name;
 
-      for (int i = 0; i < ui_->tableWidget->rowCount(); i++) {
+      for (int i = 0; i < ui_->initEstimateTableWidget->rowCount(); i++) {
         // Get sensor
-        QTableWidgetItem *temp = ui_->tableWidget->item(i, 0);
+        QTableWidgetItem *temp = ui_->initEstimateTableWidget->item(i, 0);
         QString str = temp->text();
         std::string sensor_name = str.toUtf8().constData();
 
         // Get Checkbox state
-        QWidget *pWidget = ui_->tableWidget->cellWidget(i, 1);
+        QWidget *pWidget = ui_->initEstimateTableWidget->cellWidget(i, 1);
         QCheckBox *checkbox = pWidget->findChild<QCheckBox *>();
 
         // Get SpinBox value
-        QWidget *pWidget2 = ui_->tableWidget->cellWidget(i, 2);
+        QWidget *pWidget2 = ui_->initEstimateTableWidget->cellWidget(i, 2);
         QDoubleSpinBox *spinbox = pWidget2->findChild<QDoubleSpinBox *>();
 
         set_sensor_service_name = "/set_initial_estimate/" + sensor_name + "/set_sensor_interactive_marker";
@@ -136,33 +136,33 @@ namespace atom_rviz_plugin
     } // function initEstimateCheckboxSpinBoxChanged()
 
 
-    void CalibrationPanel::sensorsCellClicked(int row,int col) {
+    void CalibrationPanel::initEstimateSensorsCellClicked(int row,int col) {
       if (col != 0) { return; }
 
       // Get sensor
-      QTableWidgetItem *temp = ui_->tableWidget->item(row, col);
+      QTableWidgetItem *temp = ui_->initEstimateTableWidget->item(row, col);
       QString sensor_str = temp->text();
 
       ui_->initEstimateSensorLabel2->setText(sensor_str);
 
-    } // function sensorsCellClicked(int row,int col)
+    } // function initEstimateSensorsCellClicked(int row,int col)
 
     void CalibrationPanel::initEstimateSaveButtonClicked() {
-      pubSaveResetMsg(1, "menu");
+      initEstimatePubSaveResetMsg(1, "menu");
     } // function initEstimateSaveButtonClicked()
 
     void CalibrationPanel::initEstimateResetButtonClicked() {
       std::string sensor = ui_->initEstimateSensorLabel2->text().toUtf8().constData();
-      pubSaveResetMsg(1, sensor + "_menu");
+      initEstimatePubSaveResetMsg(1, sensor + "_menu");
     } // function initEstimateResetButtonClicked()
 
 
     void CalibrationPanel::initEstimateResetAllButtonClicked() {
-      pubSaveResetMsg(2, "menu");
+      initEstimatePubSaveResetMsg(2, "menu");
     } // function initEstimateResetAllButtonClicked()
 
 
-    void CalibrationPanel::pubSaveResetMsg(int menu_entry, const std::string& marker_event) {
+    void CalibrationPanel::initEstimatePubSaveResetMsg(int menu_entry, const std::string& marker_event) {
       visualization_msgs::InteractiveMarkerFeedback marker;
 
       marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
@@ -171,5 +171,52 @@ namespace atom_rviz_plugin
       marker.menu_entry_id = menu_entry;
 
       initial_estimate_pub.publish(marker);
-    } //  function pubSaveResetMsg(int menu_entry, const std::string& marker_event)
+    } //  function initEstimatePubSaveResetMsg(int menu_entry, const std::string& marker_event)
+
+
+    void CalibrationPanel::initEstimateSliderToSpin(int val) {
+      ui_->initEstimatePoseXDoubleSpinBox->setValue(ui_->initEstimatePoseXSlider->value()/100.0);
+      ui_->initEstimatePoseYDoubleSpinBox->setValue(ui_->initEstimatePoseYSlider->value()/100.0);
+      ui_->initEstimatePoseZDoubleSpinBox->setValue(ui_->initEstimatePoseZSlider->value()/100.0);
+      ui_->initEstimatePoseRollDoubleSpinBox->setValue(ui_->initEstimatePoseRollSlider->value()/100.0);
+      ui_->initEstimatePosePitchDoubleSpinBox->setValue(ui_->initEstimatePosePitchSlider->value()/100.0);
+      ui_->initEstimatePoseYawDoubleSpinBox->setValue(ui_->initEstimatePoseYawSlider->value()/100.0);
+
+      initEstimatePubPoseMsg();
+    } // function initEstimateSliderToSpin(int)
+
+    void CalibrationPanel::initEstimateSpinToSlider(double val) {
+      ui_->initEstimatePoseXSlider->setValue(ui_->initEstimatePoseXDoubleSpinBox->value()*100);
+      ui_->initEstimatePoseYSlider->setValue(ui_->initEstimatePoseYDoubleSpinBox->value()*100);
+      ui_->initEstimatePoseZSlider->setValue(ui_->initEstimatePoseZDoubleSpinBox->value()*100);
+      ui_->initEstimatePoseRollSlider->setValue(ui_->initEstimatePoseRollDoubleSpinBox->value()*100);
+      ui_->initEstimatePosePitchSlider->setValue(ui_->initEstimatePosePitchDoubleSpinBox->value()*100);
+      ui_->initEstimatePoseYawSlider->setValue(ui_->initEstimatePoseYawDoubleSpinBox->value()*100);
+
+      initEstimatePubPoseMsg();
+    } // function initEstimateSpinToSlider(double)
+
+
+    void CalibrationPanel::initEstimatePubPoseMsg() {
+
+      std::string sensor = ui_->initEstimateSensorLabel2->text().toUtf8().constData();
+      if (sensor == "(none)") {
+        return;
+      }
+
+      visualization_msgs::InteractiveMarkerFeedback marker;
+
+      marker.client_id = "/rviz/MoveSensors-InteractiveMarker";
+      marker.marker_name = sensor;
+      marker.event_type = 1;
+      marker.pose.position.x = ui_->initEstimatePoseXDoubleSpinBox->value();
+      marker.pose.position.y = ui_->initEstimatePoseYDoubleSpinBox->value();
+      marker.pose.position.z = ui_->initEstimatePoseZDoubleSpinBox->value();
+      marker.pose.orientation.x = ui_->initEstimatePoseRollDoubleSpinBox->value();
+      marker.pose.orientation.y = ui_->initEstimatePosePitchDoubleSpinBox->value();
+      marker.pose.orientation.z = ui_->initEstimatePoseYawDoubleSpinBox->value();
+      marker.menu_entry_id = 0;
+
+      initial_estimate_pub.publish(marker);
+    } //  function initEstimatePubPoseMsg()
 }  // namespace atom_rviz_plugin

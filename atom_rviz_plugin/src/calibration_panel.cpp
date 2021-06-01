@@ -33,27 +33,67 @@ namespace atom_rviz_plugin
       // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
+      // Configuration Tab
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
       connect(ui_->configLoadButton, SIGNAL(clicked(bool)), this, SLOT(configLoadParameters()));
       connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(ComboBoxChange()));
 
+      // Initial Estimate Tab
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
       connect(ui_->initEstimateResetSensorButton, SIGNAL(clicked()), this, SLOT(initEstimateResetButtonClicked()));
       connect(ui_->initEstimateResetAllButton, SIGNAL(clicked()), this, SLOT(initEstimateResetAllButtonClicked()));
-      connect(ui_->tableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(sensorsCellClicked(int,int)));
+      connect(ui_->initEstimateTableWidget, SIGNAL(cellClicked(int,int)), this, SLOT(initEstimateSensorsCellClicked(int,int)));
+
+      connect(ui_->initEstimatePoseXSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+      connect(ui_->initEstimatePoseYSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+      connect(ui_->initEstimatePoseZSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+      connect(ui_->initEstimatePoseRollSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+      connect(ui_->initEstimatePosePitchSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+      connect(ui_->initEstimatePoseYawSlider, SIGNAL(valueChanged(int)), this, SLOT(initEstimateSliderToSpin(int)));
+
+      connect(ui_->initEstimatePoseXDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+      connect(ui_->initEstimatePoseYDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+      connect(ui_->initEstimatePoseZDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+      connect(ui_->initEstimatePoseRollDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+      connect(ui_->initEstimatePosePitchDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+      connect(ui_->initEstimatePoseYawDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateSpinToSlider(double)));
+
 
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
-      connect(ui_->treeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
+      connect(ui_->collectDataTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
+
+      connect(ui_->collectDataPoseXSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
+      connect(ui_->collectDataPoseYSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
+      connect(ui_->collectDataPoseZSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
+
+      connect(ui_->collectDataPoseXDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
+      connect(ui_->collectDataPoseYDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
+      connect(ui_->collectDataPoseZDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
 
       parentWidget()->setVisible(true);
 
     } //function onInitialize()
 
     void CalibrationPanel::handleTabs() {
-//      if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
-//        setTable();
-//      }
+      if (ui_->mainTabs->currentWidget() == ui_->configTab){
+
+        ui_->tabDescriptionLabel->setText("Configuration of the calibration parameters");
+
+      } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
+
+        ui_->tabDescriptionLabel->setText("Set initial estimate of the sensors' pose");
+        setTable();
+
+      } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
+
+        ui_->tabDescriptionLabel->setText("Collect data from the sensors");
+
+      } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
+
+        ui_->tabDescriptionLabel->setText("Optimization procedure");
+
+      }
       return;
     } // function handleTabs()
 

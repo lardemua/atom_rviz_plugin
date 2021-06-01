@@ -12,7 +12,7 @@
 #define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
 
 namespace atom_rviz_plugin {
-    void CalibrationPanel::ComboBoxChange() {
+    void CalibrationPanel::configComboBoxChange() {
 
       bool any_text = ui_->paramDescriptionFileTextEdit->toPlainText().isEmpty();
       configLoadParameters(false, !any_text);

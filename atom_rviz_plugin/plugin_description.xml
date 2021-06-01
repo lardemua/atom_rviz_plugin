@@ -1,6 +1,6 @@
 <library path="libatom_rviz_plugin">
   <!-- Calibration Panel -->
-  <class name="atom_rviz_plugin/atom calibration" type="atom_rviz_plugin::CalibrationPanel" base_class_type="rviz::Panel">
+  <class name="atom_rviz_plugin/ATOM Calibration" type="atom_rviz_plugin::CalibrationPanel" base_class_type="rviz::Panel">
     <description>
       Calibration Panel plugin.
     </description>

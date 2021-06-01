@@ -84,17 +84,16 @@ namespace atom_rviz_plugin
       }
 //      ROS_INFO("get_dataset_srv.response.dataset_json=%s", get_dataset_srv.response.dataset_json.c_str());
 
-
 ///*  // Putting the collection in a tree widget
 //    Parse response to call, in order to get json
       json j = json::parse(get_dataset_srv.response.dataset_json);
 
       // Get number of collections and change the header accordingly
       QString number_of_collections = QString::fromUtf8((std::to_string((j["collections"]).size()).c_str()));
-      ui_->treeWidget->setHeaderLabel("Collections: " + number_of_collections);
+      ui_->collectDataTreeWidget->setHeaderLabel("Collections: " + number_of_collections);
 
       // Main item of the tree Widget ("collections")
-      QTreeWidgetItem *topTreeItem = ui_->treeWidget->topLevelItem(0);
+      QTreeWidgetItem *topTreeItem = ui_->collectDataTreeWidget->topLevelItem(0);
 
       // Cycle to delete all collections and call function to add them all again
       for( int i = topTreeItem->childCount() - 1; i >= 0; i-- ) {
@@ -158,4 +157,43 @@ namespace atom_rviz_plugin
         ui_->collectDataSensorLabel2->setText("(none)");
       }
     } // function collectDataCheckItem(QTreeWidgetItem *item, int column)
+
+    void CalibrationPanel::collectDataSliderToSpin(int val) {
+      ui_->collectDataPoseXDoubleSpinBox->setValue(ui_->collectDataPoseXSlider->value()/100.0);
+      ui_->collectDataPoseYDoubleSpinBox->setValue(ui_->collectDataPoseYSlider->value()/100.0);
+      ui_->collectDataPoseZDoubleSpinBox->setValue(ui_->collectDataPoseZSlider->value()/100.0);
+
+      dataCollectPubPoseMsg();
+    } // function collectDataSliderToSpin(int)
+
+    void CalibrationPanel::collectDataSpinToSlider(double val) {
+      ui_->collectDataPoseXSlider->setValue(ui_->collectDataPoseXDoubleSpinBox->value()*100);
+      ui_->collectDataPoseYSlider->setValue(ui_->collectDataPoseYDoubleSpinBox->value()*100);
+      ui_->collectDataPoseZSlider->setValue(ui_->collectDataPoseZDoubleSpinBox->value()*100);
+
+      dataCollectPubPoseMsg();
+    } // function collectDataSpinToSlider(double val)
+
+    void CalibrationPanel::dataCollectPubPoseMsg() {
+
+      visualization_msgs::InteractiveMarkerFeedback marker2;
+
+      marker2.header.frame_id = "world";
+      marker2.client_id = "/rviz/ManualDataLabeler-InteractiveMarkers";
+      marker2.marker_name = "menu";
+      marker2.event_type = 1;
+      marker2.control_name = "";
+      marker2.pose.position.x = ui_->collectDataPoseXDoubleSpinBox->value();
+      marker2.pose.position.y = ui_->collectDataPoseYDoubleSpinBox->value();
+      marker2.pose.position.z = ui_->collectDataPoseZDoubleSpinBox->value();
+      marker2.pose.orientation.x = 0.0;
+      marker2.pose.orientation.y = 0.0;
+      marker2.pose.orientation.z = 0.0;
+      marker2.pose.orientation.w = 1.0;
+      marker2.menu_entry_id = 0;
+
+      data_collect_pub.publish(marker2);
+    } //  function initEstimatePubPoseMsg()
+
+
 }  // namespace atom_rviz_plugin
