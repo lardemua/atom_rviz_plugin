@@ -40,6 +40,7 @@ namespace atom_rviz_plugin {
                                                 "bag_file",
                                                 "world_link",
                                                 "anchored_sensor"};
+
         std::vector <std::string> cal_pat_str_param = {"link",
                                                        "parent_link",
                                                        "pattern_type",
