@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
 
 # Qt settings #
 find_package(Qt5 ${rviz_QT_VERSION} REQUIRED Core Widgets)
+#find_package(QCustomPlot)
 
 macro(qt_wrap_ui)
   qt5_wrap_ui(${ARGN})
@@ -71,6 +72,10 @@ set(SOURCE_FILES
         src/set_initial_estimate.cpp
         src/data_collect.cpp
   )
+  
+  set( QT_SOURCES
+    src/qcustomplot.cpp
+    )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")

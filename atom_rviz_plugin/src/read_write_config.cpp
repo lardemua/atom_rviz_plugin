@@ -279,10 +279,10 @@ namespace atom_rviz_plugin {
     }
 
 
-/*    YAML::Node baseNode = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+    YAML::Node baseNode = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
     baseNode["calibration_pattern"]["link"] = "pattern_link2"; // edit one of the nodes
     std::ofstream fout("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-    fout << baseNode; // dump it back into the file*/
+    fout << baseNode; // dump it back into the file
 
   }  // function writeButtonClicked
 }

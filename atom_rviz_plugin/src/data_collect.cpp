@@ -10,6 +10,7 @@
 #include <atom_msgs/SaveCollection.h>
 #include <atom_msgs/DeleteCollection.h>
 #include <cstdlib>
+#include <QMessageBox>
 
 using json = nlohmann::json;
 
@@ -37,34 +38,46 @@ namespace atom_rviz_plugin
 
 
     void CalibrationPanel::collectDataDeleteButtonClicked(){
+
       QString text_from_label = ui_->collectDataSensorLabel2->text();
       std::string text_from_label_str = text_from_label.toUtf8().constData();
 
       if (text_from_label_str.compare("(none)") != 0) {
         ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
-        std::string delete_collection_service_name = "/collect_data/delete_collection";
+        std::string msgDialog_str = "Are you sure you want to delete " + text_from_label_str + "?";
+        const char *msgDialog = msgDialog_str.c_str();
 
-        ros::ServiceClient delete_collection_client = nh.serviceClient<atom_msgs::DeleteCollection>(delete_collection_service_name);
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this,tr("Delete Collection"),tr(msgDialog),QMessageBox::Yes|QMessageBox::No);
 
-        atom_msgs::DeleteCollection delete_collection_srv;
-        //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+        if (reply == QMessageBox::Yes) {
+          std::string delete_collection_service_name = "/collect_data/delete_collection";
 
-        delete_collection_srv.request.collection_name = text_from_label_str.substr(11);
+          ros::ServiceClient delete_collection_client = nh.serviceClient<atom_msgs::DeleteCollection>(delete_collection_service_name);
 
-        delete_collection_client.waitForExistence(); // Wait for the service to be available before calling
-        if (delete_collection_client.call(delete_collection_srv)){
-          ROS_INFO("Service %s called successfully.", delete_collection_service_name.c_str() );
+          atom_msgs::DeleteCollection delete_collection_srv;
+          //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+
+          delete_collection_srv.request.collection_name = text_from_label_str.substr(11);
+
+          delete_collection_client.waitForExistence(); // Wait for the service to be available before calling
+          if (delete_collection_client.call(delete_collection_srv)){
+            ROS_INFO("Service %s called successfully.", delete_collection_service_name.c_str() );
+          }
+          else{
+            ROS_ERROR("Failed to call service %s", delete_collection_service_name.c_str());
+          }
+
+          collectDataParseJson();
+        } else {
+          return;
         }
-        else{
-          ROS_ERROR("Failed to call service %s", delete_collection_service_name.c_str());
-        }
-
-        collectDataParseJson();
-
       } else {
         ui_->collectDataDeleteCollectionLabel->setVisible(true);
       }
+
+
     } //  function collectDataDeleteButtonClicked()
 
 
@@ -178,9 +191,9 @@ namespace atom_rviz_plugin
 
       visualization_msgs::InteractiveMarkerFeedback marker2;
 
-      marker2.header.frame_id = "world";
+      marker2.header.frame_id = "3dlidar"; // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
       marker2.client_id = "/rviz/ManualDataLabeler-InteractiveMarkers";
-      marker2.marker_name = "menu";
+      marker2.marker_name = "3dlidar";    // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
       marker2.event_type = 1;
       marker2.control_name = "";
       marker2.pose.position.x = ui_->collectDataPoseXDoubleSpinBox->value();

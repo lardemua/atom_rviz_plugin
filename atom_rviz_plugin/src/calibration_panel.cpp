@@ -36,7 +36,7 @@ namespace atom_rviz_plugin
       // Configuration Tab
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
       connect(ui_->configLoadButton, SIGNAL(clicked(bool)), this, SLOT(configLoadParameters()));
-      connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(ComboBoxChange()));
+      connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(configComboBoxChange()));
 
       // Initial Estimate Tab
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
@@ -118,7 +118,7 @@ namespace atom_rviz_plugin
                 parameters_i.size() - std::string("/sensors/").size() - std::string("/topic_name").size();
             std::string sensor_name = parameters_i.substr(std::string("/sensors/").length(), sensor_length);
             QString str_to_combo_box = QString::fromUtf8(sensor_name.c_str());
-//            ui_->sensorsComboBox->addItem(str_to_combo_box);
+//            ui_->collectDataSensorsComboBox->addItem(str_to_combo_box);
             sensors.push_back(str_to_combo_box);
           }
         }

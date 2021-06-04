@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>367</height>
+    <width>588</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
@@ -1574,7 +1574,7 @@ between_msgs
       <widget class="QPushButton" name="collectDataSaveButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>80</x>
          <y>220</y>
          <width>130</width>
          <height>41</height>
@@ -1587,7 +1587,7 @@ between_msgs
       <widget class="QPushButton" name="collectDataDeleteButton">
        <property name="geometry">
         <rect>
-         <x>170</x>
+         <x>360</x>
          <y>220</y>
          <width>130</width>
          <height>41</height>
@@ -1621,9 +1621,9 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>310</x>
-         <y>10</y>
+         <y>60</y>
          <width>260</width>
-         <height>171</height>
+         <height>121</height>
         </rect>
        </property>
        <property name="title">
@@ -1633,7 +1633,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>3</x>
-          <y>35</y>
+          <y>30</y>
           <width>40</width>
           <height>18</height>
          </rect>
@@ -1646,7 +1646,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>3</x>
-          <y>90</y>
+          <y>60</y>
           <width>40</width>
           <height>18</height>
          </rect>
@@ -1659,7 +1659,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>3</x>
-          <y>145</y>
+          <y>90</y>
           <width>40</width>
           <height>18</height>
          </rect>
@@ -1672,7 +1672,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>190</x>
-          <y>30</y>
+          <y>28</y>
           <width>65</width>
           <height>25</height>
          </rect>
@@ -1691,7 +1691,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>190</x>
-          <y>90</y>
+          <y>58</y>
           <width>65</width>
           <height>25</height>
          </rect>
@@ -1710,7 +1710,7 @@ between_msgs
         <property name="geometry">
          <rect>
           <x>190</x>
-          <y>145</y>
+          <y>88</y>
           <width>65</width>
           <height>25</height>
          </rect>
@@ -1728,9 +1728,9 @@ between_msgs
        <widget class="QSlider" name="collectDataPoseXSlider">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>35</y>
-          <width>135</width>
+          <x>34</x>
+          <y>30</y>
+          <width>151</width>
           <height>20</height>
          </rect>
         </property>
@@ -1747,9 +1747,9 @@ between_msgs
        <widget class="QSlider" name="collectDataPoseYSlider">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>90</y>
-          <width>135</width>
+          <x>34</x>
+          <y>60</y>
+          <width>151</width>
           <height>20</height>
          </rect>
         </property>
@@ -1766,9 +1766,9 @@ between_msgs
        <widget class="QSlider" name="collectDataPoseZSlider">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>145</y>
-          <width>135</width>
+          <x>34</x>
+          <y>90</y>
+          <width>151</width>
           <height>20</height>
          </rect>
         </property>
@@ -1812,7 +1812,7 @@ between_msgs
       <widget class="QLabel" name="collectDataDeleteCollectionLabel">
        <property name="geometry">
         <rect>
-         <x>140</x>
+         <x>330</x>
          <y>262</y>
          <width>201</width>
          <height>17</height>
@@ -1822,11 +1822,60 @@ between_msgs
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#cc0000;&quot;&gt;Choose a collection to delete&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
+      <widget class="QComboBox" name="collectDataSensorsComboBox">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>10</y>
+         <width>161</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>15</y>
+         <width>67</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Sensor:</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="calibrationTab">
       <attribute name="title">
        <string>Calibration</string>
       </attribute>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>190</y>
+         <width>161</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Calibrate</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show/Hide Graph</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
