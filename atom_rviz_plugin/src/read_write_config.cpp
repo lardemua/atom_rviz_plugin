@@ -86,8 +86,10 @@ namespace atom_rviz_plugin {
                 }
               } else if (it2->first.as<std::string>() == "border_size") {
                 try {
-  //                ROS_INFO_STREAM(it2->first.as<std::string>());
-                  ROS_INFO_STREAM(it2->second.as<double>());
+                  nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<double>());
+                  calib_patt_params_content.push_back(std::to_string(it2->second.as<double>()));
+
+                  ROS_INFO_STREAM("Scalar");
 
                   ui_->configBorderSizeComboBox->addItem("Scalar");
                   ui_->configBorderSizeComboBox->addItem("Dict.");
@@ -98,6 +100,7 @@ namespace atom_rviz_plugin {
                   ui_->paramBorderSizeScalarTextEdit->setVisible(true);
                 }
                 catch (...) {
+                  ROS_INFO_STREAM("Dict");
                   ui_->configBorderSizeComboBox->addItem("Dict.");
                   ui_->configBorderSizeComboBox->addItem("Scalar");
                   ui_->paramBorderSizeXLabel->setVisible(true);
@@ -107,12 +110,9 @@ namespace atom_rviz_plugin {
                   ui_->paramBorderSizeScalarTextEdit->setVisible(false);
 
                   for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
-  //                  ROS_INFO_STREAM(it6->first.as<std::string>());
-  //                  ROS_INFO_STREAM(it6->second.as<std::string>());
+                    nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it6->first.as<std::string>(), it6->second.as<double>());
+                    calib_patt_params_content.push_back(std::to_string(it6->second.as<double>()));
                   }
-  //                ROS_INFO_STREAM("adeus");
-  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["x"]);
-  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["y"]);
                 }
               }
             }
@@ -166,7 +166,17 @@ namespace atom_rviz_plugin {
           ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
           ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
           ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
-          ui_->paramBorderSizeScalarTextEdit->setText("Ola");
+
+          QString border_size_scalar_dict = ui_->configBorderSizeComboBox->currentText();
+//          std::string border_size_scalar_dict_str = border_size_scalar_dict.toUtf8().constData();
+
+          if (border_size_scalar_dict == "Scalar") {
+            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+          } else {
+            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[11].c_str()));
+          }
+
 
           ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
           ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
