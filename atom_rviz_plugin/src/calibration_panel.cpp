@@ -30,6 +30,12 @@ namespace atom_rviz_plugin
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
+      ui_->paramBorderSizeXLabel->setVisible(false);
+      ui_->paramBorderSizeYLabel->setVisible(false);
+      ui_->paramBorderSizeXTextEdit->setVisible(false);
+      ui_->paramBorderSizeYTextEdit->setVisible(false);
+      ui_->paramBorderSizeScalarTextEdit->setVisible(true);
+
       // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
@@ -89,6 +95,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
+        ui_->collectDataSensorsComboBox->addItem("3dlidar"); //TODO APAGAR ESTA LINHA
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 

@@ -86,11 +86,26 @@ namespace atom_rviz_plugin {
                 }
               } else if (it2->first.as<std::string>() == "border_size") {
                 try {
-  //                ROS_INFO_STREAM("ola");
   //                ROS_INFO_STREAM(it2->first.as<std::string>());
                   ROS_INFO_STREAM(it2->second.as<double>());
+
+                  ui_->configBorderSizeComboBox->addItem("Scalar");
+                  ui_->configBorderSizeComboBox->addItem("Dict.");
+                  ui_->paramBorderSizeXLabel->setVisible(false);
+                  ui_->paramBorderSizeYLabel->setVisible(false);
+                  ui_->paramBorderSizeXTextEdit->setVisible(false);
+                  ui_->paramBorderSizeYTextEdit->setVisible(false);
+                  ui_->paramBorderSizeScalarTextEdit->setVisible(true);
                 }
                 catch (...) {
+                  ui_->configBorderSizeComboBox->addItem("Dict.");
+                  ui_->configBorderSizeComboBox->addItem("Scalar");
+                  ui_->paramBorderSizeXLabel->setVisible(true);
+                  ui_->paramBorderSizeYLabel->setVisible(true);
+                  ui_->paramBorderSizeXTextEdit->setVisible(true);
+                  ui_->paramBorderSizeYTextEdit->setVisible(true);
+                  ui_->paramBorderSizeScalarTextEdit->setVisible(false);
+
                   for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
   //                  ROS_INFO_STREAM(it6->first.as<std::string>());
   //                  ROS_INFO_STREAM(it6->second.as<std::string>());
@@ -151,7 +166,7 @@ namespace atom_rviz_plugin {
           ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
           ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
           ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
-          ui_->paramCalibPatBorderSizeTextEdit->setText("Ola");
+          ui_->paramBorderSizeScalarTextEdit->setText("Ola");
 
           ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
           ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));

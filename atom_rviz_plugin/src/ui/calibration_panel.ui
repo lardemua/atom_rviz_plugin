@@ -14,13 +14,6 @@
    <string>FirstWidget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="tabDescriptionLabel">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
@@ -43,7 +36,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
@@ -57,7 +50,7 @@
           <rect>
            <x>130</x>
            <y>10</y>
-           <width>371</width>
+           <width>390</width>
            <height>41</height>
           </rect>
          </property>
@@ -123,8 +116,8 @@
           <rect>
            <x>130</x>
            <y>100</y>
-           <width>371</width>
-           <height>27</height>
+           <width>390</width>
+           <height>30</height>
           </rect>
          </property>
         </widget>
@@ -133,8 +126,8 @@
           <rect>
            <x>130</x>
            <y>140</y>
-           <width>371</width>
-           <height>27</height>
+           <width>390</width>
+           <height>30</height>
           </rect>
          </property>
         </widget>
@@ -156,8 +149,8 @@
           <rect>
            <x>130</x>
            <y>60</y>
-           <width>371</width>
-           <height>27</height>
+           <width>390</width>
+           <height>30</height>
           </rect>
          </property>
         </widget>
@@ -179,8 +172,8 @@
           <rect>
            <x>130</x>
            <y>180</y>
-           <width>371</width>
-           <height>27</height>
+           <width>390</width>
+           <height>30</height>
           </rect>
          </property>
         </widget>
@@ -478,7 +471,7 @@ between_msgs
           <rect>
            <x>0</x>
            <y>182</y>
-           <width>71</width>
+           <width>81</width>
            <height>17</height>
           </rect>
          </property>
@@ -488,7 +481,7 @@ between_msgs
           </font>
          </property>
          <property name="text">
-          <string>Dictionary</string>
+          <string>Dictionary:</string>
          </property>
         </widget>
         <widget class="QTextEdit" name="paramCalibPatDictionaryTextEdit">
@@ -563,9 +556,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>301</x>
+           <x>305</x>
            <y>15</y>
-           <width>201</width>
+           <width>225</width>
            <height>31</height>
           </rect>
          </property>
@@ -647,9 +640,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>301</x>
+           <x>305</x>
            <y>175</y>
-           <width>201</width>
+           <width>225</width>
            <height>31</height>
           </rect>
          </property>
@@ -695,9 +688,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>301</x>
+           <x>305</x>
            <y>135</y>
-           <width>201</width>
+           <width>225</width>
            <height>31</height>
           </rect>
          </property>
@@ -761,9 +754,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>313</x>
+           <x>317</x>
            <y>90</y>
-           <width>81</width>
+           <width>90</width>
            <height>31</height>
           </rect>
          </property>
@@ -803,15 +796,15 @@ between_msgs
           </font>
          </property>
         </widget>
-        <widget class="QTextEdit" name="paramCalibPatBorderSizeTextEdit">
+        <widget class="QTextEdit" name="paramBorderSizeScalarTextEdit">
          <property name="enabled">
           <bool>true</bool>
          </property>
          <property name="geometry">
           <rect>
-           <x>301</x>
-           <y>55</y>
-           <width>201</width>
+           <x>305</x>
+           <y>50</y>
+           <width>141</width>
            <height>31</height>
           </rect>
          </property>
@@ -875,9 +868,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>421</x>
+           <x>440</x>
            <y>90</y>
-           <width>81</width>
+           <width>90</width>
            <height>31</height>
           </rect>
          </property>
@@ -920,7 +913,7 @@ between_msgs
         <widget class="QLabel" name="paramCalibPatDimensionLabel_2">
          <property name="geometry">
           <rect>
-           <x>301</x>
+           <x>305</x>
            <y>102</y>
            <width>21</width>
            <height>17</height>
@@ -938,7 +931,7 @@ between_msgs
         <widget class="QLabel" name="paramCalibPatDimensionLabel_3">
          <property name="geometry">
           <rect>
-           <x>410</x>
+           <x>428</x>
            <y>102</y>
            <width>21</width>
            <height>17</height>
@@ -953,6 +946,154 @@ between_msgs
           <string>y:</string>
          </property>
         </widget>
+        <widget class="QComboBox" name="configBorderSizeComboBox">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>50</y>
+           <width>71</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="maxVisibleItems">
+          <number>2</number>
+         </property>
+         <property name="maxCount">
+          <number>2</number>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="paramBorderSizeYTextEdit">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>50</y>
+           <width>55</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>0</width>
+           <height>-31072</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+        </widget>
+        <widget class="QLabel" name="paramBorderSizeYLabel">
+         <property name="geometry">
+          <rect>
+           <x>378</x>
+           <y>62</y>
+           <width>21</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>y:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="paramBorderSizeXLabel">
+         <property name="geometry">
+          <rect>
+           <x>305</x>
+           <y>62</y>
+           <width>21</width>
+           <height>17</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>x:</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="paramBorderSizeXTextEdit">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>317</x>
+           <y>50</y>
+           <width>55</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>0</width>
+           <height>-31072</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="sensorsTab">
         <attribute name="title">
@@ -961,9 +1102,9 @@ between_msgs
         <widget class="QTextEdit" name="paramSensorsLinkTextEdit">
          <property name="geometry">
           <rect>
-           <x>100</x>
+           <x>90</x>
            <y>10</y>
-           <width>221</width>
+           <width>280</width>
            <height>35</height>
           </rect>
          </property>
@@ -983,9 +1124,9 @@ between_msgs
         <widget class="QTextEdit" name="paramSensorsParentLinkTextEdit">
          <property name="geometry">
           <rect>
-           <x>100</x>
+           <x>90</x>
            <y>60</y>
-           <width>221</width>
+           <width>280</width>
            <height>35</height>
           </rect>
          </property>
@@ -993,9 +1134,9 @@ between_msgs
         <widget class="QTextEdit" name="paramSensorsChildLinkTextEdit">
          <property name="geometry">
           <rect>
-           <x>100</x>
+           <x>90</x>
            <y>110</y>
-           <width>221</width>
+           <width>280</width>
            <height>35</height>
           </rect>
          </property>
@@ -1003,9 +1144,9 @@ between_msgs
         <widget class="QTextEdit" name="paramSensorsTopicNameTextEdit">
          <property name="geometry">
           <rect>
-           <x>100</x>
+           <x>90</x>
            <y>160</y>
-           <width>221</width>
+           <width>280</width>
            <height>35</height>
           </rect>
          </property>
@@ -1013,7 +1154,7 @@ between_msgs
         <widget class="QLabel" name="paramSensorsTopicNameLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>5</x>
            <y>170</y>
            <width>91</width>
            <height>17</height>
@@ -1026,7 +1167,7 @@ between_msgs
         <widget class="QLabel" name="paramSensorsLinkLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>5</x>
            <y>20</y>
            <width>67</width>
            <height>17</height>
@@ -1039,7 +1180,7 @@ between_msgs
         <widget class="QLabel" name="paramSensorsChildLinkLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>5</x>
            <y>120</y>
            <width>67</width>
            <height>17</height>
@@ -1052,7 +1193,7 @@ between_msgs
         <widget class="QLabel" name="paramSensorsParentLinkLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>5</x>
            <y>70</y>
            <width>81</width>
            <height>17</height>
@@ -1065,9 +1206,9 @@ between_msgs
         <widget class="QComboBox" name="sensorsComboBox">
          <property name="geometry">
           <rect>
-           <x>340</x>
+           <x>375</x>
            <y>10</y>
-           <width>161</width>
+           <width>155</width>
            <height>25</height>
           </rect>
          </property>
@@ -1077,27 +1218,27 @@ between_msgs
       <widget class="QPushButton" name="configWriteButton">
        <property name="geometry">
         <rect>
-         <x>449</x>
-         <y>260</y>
-         <width>91</width>
-         <height>21</height>
+         <x>440</x>
+         <y>255</y>
+         <width>100</width>
+         <height>30</height>
         </rect>
        </property>
        <property name="text">
-        <string>Write</string>
+        <string>Update File</string>
        </property>
       </widget>
       <widget class="QPushButton" name="configLoadButton">
        <property name="geometry">
         <rect>
          <x>290</x>
-         <y>260</y>
-         <width>80</width>
-         <height>25</height>
+         <y>255</y>
+         <width>100</width>
+         <height>30</height>
         </rect>
        </property>
        <property name="text">
-        <string>Load file</string>
+        <string>Load File</string>
        </property>
       </widget>
       <widget class="QLabel" name="label">
@@ -1170,35 +1311,35 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>220</y>
-         <width>71</width>
-         <height>30</height>
+         <y>240</y>
+         <width>150</width>
+         <height>50</height>
         </rect>
        </property>
        <property name="text">
-        <string>Save</string>
+        <string>Save Pose</string>
        </property>
       </widget>
       <widget class="QPushButton" name="initEstimateResetAllButton">
        <property name="geometry">
         <rect>
-         <x>100</x>
-         <y>220</y>
-         <width>81</width>
-         <height>30</height>
+         <x>390</x>
+         <y>240</y>
+         <width>150</width>
+         <height>50</height>
         </rect>
        </property>
        <property name="text">
-        <string>Reset All</string>
+        <string>Reset All Poses</string>
        </property>
       </widget>
       <widget class="QLabel" name="initEstimateSensorLabel">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>180</y>
+         <y>210</y>
          <width>121</width>
-         <height>17</height>
+         <height>20</height>
         </rect>
        </property>
        <property name="text">
@@ -1209,22 +1350,22 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>200</x>
-         <y>220</y>
-         <width>101</width>
-         <height>30</height>
+         <y>240</y>
+         <width>150</width>
+         <height>50</height>
         </rect>
        </property>
        <property name="text">
-        <string>Reset Sensor</string>
+        <string>Reset Pose</string>
        </property>
       </widget>
       <widget class="QTableWidget" name="initEstimateTableWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>20</y>
          <width>291</width>
-         <height>161</height>
+         <height>191</height>
         </rect>
        </property>
        <property name="lineWidth">
@@ -1238,9 +1379,9 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>130</x>
-         <y>180</y>
+         <y>210</y>
          <width>171</width>
-         <height>17</height>
+         <height>20</height>
         </rect>
        </property>
        <property name="text">
@@ -1251,7 +1392,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>310</x>
-         <y>10</y>
+         <y>0</y>
          <width>260</width>
          <height>211</height>
         </rect>
@@ -1575,7 +1716,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>220</y>
+         <y>238</y>
          <width>130</width>
          <height>41</height>
         </rect>
@@ -1588,7 +1729,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>360</x>
-         <y>220</y>
+         <y>238</y>
          <width>130</width>
          <height>41</height>
         </rect>
@@ -1603,7 +1744,7 @@ between_msgs
          <x>10</x>
          <y>10</y>
          <width>290</width>
-         <height>171</height>
+         <height>190</height>
         </rect>
        </property>
        <column>
@@ -1621,7 +1762,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>310</x>
-         <y>60</y>
+         <y>80</y>
          <width>260</width>
          <height>121</height>
         </rect>
@@ -1787,7 +1928,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>182</y>
+         <y>205</y>
          <width>151</width>
          <height>17</height>
         </rect>
@@ -1800,7 +1941,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>150</x>
-         <y>182</y>
+         <y>205</y>
          <width>191</width>
          <height>17</height>
         </rect>
@@ -1813,7 +1954,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>262</y>
+         <y>280</y>
          <width>201</width>
          <height>17</height>
         </rect>
@@ -1826,7 +1967,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>370</x>
-         <y>10</y>
+         <y>30</y>
          <width>161</width>
          <height>25</height>
         </rect>
@@ -1836,7 +1977,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>310</x>
-         <y>15</y>
+         <y>30</y>
          <width>67</width>
          <height>17</height>
         </rect>
@@ -1853,7 +1994,7 @@ between_msgs
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
-         <x>310</x>
+         <x>20</x>
          <y>190</y>
          <width>161</width>
          <height>61</height>
@@ -1866,7 +2007,7 @@ between_msgs
       <widget class="QPushButton" name="pushButton_2">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>220</x>
          <y>30</y>
          <width>141</width>
          <height>31</height>
@@ -1876,7 +2017,53 @@ between_msgs
         <string>Show/Hide Graph</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>80</y>
+         <width>141</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Show/Hide Graph</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>171</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Nome do gráfico</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>171</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Nome do gráfico</string>
+       </property>
+      </widget>
      </widget>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="tabDescriptionLabel">
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>
