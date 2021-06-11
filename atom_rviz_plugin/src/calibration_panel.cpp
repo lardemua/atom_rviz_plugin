@@ -18,7 +18,6 @@ namespace atom_rviz_plugin
       ros::init(argc, NULL, "calibration_panel");
 //      PFLN
     }
-
     CalibrationPanel::~CalibrationPanel() = default;
 
     void CalibrationPanel::onInitialize()
