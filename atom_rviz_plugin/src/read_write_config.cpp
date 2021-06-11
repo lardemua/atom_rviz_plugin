@@ -89,25 +89,14 @@ namespace atom_rviz_plugin {
                   nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<double>());
                   calib_patt_params_content.push_back(std::to_string(it2->second.as<double>()));
 
-                  ROS_INFO_STREAM("Scalar");
-
                   ui_->configBorderSizeComboBox->addItem("Scalar");
                   ui_->configBorderSizeComboBox->addItem("Dict.");
-                  ui_->paramBorderSizeXLabel->setVisible(false);
-                  ui_->paramBorderSizeYLabel->setVisible(false);
-                  ui_->paramBorderSizeXTextEdit->setVisible(false);
-                  ui_->paramBorderSizeYTextEdit->setVisible(false);
-                  ui_->paramBorderSizeScalarTextEdit->setVisible(true);
+                  configBorderSizeSetComboBox("Scalar");
                 }
                 catch (...) {
-                  ROS_INFO_STREAM("Dict");
                   ui_->configBorderSizeComboBox->addItem("Dict.");
                   ui_->configBorderSizeComboBox->addItem("Scalar");
-                  ui_->paramBorderSizeXLabel->setVisible(true);
-                  ui_->paramBorderSizeYLabel->setVisible(true);
-                  ui_->paramBorderSizeXTextEdit->setVisible(true);
-                  ui_->paramBorderSizeYTextEdit->setVisible(true);
-                  ui_->paramBorderSizeScalarTextEdit->setVisible(false);
+                  configBorderSizeSetComboBox("Dict.");
 
                   for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
                     nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it6->first.as<std::string>(), it6->second.as<double>());
@@ -183,23 +172,12 @@ namespace atom_rviz_plugin {
           ui_->paramSensorsChildLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[2].c_str()));
           ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
         }
-
-
       } catch (...) {
         return;
       }
     } // function configLoadButtonClicked()
 
 
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
 // ####################################################################################################################
 // ####################################################################################################################
 // ####################################################################################################################
@@ -252,39 +230,53 @@ namespace atom_rviz_plugin {
       this->nh.setParam(calib_patt_params[i], calib_patt_new_param_str[i]);
     }
 
-    // Int parameter
+    // Double parameters
     std::vector <std::string> calib_patt_int_params = {"/calibration_pattern/size",
                                                        "/calibration_pattern/inner_size"};
-    std::vector <std::string> calib_patt_new_int_param_str = {
-        ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData()};
-    for (size_t i = 0; i < calib_patt_new_int_param_str.size(); i++) {
-      double calib_patt_new_param_int = std::stod(calib_patt_new_int_param_str[i]);
-      this->nh.setParam(calib_patt_int_params[i], calib_patt_new_param_int);
-    }
+
+    double calib_patt_size_param = std::stod(ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData());
+    double calib_patt_inner_size_param = std::stod(ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData());
+
+    this->nh.setParam(calib_patt_int_params[0], calib_patt_size_param);
+    this->nh.setParam(calib_patt_int_params[1], calib_patt_inner_size_param);
+
+
 
     // Boolean parameter
     std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedTextEdit->toPlainText().toUtf8().constData();
     bool misc_new_param_bool = calib_patt_new_param_bool_str.compare("true") ? true : false;
     this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool_str);
 
+
     // Dictionary parameters
     // /calibration_pattern/dimension parameter:
-/*    std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
-    int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:") + 2,
-                                                                    calib_patt_new_dict_str.find(",") -
-                                                                    (calib_patt_new_dict_str.find("x:") + 2)));
-    int dimension_y_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("y:") + 2,
-                                                                    calib_patt_new_dict_str.find("}") -
-                                                                    (calib_patt_new_dict_str.find("y:") + 2)));
-    this->nh.setParam("/calibration_pattern/dimension/x", dimension_x_parameter);
-    this->nh.setParam("/calibration_pattern/dimension/y", dimension_y_parameter);
-      ROS_INFO_STREAM(calib_patt_new_dict_str);
-    ROS_INFO_STREAM(dimension_x_parameter);
-    ROS_INFO_STREAM(dimension_y_parameter);*/
+    std::string calib_patt_dimension_x_parameter_str = ui_->paramCalibPatDimensionXTextEdit->toPlainText().toUtf8().constData();
+    std::string calib_patt_dimension_y_parameter_str = ui_->paramCalibPatDimensionYTextEdit->toPlainText().toUtf8().constData();
+
+    double calib_patt_dimension_x_parameter = std::stod(calib_patt_dimension_x_parameter_str);
+    double calib_patt_dimension_y_parameter = std::stod(calib_patt_dimension_y_parameter_str);
+
+    this->nh.setParam("/calibration_pattern/dimension/x", calib_patt_dimension_x_parameter);
+    this->nh.setParam("/calibration_pattern/dimension/y", calib_patt_dimension_y_parameter);
+
+    ROS_INFO_STREAM(calib_patt_dimension_x_parameter_str);
+    ROS_INFO_STREAM(calib_patt_dimension_y_parameter_str);
+
+    double calib_patt_border_size_param, calib_patt_border_size_x_param, calib_patt_border_size_y_param;
+    // /calibration_pattern/border_size parameter:
+    if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+      calib_patt_border_size_param = std::stod(ui_->paramBorderSizeScalarTextEdit->toPlainText().toUtf8().constData());
+      this->nh.setParam("/calibration_pattern/border_size", calib_patt_border_size_param);
+    } else {
+      calib_patt_border_size_x_param = std::stod(ui_->paramBorderSizeXTextEdit->toPlainText().toUtf8().constData());
+      calib_patt_border_size_y_param = std::stod(ui_->paramBorderSizeYTextEdit->toPlainText().toUtf8().constData());
+
+      this->nh.setParam("/calibration_pattern/border_size/x", calib_patt_border_size_x_param);
+      this->nh.setParam("/calibration_pattern/border_size/y", calib_patt_border_size_y_param);
+    }
 
 
-  // *********************
+    // *********************
   // * Sensors Parameter *
   // *********************
     std::string sensor_to_write = ui_->sensorsComboBox->currentText().toUtf8().constData();
@@ -303,11 +295,64 @@ namespace atom_rviz_plugin {
       this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
     }
 
+    std::string config_ros_package = ui_->configPackageLineEdit->toPlainText().toUtf8().constData();
+    std::string config_file_path = ros::package::getPath(config_ros_package) + "/calibration/config.yml";
+    YAML::Node baseNode = YAML::LoadFile(config_file_path);
 
-    YAML::Node baseNode = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-    baseNode["calibration_pattern"]["link"] = "pattern_link2"; // edit one of the nodes
-    std::ofstream fout("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+    // Miscellaneous Tab
+    baseNode["description_file"] = misc_new_param_str[0];
+    baseNode["bag_file"] = misc_new_param_str[1];
+    baseNode["world_link"] = misc_new_param_str[2];
+    baseNode["anchored_sensor"] = misc_new_param_str[3];
+    baseNode["max_duration_between_msgs"] = misc_new_param_int;
+
+    // Calibration Pattern Tab
+    baseNode["calibration_pattern"]["link"] = calib_patt_new_param_str[0];
+    baseNode["calibration_pattern"]["parent_link"] = calib_patt_new_param_str[1];
+    baseNode["calibration_pattern"]["pattern_type"] = calib_patt_new_param_str[2];
+    baseNode["calibration_pattern"]["dictionary"] = calib_patt_new_param_str[3];
+    baseNode["calibration_pattern"]["mesh_file"] = calib_patt_new_param_str[4];
+    baseNode["calibration_pattern"]["size"] = calib_patt_size_param;
+    baseNode["calibration_pattern"]["inner_size"] = calib_patt_inner_size_param;
+    baseNode["calibration_pattern"]["fixed"] = calib_patt_new_param_bool_str;
+    baseNode["calibration_pattern"]["dimension"]["x"] = calib_patt_dimension_x_parameter;
+    baseNode["calibration_pattern"]["dimension"]["y"] = calib_patt_dimension_y_parameter;
+    if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+      baseNode["calibration_pattern"]["border_size"] = calib_patt_border_size_param;
+    } else {
+      baseNode["calibration_pattern"]["border_size"]["x"] = calib_patt_border_size_x_param;
+      baseNode["calibration_pattern"]["border_size"]["y"] = calib_patt_border_size_y_param;
+    }
+
+    // Sensors Tab
+    baseNode["sensors"][sensor_to_write]["link"] = sensors_new_param_str[0];
+    baseNode["sensors"][sensor_to_write]["parent_link"] = sensors_new_param_str[1];
+    baseNode["sensors"][sensor_to_write]["child_link"] = sensors_new_param_str[2];
+    baseNode["sensors"][sensor_to_write]["topic_name"] = sensors_new_param_str[3];
+
+    std::ofstream fout(config_file_path);
     fout << baseNode; // dump it back into the file
 
+
   }  // function writeButtonClicked
+
+//##########################################################
+
+  void CalibrationPanel::configBorderSizeSetComboBox(QString combobox_str) {
+
+      if (combobox_str == "Scalar") {
+        ui_->paramBorderSizeXLabel->setVisible(false);
+        ui_->paramBorderSizeYLabel->setVisible(false);
+        ui_->paramBorderSizeXTextEdit->setVisible(false);
+        ui_->paramBorderSizeYTextEdit->setVisible(false);
+        ui_->paramBorderSizeScalarTextEdit->setVisible(true);
+      } else {
+        ui_->paramBorderSizeXLabel->setVisible(true);
+        ui_->paramBorderSizeYLabel->setVisible(true);
+        ui_->paramBorderSizeXTextEdit->setVisible(true);
+        ui_->paramBorderSizeYTextEdit->setVisible(true);
+        ui_->paramBorderSizeScalarTextEdit->setVisible(false);
+      }
+    }
+
 }

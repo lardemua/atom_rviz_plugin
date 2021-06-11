@@ -43,6 +43,7 @@ namespace atom_rviz_plugin
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
       connect(ui_->configLoadButton, SIGNAL(clicked(bool)), this, SLOT(configLoadParameters()));
       connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(configComboBoxChange()));
+      connect(ui_->configBorderSizeComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(configBorderSizeSetComboBox(QString)));
 
       // Initial Estimate Tab
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));

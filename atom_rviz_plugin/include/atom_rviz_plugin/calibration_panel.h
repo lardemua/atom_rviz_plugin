@@ -33,6 +33,7 @@ private Q_SLOTS:
   void setTable();
 
   void configComboBoxChange();
+  void configBorderSizeSetComboBox(QString combobox_str);
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
   void configReadButtonClicked(); //TEST
   void configWriteButtonClicked();
