@@ -306,6 +306,7 @@ namespace atom_rviz_plugin {
     baseNode["anchored_sensor"] = misc_new_param_str[3];
     baseNode["max_duration_between_msgs"] = misc_new_param_int;
 
+
     // Calibration Pattern Tab
     baseNode["calibration_pattern"]["link"] = calib_patt_new_param_str[0];
     baseNode["calibration_pattern"]["parent_link"] = calib_patt_new_param_str[1];
@@ -323,6 +324,7 @@ namespace atom_rviz_plugin {
       baseNode["calibration_pattern"]["border_size"]["x"] = calib_patt_border_size_x_param;
       baseNode["calibration_pattern"]["border_size"]["y"] = calib_patt_border_size_y_param;
     }
+
 
     // Sensors Tab
     baseNode["sensors"][sensor_to_write]["link"] = sensors_new_param_str[0];
