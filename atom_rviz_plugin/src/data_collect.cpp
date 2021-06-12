@@ -207,6 +207,4 @@ namespace atom_rviz_plugin
 
       data_collect_pub.publish(marker2);
     } //  function initEstimatePubPoseMsg()
-
-
 }  // namespace atom_rviz_plugin

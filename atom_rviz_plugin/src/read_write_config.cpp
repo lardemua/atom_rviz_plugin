@@ -27,8 +27,8 @@ namespace atom_rviz_plugin {
         std::string config_file_path = ros::package::getPath(config_ros_package) + "/calibration/config.yml";
 
         YAML::Node config_params = YAML::LoadFile(config_file_path);
-  //      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-  //      YAML::Node config_params = YAML::LoadFile("/home/mike/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+        //      YAML::Node config_params = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
+        //      YAML::Node config_params = YAML::LoadFile("/home/mike/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
 
         YAML::Node calibration_pattern_node = config_params["calibration_pattern"];
         YAML::Node sensors_node = config_params["sensors"];
@@ -37,9 +37,9 @@ namespace atom_rviz_plugin {
 
         // String parameters for misc and within the calibration_pattern parameter
         std::vector <std::string> str_misc_params = {"description_file",
-                                                "bag_file",
-                                                "world_link",
-                                                "anchored_sensor"};
+                                                     "bag_file",
+                                                     "world_link",
+                                                     "anchored_sensor"};
         std::vector <std::string> cal_pat_str_param = {"link",
                                                        "parent_link",
                                                        "pattern_type",
@@ -86,18 +86,22 @@ namespace atom_rviz_plugin {
                 }
               } else if (it2->first.as<std::string>() == "border_size") {
                 try {
-  //                ROS_INFO_STREAM("ola");
-  //                ROS_INFO_STREAM(it2->first.as<std::string>());
-                  ROS_INFO_STREAM(it2->second.as<double>());
+                  nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<double>());
+                  calib_patt_params_content.push_back(std::to_string(it2->second.as<double>()));
+
+                  ui_->configBorderSizeComboBox->addItem("Scalar");
+                  ui_->configBorderSizeComboBox->addItem("Dict.");
+                  configBorderSizeSetComboBox("Scalar");
                 }
                 catch (...) {
+                  ui_->configBorderSizeComboBox->addItem("Dict.");
+                  ui_->configBorderSizeComboBox->addItem("Scalar");
+                  configBorderSizeSetComboBox("Dict.");
+
                   for (YAML::const_iterator it6 = calibration_pattern_node["border_size"].begin(); it6 != calibration_pattern_node["border_size"].end(); ++it6) {
-  //                  ROS_INFO_STREAM(it6->first.as<std::string>());
-  //                  ROS_INFO_STREAM(it6->second.as<std::string>());
+                    nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>() + "/" + it6->first.as<std::string>(), it6->second.as<double>());
+                    calib_patt_params_content.push_back(std::to_string(it6->second.as<double>()));
                   }
-  //                ROS_INFO_STREAM("adeus");
-  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["x"]);
-  //                ROS_INFO_STREAM(calibration_pattern_node["border_size"]["y"]);
                 }
               }
             }
@@ -127,14 +131,20 @@ namespace atom_rviz_plugin {
                 if (it3->first.as<std::string>() == sensor_to_read ){
                   sensors_params_content.push_back(it4->second.as<std::string>());
                 }
-
               }
             }
           }
         }
 
-  // Show read parameters on all respective TextEdit boxes
-        if (clicked || comboBoxChanged) {
+        // Show read parameters on all respective TextEdit boxes
+        if (comboBoxChanged) {
+
+          ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
+          ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
+          ui_->paramSensorsChildLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[2].c_str()));
+          ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
+
+        } else {
           ui_->paramDescriptionFileTextEdit->setText(QString::fromUtf8(misc_params_content[0].c_str()));
           ui_->paramBagFileTextEdit->setText(QString::fromUtf8(misc_params_content[1].c_str()));
           ui_->paramWorldLinkTextEdit->setText(QString::fromUtf8(misc_params_content[2].c_str()));
@@ -151,15 +161,22 @@ namespace atom_rviz_plugin {
           ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
           ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
           ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
-          ui_->paramCalibPatBorderSizeTextEdit->setText("Ola");
+
+          QString border_size_scalar_dict = ui_->configBorderSizeComboBox->currentText();
+//          std::string border_size_scalar_dict_str = border_size_scalar_dict.toUtf8().constData();
+
+          if (border_size_scalar_dict == "Scalar") {
+            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+          } else {
+            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[11].c_str()));
+          }
 
           ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
           ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
           ui_->paramSensorsChildLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[2].c_str()));
           ui_->paramSensorsTopicNameTextEdit->setText(QString::fromUtf8(sensors_params_content[3].c_str()));
         }
-
-
       } catch (...) {
         return;
       }
@@ -169,120 +186,176 @@ namespace atom_rviz_plugin {
 // ####################################################################################################################
 // ####################################################################################################################
 // ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
-// ####################################################################################################################
 
 
 
-  void CalibrationPanel::configWriteButtonClicked() {
-  // *************************************
-  // * Config Parameters (Miscellaneous) *
-  // *************************************
+    void CalibrationPanel::configWriteButtonClicked() {
+      // *************************************
+      // * Config Parameters (Miscellaneous) *
+      // *************************************
 
-  // String parameters
-    std::vector <std::string> misc_params = {"/description_file",
-                                             "/bag_file",
-                                             "/world_link",
-                                             "/anchored_sensor"};
-    std::vector <std::string> misc_new_param_str = {
-        ui_->paramDescriptionFileTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramBagFileTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramWorldLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramAnchoredSensorTextEdit->toPlainText().toUtf8().constData()};
+      // String parameters
+      std::vector <std::string> misc_params = {"/description_file",
+                                               "/bag_file",
+                                               "/world_link",
+                                               "/anchored_sensor"};
+      std::vector <std::string> misc_new_param_str = {
+          ui_->paramDescriptionFileTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramBagFileTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramWorldLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramAnchoredSensorTextEdit->toPlainText().toUtf8().constData()};
 
-    for (size_t i = 0; i < misc_new_param_str.size(); i++) {
-      this->nh.setParam(misc_params[i], misc_new_param_str[i]);
+      for (size_t i = 0; i < misc_new_param_str.size(); i++) {
+        this->nh.setParam(misc_params[i], misc_new_param_str[i]);
+      }
+
+      // Int parameter
+      std::string misc_new_param_int_str = ui_->paramMaxDurationTextEdit->toPlainText().toUtf8().constData();
+      int misc_new_param_int = std::stoi(misc_new_param_int_str);
+      this->nh.setParam("/max_duration_between_msgs", misc_new_param_int);
+
+
+      // *********************************
+      // * Calibration Pattern Parameter *
+      // *********************************
+
+      //String parameters
+      std::vector <std::string> calib_patt_params = {"/calibration_pattern/link",
+                                                     "/calibration_pattern/parent_link",
+                                                     "/calibration_pattern/pattern_type",
+                                                     "/calibration_pattern/dictionary",
+                                                     "/calibration_pattern/mesh_file"};
+      std::vector <std::string> calib_patt_new_param_str = {
+          ui_->paramCalibPatLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatParentLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatPatternTypeTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatDictionaryTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramCalibPatMeshFileTextEdit->toPlainText().toUtf8().constData()};
+      for (size_t i = 0; i < calib_patt_new_param_str.size(); i++) {
+        this->nh.setParam(calib_patt_params[i], calib_patt_new_param_str[i]);
+      }
+
+      // Double parameters
+      std::vector <std::string> calib_patt_int_params = {"/calibration_pattern/size",
+                                                         "/calibration_pattern/inner_size"};
+
+      double calib_patt_size_param = std::stod(ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData());
+      double calib_patt_inner_size_param = std::stod(ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData());
+
+      this->nh.setParam(calib_patt_int_params[0], calib_patt_size_param);
+      this->nh.setParam(calib_patt_int_params[1], calib_patt_inner_size_param);
+
+
+
+      // Boolean parameter
+      std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedTextEdit->toPlainText().toUtf8().constData();
+      bool misc_new_param_bool = calib_patt_new_param_bool_str.compare("true") ? true : false;
+      this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool_str);
+
+
+      // Dictionary parameters
+      // /calibration_pattern/dimension parameter:
+      std::string calib_patt_dimension_x_parameter_str = ui_->paramCalibPatDimensionXTextEdit->toPlainText().toUtf8().constData();
+      std::string calib_patt_dimension_y_parameter_str = ui_->paramCalibPatDimensionYTextEdit->toPlainText().toUtf8().constData();
+
+      double calib_patt_dimension_x_parameter = std::stod(calib_patt_dimension_x_parameter_str);
+      double calib_patt_dimension_y_parameter = std::stod(calib_patt_dimension_y_parameter_str);
+
+      this->nh.setParam("/calibration_pattern/dimension/x", calib_patt_dimension_x_parameter);
+      this->nh.setParam("/calibration_pattern/dimension/y", calib_patt_dimension_y_parameter);
+
+      // /calibration_pattern/border_size parameter:
+      double calib_patt_border_size_param, calib_patt_border_size_x_param, calib_patt_border_size_y_param;
+
+      if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+        calib_patt_border_size_param = std::stod(ui_->paramBorderSizeScalarTextEdit->toPlainText().toUtf8().constData());
+        this->nh.setParam("/calibration_pattern/border_size", calib_patt_border_size_param);
+      } else {
+        calib_patt_border_size_x_param = std::stod(ui_->paramBorderSizeXTextEdit->toPlainText().toUtf8().constData());
+        calib_patt_border_size_y_param = std::stod(ui_->paramBorderSizeYTextEdit->toPlainText().toUtf8().constData());
+
+        this->nh.setParam("/calibration_pattern/border_size/x", calib_patt_border_size_x_param);
+        this->nh.setParam("/calibration_pattern/border_size/y", calib_patt_border_size_y_param);
+      }
+
+
+      // *********************
+      // * Sensors Parameter *
+      // *********************
+      std::string sensor_to_write = ui_->sensorsComboBox->currentText().toUtf8().constData();
+
+      //String parameters
+      std::vector <std::string> sensors_params = {"/sensors/" + sensor_to_write + "/link",
+                                                  "/sensors/" + sensor_to_write + "/parent_link",
+                                                  "/sensors/" + sensor_to_write + "/child_link",
+                                                  "/sensors/" + sensor_to_write + "/topic_name"};
+      std::vector <std::string> sensors_new_param_str = {
+          ui_->paramSensorsLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsParentLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsChildLinkTextEdit->toPlainText().toUtf8().constData(),
+          ui_->paramSensorsTopicNameTextEdit->toPlainText().toUtf8().constData()};
+      for (size_t i = 0; i < sensors_new_param_str.size(); i++) {
+        this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
+      }
+
+      std::string config_ros_package = ui_->configPackageLineEdit->toPlainText().toUtf8().constData();
+      std::string config_file_path = ros::package::getPath(config_ros_package) + "/calibration/config.yml";
+      YAML::Node baseNode = YAML::LoadFile(config_file_path);
+
+      // Miscellaneous Tab
+      baseNode["description_file"] = misc_new_param_str[0];
+      baseNode["bag_file"] = misc_new_param_str[1];
+      baseNode["world_link"] = misc_new_param_str[2];
+      baseNode["anchored_sensor"] = misc_new_param_str[3];
+      baseNode["max_duration_between_msgs"] = misc_new_param_int;
+
+      // Calibration Pattern Tab
+      baseNode["calibration_pattern"]["link"] = calib_patt_new_param_str[0];
+      baseNode["calibration_pattern"]["parent_link"] = calib_patt_new_param_str[1];
+      baseNode["calibration_pattern"]["pattern_type"] = calib_patt_new_param_str[2];
+      baseNode["calibration_pattern"]["dictionary"] = calib_patt_new_param_str[3];
+      baseNode["calibration_pattern"]["mesh_file"] = calib_patt_new_param_str[4];
+      baseNode["calibration_pattern"]["size"] = calib_patt_size_param;
+      baseNode["calibration_pattern"]["inner_size"] = calib_patt_inner_size_param;
+      baseNode["calibration_pattern"]["fixed"] = calib_patt_new_param_bool_str;
+      baseNode["calibration_pattern"]["dimension"]["x"] = calib_patt_dimension_x_parameter;
+      baseNode["calibration_pattern"]["dimension"]["y"] = calib_patt_dimension_y_parameter;
+      if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+        baseNode["calibration_pattern"]["border_size"] = calib_patt_border_size_param;
+      } else {
+        baseNode["calibration_pattern"]["border_size"]["x"] = calib_patt_border_size_x_param;
+        baseNode["calibration_pattern"]["border_size"]["y"] = calib_patt_border_size_y_param;
+      }
+
+      // Sensors Tab
+      baseNode["sensors"][sensor_to_write]["link"] = sensors_new_param_str[0];
+      baseNode["sensors"][sensor_to_write]["parent_link"] = sensors_new_param_str[1];
+      baseNode["sensors"][sensor_to_write]["child_link"] = sensors_new_param_str[2];
+      baseNode["sensors"][sensor_to_write]["topic_name"] = sensors_new_param_str[3];
+
+      std::ofstream fout(config_file_path);
+      fout << baseNode; // dump it back into the file
+
+
+    }  // function writeButtonClicked
+
+//##########################################################
+
+    void CalibrationPanel::configBorderSizeSetComboBox(QString combobox_str) {
+
+      if (combobox_str == "Scalar") {
+        ui_->paramBorderSizeXLabel->setVisible(false);
+        ui_->paramBorderSizeYLabel->setVisible(false);
+        ui_->paramBorderSizeXTextEdit->setVisible(false);
+        ui_->paramBorderSizeYTextEdit->setVisible(false);
+        ui_->paramBorderSizeScalarTextEdit->setVisible(true);
+      } else {
+        ui_->paramBorderSizeXLabel->setVisible(true);
+        ui_->paramBorderSizeYLabel->setVisible(true);
+        ui_->paramBorderSizeXTextEdit->setVisible(true);
+        ui_->paramBorderSizeYTextEdit->setVisible(true);
+        ui_->paramBorderSizeScalarTextEdit->setVisible(false);
+      }
     }
 
-  // Int parameter
-    std::string misc_new_param_int_str = ui_->paramMaxDurationTextEdit->toPlainText().toUtf8().constData();
-    int misc_new_param_int = std::stoi(misc_new_param_int_str);
-    this->nh.setParam("/max_duration_between_msgs", misc_new_param_int);
-
-
-  // *********************************
-  // * Calibration Pattern Parameter *
-  // *********************************
-
-  //String parameters
-    std::vector <std::string> calib_patt_params = {"/calibration_pattern/link",
-                                                   "/calibration_pattern/parent_link",
-                                                   "/calibration_pattern/pattern_type",
-                                                   "/calibration_pattern/dictionary",
-                                                   "/calibration_pattern/mesh_file"};
-    std::vector <std::string> calib_patt_new_param_str = {
-        ui_->paramCalibPatLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatParentLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatPatternTypeTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatDictionaryTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatMeshFileTextEdit->toPlainText().toUtf8().constData()};
-    for (size_t i = 0; i < calib_patt_new_param_str.size(); i++) {
-      this->nh.setParam(calib_patt_params[i], calib_patt_new_param_str[i]);
-    }
-
-    // Int parameter
-    std::vector <std::string> calib_patt_int_params = {"/calibration_pattern/size",
-                                                       "/calibration_pattern/inner_size"};
-    std::vector <std::string> calib_patt_new_int_param_str = {
-        ui_->paramCalibPatSizeTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramCalibPatInnerSizeTextEdit->toPlainText().toUtf8().constData()};
-    for (size_t i = 0; i < calib_patt_new_int_param_str.size(); i++) {
-      double calib_patt_new_param_int = std::stod(calib_patt_new_int_param_str[i]);
-      this->nh.setParam(calib_patt_int_params[i], calib_patt_new_param_int);
-    }
-
-    // Boolean parameter
-    std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedTextEdit->toPlainText().toUtf8().constData();
-    bool misc_new_param_bool = calib_patt_new_param_bool_str.compare("true") ? true : false;
-    this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool_str);
-
-    // Dictionary parameters
-    // /calibration_pattern/dimension parameter:
-/*    std::string calib_patt_new_dict_str = ui_->paramCalibPatDimensionTextEdit->toPlainText().toUtf8().constData();
-    int dimension_x_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("x:") + 2,
-                                                                    calib_patt_new_dict_str.find(",") -
-                                                                    (calib_patt_new_dict_str.find("x:") + 2)));
-    int dimension_y_parameter = stoi(calib_patt_new_dict_str.substr(calib_patt_new_dict_str.find("y:") + 2,
-                                                                    calib_patt_new_dict_str.find("}") -
-                                                                    (calib_patt_new_dict_str.find("y:") + 2)));
-    this->nh.setParam("/calibration_pattern/dimension/x", dimension_x_parameter);
-    this->nh.setParam("/calibration_pattern/dimension/y", dimension_y_parameter);
-      ROS_INFO_STREAM(calib_patt_new_dict_str);
-    ROS_INFO_STREAM(dimension_x_parameter);
-    ROS_INFO_STREAM(dimension_y_parameter);*/
-
-
-  // *********************
-  // * Sensors Parameter *
-  // *********************
-    std::string sensor_to_write = ui_->sensorsComboBox->currentText().toUtf8().constData();
-
-    //String parameters
-    std::vector <std::string> sensors_params = {"/sensors/" + sensor_to_write + "/link",
-                                                "/sensors/" + sensor_to_write + "/parent_link",
-                                                "/sensors/" + sensor_to_write + "/child_link",
-                                                "/sensors/" + sensor_to_write + "/topic_name"};
-    std::vector <std::string> sensors_new_param_str = {
-        ui_->paramSensorsLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramSensorsParentLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramSensorsChildLinkTextEdit->toPlainText().toUtf8().constData(),
-        ui_->paramSensorsTopicNameTextEdit->toPlainText().toUtf8().constData()};
-    for (size_t i = 0; i < sensors_new_param_str.size(); i++) {
-      this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
-    }
-
-
-    YAML::Node baseNode = YAML::LoadFile("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-    baseNode["calibration_pattern"]["link"] = "pattern_link2"; // edit one of the nodes
-    std::ofstream fout("/home/miguel/catkin_ws/src/calibration/mmtbot/mmtbot_calibration/calibration/config.yml");
-    fout << baseNode; // dump it back into the file
-
-  }  // function writeButtonClicked
 }

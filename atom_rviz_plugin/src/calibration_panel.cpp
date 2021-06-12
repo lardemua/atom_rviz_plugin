@@ -30,6 +30,12 @@ namespace atom_rviz_plugin
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
+      ui_->paramBorderSizeXLabel->setVisible(false);
+      ui_->paramBorderSizeYLabel->setVisible(false);
+      ui_->paramBorderSizeXTextEdit->setVisible(false);
+      ui_->paramBorderSizeYTextEdit->setVisible(false);
+      ui_->paramBorderSizeScalarTextEdit->setVisible(true);
+
       // Qt events for buttons, checkboxes, labels, combobox,...
       connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
@@ -37,6 +43,7 @@ namespace atom_rviz_plugin
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
       connect(ui_->configLoadButton, SIGNAL(clicked(bool)), this, SLOT(configLoadParameters()));
       connect(ui_->sensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(configComboBoxChange()));
+      connect(ui_->configBorderSizeComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(configBorderSizeSetComboBox(QString)));
 
       // Initial Estimate Tab
       connect(ui_->initEstimateSaveButton, SIGNAL(clicked()), this, SLOT(initEstimateSaveButtonClicked()));
@@ -84,11 +91,12 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
 
         ui_->tabDescriptionLabel->setText("Set initial estimate of the sensors' pose");
-        setTable();
+        initEstimateSetTable();
 
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
+        ui_->collectDataSensorsComboBox->addItem("3dlidar"); //TODO APAGAR ESTA LINHA
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
