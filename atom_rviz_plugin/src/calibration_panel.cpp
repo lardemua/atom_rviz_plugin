@@ -91,7 +91,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
 
         ui_->tabDescriptionLabel->setText("Set initial estimate of the sensors' pose");
-        setTable();
+        initEstimateSetTable();
 
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 

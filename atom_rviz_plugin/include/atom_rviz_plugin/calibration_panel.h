@@ -8,6 +8,8 @@
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 #include <QTreeWidgetItem>
 
+#include <tf2_ros/transform_listener.h>
+
 
 namespace Ui {
 class CalibUI;
@@ -22,6 +24,8 @@ class CalibrationPanel: public rviz::Panel
   ros::NodeHandle nh;
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
   ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
+  tf2_ros::Buffer tfBuffer;
+
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
 
@@ -30,14 +34,14 @@ class CalibrationPanel: public rviz::Panel
 private Q_SLOTS:
   std::vector <QString> getSensors();
   void handleTabs();
-  void setTable();
 
   void configComboBoxChange();
   void configBorderSizeSetComboBox(QString combobox_str);
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
-  void configReadButtonClicked(); //TEST
   void configWriteButtonClicked();
 
+  void initEstimateSetTable();
+  void initEstimateGetSensorsCurrentPose(std::string sensor);
   void initEstimateCheckboxSpinBoxChanged();
   void initEstimateSensorsCellClicked(int row,int col);
   void initEstimateSaveButtonClicked();

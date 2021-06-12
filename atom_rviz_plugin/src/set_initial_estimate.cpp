@@ -6,6 +6,10 @@
 #include <atom_msgs/GetSensorInteractiveMarker.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 
+#include <tf2_ros/transform_listener.h>
+#include <geometry_msgs/TransformStamped.h>
+#include <geometry_msgs/Twist.h>
+
 #include <QHBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QCheckBox>
@@ -14,7 +18,38 @@
 
 namespace atom_rviz_plugin
 {
-    void CalibrationPanel::setTable(){
+    void CalibrationPanel::initEstimateGetSensorsCurrentPose(std::string sensor) {
+      tf2_ros::TransformListener tfListener(tfBuffer);
+      geometry_msgs::TransformStamped transformStamped;
+
+      std::string parent_link, child_link;
+      std::string parent_param = "/sensors/" + sensor + "/parent_link";
+      std::string child_param = "/sensors/" + sensor + "/child_link";
+
+      this->nh.getParam(parent_param,parent_link);
+      this->nh.getParam(child_param,child_link);
+
+      transformStamped = tfBuffer.lookupTransform(parent_link, child_link, ros::Time(0));
+
+      double x = transformStamped.transform.translation.x;
+      double y = transformStamped.transform.translation.y;
+      double z = transformStamped.transform.translation.z;
+      double roll = transformStamped.transform.rotation.x;
+      double pitch = transformStamped.transform.rotation.y;
+      double yaw = transformStamped.transform.rotation.z;
+
+      ui_->initEstimatePoseXSlider->setValue(x*100);
+      ui_->initEstimatePoseYSlider->setValue(y*100);
+      ui_->initEstimatePoseZSlider->setValue(z*100);
+      ui_->initEstimatePoseRollSlider->setValue(roll*100);
+      ui_->initEstimatePosePitchSlider->setValue(pitch*100);
+      ui_->initEstimatePoseYawSlider->setValue(yaw*100);
+
+      initEstimatePubPoseMsg();
+    }
+
+
+    void CalibrationPanel::initEstimateSetTable(){
 
       QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0,0));
       if (item0 != 0) {
@@ -93,7 +128,7 @@ namespace atom_rviz_plugin
         ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount()-1,2,spinBoxWidget);
         connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
       }
-    } //function setTable()
+    } //function initEstimateSetTable()
 
 
     void CalibrationPanel::initEstimateCheckboxSpinBoxChanged() {
@@ -144,6 +179,8 @@ namespace atom_rviz_plugin
       QString sensor_str = temp->text();
 
       ui_->initEstimateSensorLabel2->setText(sensor_str);
+
+      initEstimateGetSensorsCurrentPose(sensor_str.toUtf8().constData());
 
     } // function initEstimateSensorsCellClicked(int row,int col)
 
