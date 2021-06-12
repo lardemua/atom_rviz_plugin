@@ -48,7 +48,6 @@ namespace atom_rviz_plugin
       initEstimatePubPoseMsg();
     }
 
-
     void CalibrationPanel::initEstimateSetTable(){
 
       QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0,0));
