@@ -1,0 +1,32 @@
+description_file: package://mmtbot_description/urdf/mmtbot.urdf.xacro_changed
+bag_file: $ROS_BAGS/mmtbot/11_03_2021.bag_changed
+world_link: world_changed
+sensors:
+  hand_camera:
+    link: hand_camera_rgb_optical_frame_changed
+    parent_link: ee_link_changed
+    child_link: hand_camera_link_changed
+    topic_name: /hand_camera/rgb/image_raw_changed
+  world_camera:
+    link: world_camera_rgb_optical_frame_changed
+    parent_link: tripod_right_support_changed
+    child_link: world_camera_link_changed
+    topic_name: /world_camera/rgb/image_raw_changed
+  3dlidar:
+    link: 3dlidar_changed
+    parent_link: tripod_left_support_changed
+    child_link: 3dlidar_base_link_changed
+    topic_name: /3dlidar/points_changed
+calibration_pattern:
+  link: pattern_link_changed
+  parent_link: world_changed
+  fixed: false
+  pattern_type: charuco_changed
+  dictionary: DICT_5X5_100_changed
+  mesh_file: package://mmtbot_gazebo/models/charuco_800x600/charuco_800x600.dae_changed
+  border_size: {x: 0.062132123, y: 0.045123123}
+  dimension: {x: 0.04123123, y: 0.031312312}
+  size: 11
+  inner_size: 8
+anchored_sensor: ""
+max_duration_between_msgs: 1000
