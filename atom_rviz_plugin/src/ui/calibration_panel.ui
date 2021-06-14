@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -43,7 +43,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
@@ -357,54 +357,6 @@ between_msgs
          </property>
          <property name="text">
           <string>Fixed:</string>
-         </property>
-        </widget>
-        <widget class="QTextEdit" name="paramCalibPatFixedTextEdit">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="geometry">
-          <rect>
-           <x>91</x>
-           <y>95</y>
-           <width>125</width>
-           <height>30</height>
-          </rect>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="sizeIncrement">
-          <size>
-           <width>0</width>
-           <height>-31072</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
          </property>
         </widget>
         <widget class="QLabel" name="paramCalibPatPatternTypeLabel">
@@ -1101,13 +1053,25 @@ between_msgs
           </font>
          </property>
         </widget>
+        <widget class="QComboBox" name="paramCalibPatFixedComboBox">
+         <property name="geometry">
+          <rect>
+           <x>90</x>
+           <y>100</y>
+           <width>121</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="maxVisibleItems">
+          <number>2</number>
+         </property>
+        </widget>
         <zorder>paramBorderSizeScalarTextEdit</zorder>
         <zorder>paramCalibPatLinkTextEdit</zorder>
         <zorder>paramCalibPatLinkLabel</zorder>
         <zorder>paramCalibPatParentLinkTextEdit</zorder>
         <zorder>paramCalibPatParentLinkLabel</zorder>
         <zorder>paramCalibPatFixedLabel</zorder>
-        <zorder>paramCalibPatFixedTextEdit</zorder>
         <zorder>paramCalibPatPatternTypeLabel</zorder>
         <zorder>paramCalibPatPatternTypeTextEdit</zorder>
         <zorder>paramCalibPatDictionaryLabel</zorder>
@@ -1129,6 +1093,7 @@ between_msgs
         <zorder>paramBorderSizeYLabel</zorder>
         <zorder>paramBorderSizeXLabel</zorder>
         <zorder>paramBorderSizeXTextEdit</zorder>
+        <zorder>paramCalibPatFixedComboBox</zorder>
        </widget>
        <widget class="QWidget" name="sensorsTab">
         <attribute name="title">

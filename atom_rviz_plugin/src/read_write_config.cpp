@@ -12,15 +12,26 @@
 #define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
 
 namespace atom_rviz_plugin {
-    void CalibrationPanel::configComboBoxChange() {
+
+    void CalibrationPanel::configSensorsComboBoxChange() {
+      /// Function configComboBoxChange()
+      /* This function handles the action of alternating between the combobox of the sensors.
+       * It checks if the file has read something already and it calls a function with the
+       * right arguments in order to adjust the content of the text boxes to the sensor that
+       * is currently on the combobox. */
 
       bool any_text = ui_->paramDescriptionFileTextEdit->toPlainText().isEmpty();
       configLoadParameters(false, !any_text);
     }
 
-    void CalibrationPanel::configLoadParameters(bool clicked /*= true*/, bool comboBoxChanged /*= false*/) {
 
-//      std::string config_file_path = ros::package::getPath("mmtbot_calibration") + "/calibration/config.yml";
+    void CalibrationPanel::configLoadParameters(bool clicked /*= true*/, bool comboBoxChanged /*= false*/) {
+      /// Function configLoadParameters(bool clicked /*= true*/, bool comboBoxChanged /*= false*/)
+      /* This function loads the parameters of the config.yml file into the panel to the respective
+       * text boxes. It takes two arguments that have a default value. The argument clicked is true
+       * by default, and it is passed as false if there is a need to load the parameters without the
+       * button being clicked. The comboboxChanged is false by default, and is called as true when the
+       * sensors combobox is changed. */
 
       try {
         std::string config_ros_package = ui_->configPackageLineEdit->toPlainText().toUtf8().constData();
@@ -45,6 +56,7 @@ namespace atom_rviz_plugin {
                                                        "pattern_type",
                                                        "dictionary",
                                                        "mesh_file"};
+        bool calib_patt_fixed_param_cb;
 
         // Iterate through all parameters in config.yaml file
         for (YAML::const_iterator it = config_params.begin(); it != config_params.end(); ++it) {
@@ -71,7 +83,8 @@ namespace atom_rviz_plugin {
               } else if (it2->first.as<std::string>() == "fixed") {
 
                 nh.setParam("/" + it->first.as<std::string>() + "/" + it2->first.as<std::string>(), it2->second.as<bool>());
-                calib_patt_params_content.push_back(it2->second.as<bool>() ? "true" : "false");
+                calib_patt_fixed_param_cb = it2->second.as<bool>();
+//                calib_patt_params_content.push_back(it2->second.as<bool>() ? "true" : "false");
 
               } else if (it2->first.as<std::string>() == "size" || it2->first.as<std::string>() == "inner_size") {
 
@@ -153,23 +166,29 @@ namespace atom_rviz_plugin {
 
           ui_->paramCalibPatLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[0].c_str()));
           ui_->paramCalibPatParentLinkTextEdit->setText(QString::fromUtf8(calib_patt_params_content[1].c_str()));
-          ui_->paramCalibPatFixedTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
-          ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
-          ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
-          ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
-          ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
-          ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
-          ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
-          ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
+
+          if (calib_patt_fixed_param_cb) {
+            ui_->paramCalibPatFixedComboBox->addItem("True");
+            ui_->paramCalibPatFixedComboBox->addItem("False");
+          } else {
+            ui_->paramCalibPatFixedComboBox->addItem("False");
+            ui_->paramCalibPatFixedComboBox->addItem("True");
+          }
+
+          ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
+          ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
+          ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
+          ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
+          ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
+          ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
+          ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
 
           QString border_size_scalar_dict = ui_->configBorderSizeComboBox->currentText();
-//          std::string border_size_scalar_dict_str = border_size_scalar_dict.toUtf8().constData();
-
           if (border_size_scalar_dict == "Scalar") {
-            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
           } else {
-            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
-            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[11].c_str()));
+            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
+            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
           }
 
           ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
@@ -248,9 +267,14 @@ namespace atom_rviz_plugin {
 
 
       // Boolean parameter
-      std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedTextEdit->toPlainText().toUtf8().constData();
-      bool misc_new_param_bool = calib_patt_new_param_bool_str.compare("true") ? true : false;
-      this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool_str);
+      std::string calib_patt_new_param_bool_str = ui_->paramCalibPatFixedComboBox->currentText().toUtf8().constData();
+      bool calib_patt_new_param_bool;
+      if (calib_patt_new_param_bool_str == "True") {
+        calib_patt_new_param_bool = true;
+      } else {
+        calib_patt_new_param_bool = false;
+      }
+      this->nh.setParam("/calibration_pattern/fixed", calib_patt_new_param_bool);
 
 
       // Dictionary parameters
@@ -284,7 +308,6 @@ namespace atom_rviz_plugin {
       // *********************
       std::string sensor_to_write = ui_->sensorsComboBox->currentText().toUtf8().constData();
 
-      //String parameters
       std::vector <std::string> sensors_params = {"/sensors/" + sensor_to_write + "/link",
                                                   "/sensors/" + sensor_to_write + "/parent_link",
                                                   "/sensors/" + sensor_to_write + "/child_link",
@@ -298,14 +321,85 @@ namespace atom_rviz_plugin {
         this->nh.setParam(sensors_params[i], sensors_new_param_str[i]);
       }
 
+      // =======
+      // EMITTER
+      // =======
       std::string config_ros_package = ui_->configPackageLineEdit->toPlainText().toUtf8().constData();
       std::string config_file_path = ros::package::getPath(config_ros_package) + "/calibration/config.yml";
+
+      YAML::Emitter emitter;
+
+      emitter << YAML::BeginMap;
+        emitter << YAML::Key << "description_file" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[0];
+        emitter << YAML::Key << "bag_file" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[1];
+        emitter << YAML::Key << "world_link" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[2];
+
+        std::vector <QString> all_sensors = getSensors();
+        std::string sensor_param_link_path, sensor_param_parent_link_path, sensor_param_child_link_path, sensor_param_topic_name_path;
+        std::string sensor_param_link, sensor_param_parent_link, sensor_param_child_link, sensor_param_topic_name;
+
+        emitter << YAML::Key << "sensors" << YAML::Value << YAML::BeginMap;
+        for (size_t i = 0; i < all_sensors.size(); i++) {
+          std::string sensor_str = all_sensors[i].toUtf8().constData();
+
+          sensor_param_link_path = "/sensors/" + sensor_str + "/link";
+          sensor_param_parent_link_path = "/sensors/" + sensor_str + "/parent_link";
+          sensor_param_child_link_path = "/sensors/" + sensor_str + "/child_link";
+          sensor_param_topic_name_path = "/sensors/" + sensor_str + "/topic_name";
+
+          this->nh.getParam(sensor_param_link_path, sensor_param_link);
+          this->nh.getParam(sensor_param_parent_link_path, sensor_param_parent_link);
+          this->nh.getParam(sensor_param_child_link_path, sensor_param_child_link);
+          this->nh.getParam(sensor_param_topic_name_path, sensor_param_topic_name);
+
+          emitter << YAML::Key << sensor_str << YAML::DoubleQuoted << YAML::Value << YAML::BeginMap;
+            emitter << YAML::Key << "link" << YAML::DoubleQuoted << YAML::Value << sensor_param_link;
+            emitter << YAML::Key << "parent_link" << YAML::DoubleQuoted << YAML::Value << sensor_param_parent_link;
+            emitter << YAML::Key << "child_link" << YAML::DoubleQuoted << YAML::Value << sensor_param_child_link;
+            emitter << YAML::Key << "topic_name" << YAML::DoubleQuoted << YAML::Value << sensor_param_topic_name;
+          emitter << YAML::EndMap;
+        }
+        emitter << YAML::EndMap;
+
+        emitter << YAML::Key << "calibration_pattern" << YAML::Value << YAML::BeginMap;
+          emitter << YAML::Key << "link" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[0];
+          emitter << YAML::Key << "parent_link" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[1];
+          emitter << YAML::Key << "fixed" << YAML::Value << calib_patt_new_param_bool;
+          emitter << YAML::Key << "pattern_type" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[2];
+          emitter << YAML::Key << "dictionary" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[3];
+          emitter << YAML::Key << "mesh_file" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[4];
+          if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+            emitter << YAML::Key << "border_size" << YAML::Value << calib_patt_border_size_param;
+          } else {
+            emitter << YAML::Key << "border_size" << YAML::Value << YAML::BeginMap;
+              emitter << YAML::Key << "x" << YAML::Value << calib_patt_border_size_x_param;
+              emitter << YAML::Key << "y" << YAML::Value << calib_patt_border_size_y_param;
+            emitter << YAML::EndMap;
+          }
+          emitter << YAML::Key << "dimension" << YAML::Value << YAML::BeginMap;
+            emitter << YAML::Key << "x" << YAML::Value << calib_patt_dimension_x_parameter;
+            emitter << YAML::Key << "y" << YAML::Value << calib_patt_dimension_y_parameter;
+          emitter << YAML::EndMap;
+          emitter << YAML::Key << "size" << YAML::Value << calib_patt_size_param;
+          emitter << YAML::Key << "inner_size" << YAML::Value << calib_patt_inner_size_param;
+
+        emitter << YAML::EndMap;
+
+        emitter << YAML::Key << "anchored_sensor" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[3];
+        emitter << YAML::Key << "max_duration_between_msgs" << YAML::Value << misc_new_param_int;
+
+    emitter << YAML::EndMap;
+
+      std::ofstream fout(config_file_path);
+      fout << emitter.c_str(); // dump it back into the file
+
+/*
       YAML::Node baseNode = YAML::LoadFile(config_file_path);
 
       // Miscellaneous Tab
       std::string quote = "\"";
-      baseNode["description_file"] = misc_new_param_str[0];
-      baseNode["bag_file"] = misc_new_param_str[1];
+      baseNode["description_file"] = "" + misc_new_param_str[0];
+      baseNode["bag_file"] = "" + misc_new_param_str[1] + "";
       baseNode["world_link"] = misc_new_param_str[2];
       baseNode["anchored_sensor"] = misc_new_param_str[3];
       baseNode["max_duration_between_msgs"] = misc_new_param_int;
@@ -341,23 +435,8 @@ namespace atom_rviz_plugin {
       std::string yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
 
       std::string command_line = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
-//      std::cout << command_line << std::endl;
-//      system(command_line.c_str());
-/*
-      ros::master::V_TopicInfo master_topics;
-      ros::master::getTopics(master_topics);
+*/
 
-      std::string topic;
-      for (ros::master::V_TopicInfo::iterator it = master_topics.begin() ; it != master_topics.end(); it++) {
-        const ros::master::TopicInfo& info = *it;
-        if (info.datatype == "geometry_msgs/PoseWithCovarianceStamped") {
-          topic = info.name;
-        }
-
-//        std::cout << "Topic : " << it - master_topics.begin() << ": " << info.name << " -> " << info.datatype <<       std::endl;
-
-      }
-      ROS_INFO_STREAM(topic);*/
     }  // function writeButtonClicked
 
 //##########################################################

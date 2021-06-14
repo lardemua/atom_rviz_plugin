@@ -35,7 +35,7 @@ private Q_SLOTS:
   std::vector <QString> getSensors();
   void handleTabs();
 
-  void configComboBoxChange();
+  void configSensorsComboBoxChange();
   void configBorderSizeSetComboBox(QString combobox_str);
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
   void configWriteButtonClicked();
