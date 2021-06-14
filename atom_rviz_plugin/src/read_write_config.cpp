@@ -303,6 +303,7 @@ namespace atom_rviz_plugin {
       YAML::Node baseNode = YAML::LoadFile(config_file_path);
 
       // Miscellaneous Tab
+      std::string quote = "\"";
       baseNode["description_file"] = misc_new_param_str[0];
       baseNode["bag_file"] = misc_new_param_str[1];
       baseNode["world_link"] = misc_new_param_str[2];
@@ -340,9 +341,23 @@ namespace atom_rviz_plugin {
       std::string yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
 
       std::string command_line = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
-      system(command_line.c_str());
+//      std::cout << command_line << std::endl;
+//      system(command_line.c_str());
+/*
+      ros::master::V_TopicInfo master_topics;
+      ros::master::getTopics(master_topics);
 
+      std::string topic;
+      for (ros::master::V_TopicInfo::iterator it = master_topics.begin() ; it != master_topics.end(); it++) {
+        const ros::master::TopicInfo& info = *it;
+        if (info.datatype == "geometry_msgs/PoseWithCovarianceStamped") {
+          topic = info.name;
+        }
 
+//        std::cout << "Topic : " << it - master_topics.begin() << ": " << info.name << " -> " << info.datatype <<       std::endl;
+
+      }
+      ROS_INFO_STREAM(topic);*/
     }  // function writeButtonClicked
 
 //##########################################################

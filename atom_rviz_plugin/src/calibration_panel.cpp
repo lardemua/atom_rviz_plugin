@@ -78,6 +78,41 @@ namespace atom_rviz_plugin
       connect(ui_->collectDataPoseYDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
       connect(ui_->collectDataPoseZDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
 
+
+
+      // Set Combo Box of Data collect Tab
+      ros::master::V_TopicInfo master_topics;
+      ros::master::getTopics(master_topics);
+
+      int repeated_sensor = 0;
+      std::string topic;
+      std::vector <std::string> lidar_topics;
+      for (ros::master::V_TopicInfo::iterator it = master_topics.begin() ; it != master_topics.end(); it++) {
+        const ros::master::TopicInfo& info = *it;
+        if (info.datatype == "sensor_msgs/PointCloud2") {
+          topic = info.name;
+          topic = topic.substr(1);
+          std::size_t pos = topic.find('/');
+          if (pos != std::string::npos)
+          {
+            topic = topic.substr(0, pos);
+          }
+
+          // Avoid repeated topics
+          if (lidar_topics.size()!=0){
+            for (size_t i = 0; i < lidar_topics.size(); i++) {
+              if(lidar_topics[i]==topic){
+                repeated_sensor = repeated_sensor + 1;
+              }
+            }
+          }
+          if (repeated_sensor == 0) {
+            lidar_topics.push_back(topic);
+            ui_->collectDataSensorsComboBox->addItem(QString::fromUtf8(topic.c_str()));
+          }
+        }
+      }
+
       parentWidget()->setVisible(true);
 
     } //function onInitialize()
@@ -96,7 +131,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
-        ui_->collectDataSensorsComboBox->addItem("3dlidar"); //TODO APAGAR ESTA LINHA
+//        ui_->collectDataSensorsComboBox->addItem("3dlidar"); //TODO APAGAR ESTA LINHA
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 

@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -2006,6 +2006,9 @@ between_msgs
          <width>161</width>
          <height>25</height>
         </rect>
+       </property>
+       <property name="maxVisibleItems">
+        <number>50</number>
        </property>
       </widget>
       <widget class="QLabel" name="label_2">
