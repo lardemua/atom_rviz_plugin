@@ -388,54 +388,18 @@ namespace atom_rviz_plugin {
         emitter << YAML::Key << "anchored_sensor" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[3];
         emitter << YAML::Key << "max_duration_between_msgs" << YAML::Value << misc_new_param_int;
 
-    emitter << YAML::EndMap;
+      emitter << YAML::EndMap;
 
       std::ofstream fout(config_file_path);
       fout << emitter.c_str(); // dump it back into the file
 
-/*
-      YAML::Node baseNode = YAML::LoadFile(config_file_path);
-
-      // Miscellaneous Tab
-      std::string quote = "\"";
-      baseNode["description_file"] = "" + misc_new_param_str[0];
-      baseNode["bag_file"] = "" + misc_new_param_str[1] + "";
-      baseNode["world_link"] = misc_new_param_str[2];
-      baseNode["anchored_sensor"] = misc_new_param_str[3];
-      baseNode["max_duration_between_msgs"] = misc_new_param_int;
-
-      // Calibration Pattern Tab
-      baseNode["calibration_pattern"]["link"] = calib_patt_new_param_str[0];
-      baseNode["calibration_pattern"]["parent_link"] = calib_patt_new_param_str[1];
-      baseNode["calibration_pattern"]["pattern_type"] = calib_patt_new_param_str[2];
-      baseNode["calibration_pattern"]["dictionary"] = calib_patt_new_param_str[3];
-      baseNode["calibration_pattern"]["mesh_file"] = calib_patt_new_param_str[4];
-      baseNode["calibration_pattern"]["size"] = calib_patt_size_param;
-      baseNode["calibration_pattern"]["inner_size"] = calib_patt_inner_size_param;
-      baseNode["calibration_pattern"]["fixed"] = calib_patt_new_param_bool_str;
-      baseNode["calibration_pattern"]["dimension"]["x"] = calib_patt_dimension_x_parameter;
-      baseNode["calibration_pattern"]["dimension"]["y"] = calib_patt_dimension_y_parameter;
-      if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
-        baseNode["calibration_pattern"]["border_size"] = calib_patt_border_size_param;
-      } else {
-        baseNode["calibration_pattern"]["border_size"]["x"] = calib_patt_border_size_x_param;
-        baseNode["calibration_pattern"]["border_size"]["y"] = calib_patt_border_size_y_param;
-      }
-
-      // Sensors Tab
-      baseNode["sensors"][sensor_to_write]["link"] = sensors_new_param_str[0];
-      baseNode["sensors"][sensor_to_write]["parent_link"] = sensors_new_param_str[1];
-      baseNode["sensors"][sensor_to_write]["child_link"] = sensors_new_param_str[2];
-      baseNode["sensors"][sensor_to_write]["topic_name"] = sensors_new_param_str[3];
-
-      std::ofstream fout(config_file_path);
-      fout << baseNode; // dump it back into the file
-
       std::string python_script_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/copy_content_to_yaml.py";
       std::string yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
 
-      std::string command_line = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
-*/
+      std::string command_str = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
+      const char *command = command_str.c_str();
+      system(command);
+//      std::cout << "Running command " << std::endl << command << std::endl;
 
     }  // function writeButtonClicked
 
