@@ -24,11 +24,11 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
-       <string>Config</string>
+       <string>Configuration</string>
       </attribute>
       <widget class="QTabWidget" name="configurationTabs">
        <property name="enabled">

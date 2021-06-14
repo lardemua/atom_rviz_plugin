@@ -336,6 +336,12 @@ namespace atom_rviz_plugin {
       std::ofstream fout(config_file_path);
       fout << baseNode; // dump it back into the file
 
+      std::string python_script_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/copy_content_to_yaml.py";
+      std::string yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
+
+      std::string command_line = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
+      system(command_line.c_str());
+
 
     }  // function writeButtonClicked
 

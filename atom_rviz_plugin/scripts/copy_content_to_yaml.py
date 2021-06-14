@@ -1,17 +1,7 @@
 #!/usr/bin/env python3
 import argparse
-import os
-import re
-import rospkg
-import subprocess
-
 import ruamel.yaml.comments
-from colorama import Fore
-from urllib.parse import urlparse
-
 import yaml
-from urdf_parser_py.urdf import URDF
-import sys
 from ruamel.yaml import YAML, comments
 
 
@@ -62,6 +52,7 @@ def main():
     # Dump format (now with content values changed) to file.
     file_out = open(args['yaml_out'], 'w')
     yaml.dump(format, file_out)
+
 
 if __name__ == "__main__":
     main()
