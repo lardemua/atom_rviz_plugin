@@ -44,7 +44,7 @@ bag_file: $ROS_BAGS/mmtbot/11_03_2021.bag_changed
 
 # You must define a frame of reference for the optimization process.
 # It must exist in the transformation chains of all the sensors which are being calibrated.
-world_link: world_changed
+world_link: worl
 
 # ATOM will calibrate the extrinsic parameters of your sensors.
 # In this section you should discriminate the sensors that will be part of the calibrations.

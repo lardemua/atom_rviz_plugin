@@ -14,8 +14,6 @@ from urdf_parser_py.urdf import URDF
 import sys
 from ruamel.yaml import YAML, comments
 
-import OptimizationUtils.OptimizationUtils
-
 
 def loadYMLConfig(filename):
     """Load configuration from a yml file"""

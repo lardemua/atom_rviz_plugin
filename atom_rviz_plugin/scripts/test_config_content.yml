@@ -1,6 +1,6 @@
 description_file: package://mmtbot_description/urdf/mmtbot.urdf.xacro_changed
 bag_file: $ROS_BAGS/mmtbot/11_03_2021.bag_changed
-world_link: world_changed
+world_link: worl
 sensors:
   hand_camera:
     link: hand_camera_rgb_optical_frame_changed
