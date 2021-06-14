@@ -25,7 +25,7 @@ class CalibrationPanel: public rviz::Panel
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
   ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   tf2_ros::Buffer tfBuffer;
-  ros::Subscriber data_collect_sub = nh.subscribe("position", 1000, positionCallback);
+  ros::Subscriber data_collect_sub = nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
 
   CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;

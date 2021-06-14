@@ -133,7 +133,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
-        collectDataGetMarkersPosition();
+//        positionCallback();
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
