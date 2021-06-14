@@ -87,6 +87,12 @@ target_link_libraries(test_json_parser
    ${catkin_LIBRARIES}
 )
 
+# Compile call_python.cpp
+add_executable(call_python scripts/call_python.cpp)
+target_link_libraries(call_python
+   ${catkin_LIBRARIES}
+)
+
 #[[add_executable(test_read_param_node src/test_read_param.cpp)
  target_link_libraries(test_read_param_node
    ${catkin_LIBRARIES}
