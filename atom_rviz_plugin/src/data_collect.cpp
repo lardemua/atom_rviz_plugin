@@ -5,6 +5,8 @@
 #include <iomanip>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include <tf2_ros/transform_listener.h>
+#include <geometry_msgs/TransformStamped.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 #include <atom_msgs/GetDataset.h>
 #include <atom_msgs/SaveCollection.h>
@@ -12,12 +14,21 @@
 #include <cstdlib>
 #include <QMessageBox>
 
-using json = nlohmann::json;
-
 #include "ui_calibration_panel.h"
+
+using json = nlohmann::json;
 
 namespace atom_rviz_plugin
 {
+    void CalibrationPanel::positionCallback(){
+///*  // Function to get the Interactive Marker's position of the sensor in the combobox
+      try {
+        std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
+      } catch(...) {
+        return;
+      }
+    } //  function positionCallback()
+
     void CalibrationPanel::collectDataSaveButtonClicked(){
 ///*  // Save the collection (using the SaveCollection service)
       std::string save_collection_service_name = "/collect_data/save_collection";

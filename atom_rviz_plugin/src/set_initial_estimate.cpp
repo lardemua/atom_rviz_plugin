@@ -8,7 +8,6 @@
 
 #include <tf2_ros/transform_listener.h>
 #include <geometry_msgs/TransformStamped.h>
-#include <geometry_msgs/Twist.h>
 
 #include <QHBoxLayout>
 #include <QtWidgets/QDoubleSpinBox>
@@ -50,82 +49,88 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::initEstimateSetTable(){
 
-      QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0,0));
-      if (item0 != 0) {
+      try {
+        QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0, 0));
+        if (item0 != 0) {
+          return;
+        }
+
+        std::vector <QString> sensors_for_table = getSensors();
+
+        // TableWidget for sensors in the initial estimate tab
+        ui_->initEstimateTableWidget->verticalHeader()->setVisible(false);
+        ui_->initEstimateTableWidget->setShowGrid(false);
+        ui_->initEstimateTableWidget->setColumnCount(3);
+        ui_->initEstimateTableWidget->setColumnWidth(0, 125);
+        ui_->initEstimateTableWidget->setColumnWidth(1, 85);
+        ui_->initEstimateTableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+
+        for (size_t i = 0; i < sensors_for_table.size(); i++) {
+          QString sensor = sensors_for_table[i];
+          std::string sensor_str = sensor.toUtf8().constData();
+
+          // Get State of sensor marker (visibility and scale)
+          std::string get_sensor_service_name =
+              "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
+          ros::ServiceClient get_sensor_client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(
+              get_sensor_service_name);
+
+          atom_msgs::GetSensorInteractiveMarker get_sensor_srv;
+          //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
+
+          get_sensor_client.waitForExistence(); // Wait for the service to be available before calling
+          if (get_sensor_client.call(get_sensor_srv)) {
+            ROS_INFO("Service %s called successfully.", get_sensor_service_name.c_str());
+          } else {
+            ROS_ERROR("Failed to call service %s", get_sensor_service_name.c_str());
+            return; // perhaps here we should do a shutdown or an exit?
+          }
+          //       cout <<  << srv.response.visible << endl;
+          ROS_INFO("get_sensor_srv.response.visible=%d",
+                   get_sensor_srv.response.visible); // just for testing, return visible=1 so it should be fine
+
+          //Add row
+          ui_->initEstimateTableWidget->insertRow(ui_->initEstimateTableWidget->rowCount());
+
+          // Table Headers
+          ui_->initEstimateTableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Sensors"));
+          ui_->initEstimateTableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Show/Hide"));
+          ui_->initEstimateTableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem("Scale"));
+
+          // First column: sensor names
+          QTableWidgetItem *sensor_item = new QTableWidgetItem(sensor);
+          sensor_item->setFlags(sensor_item->flags() ^ Qt::ItemIsEditable);
+          ui_->initEstimateTableWidget->setItem(ui_->initEstimateTableWidget->rowCount() - 1, 0, sensor_item);
+
+          // Second column of the table (checkboxes for the sensors visibility)
+          QWidget *pWidget = new QWidget();
+          QCheckBox *pCheckBox = new QCheckBox();
+          QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
+          pLayout->addWidget(pCheckBox);
+          pLayout->setAlignment(Qt::AlignCenter);
+          pLayout->setContentsMargins(0, 0, 0, 0);
+          pWidget->setLayout(pLayout);
+          pCheckBox->setCheckState(get_sensor_srv.response.visible ? Qt::Checked : Qt::Unchecked);
+          ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount() - 1, 1, pWidget);
+          connect(pCheckBox, SIGNAL(clicked()), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
+
+
+          // Third column of the table  (spinbox for the scale of the marker)
+          QWidget *spinBoxWidget = new QWidget();
+          QDoubleSpinBox *pSpinBox = new QDoubleSpinBox();
+          QHBoxLayout *spinBoxLayout = new QHBoxLayout(pWidget);
+          spinBoxLayout->addWidget(pSpinBox);
+          spinBoxLayout->setContentsMargins(0, 0, 0, 0);
+          spinBoxWidget->setLayout(spinBoxLayout);
+          pSpinBox->setDecimals(2);
+          pSpinBox->setSingleStep(0.05);
+          pSpinBox->setMinimum(0.05);
+          pSpinBox->setValue(get_sensor_srv.response.scale);
+          ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount() - 1, 2, spinBoxWidget);
+          connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
+        }
+      } catch (...) {
         return;
-      }
-
-      std::vector <QString> sensors_for_table = getSensors();
-
-      // TableWidget for sensors in the initial estimate tab
-      ui_->initEstimateTableWidget->verticalHeader()->setVisible(false);
-      ui_->initEstimateTableWidget->setShowGrid(false);
-      ui_->initEstimateTableWidget->setColumnCount(3);
-      ui_->initEstimateTableWidget->setColumnWidth(0, 125);
-      ui_->initEstimateTableWidget->setColumnWidth(1, 85);
-      ui_->initEstimateTableWidget->horizontalHeader()->setSectionResizeMode( 2, QHeaderView::Stretch );
-
-      for (size_t i = 0; i < sensors_for_table.size(); i++) {
-        QString sensor = sensors_for_table[i];
-        std::string sensor_str = sensor.toUtf8().constData();
-
-        // Get State of sensor marker (visibility and scale)
-        std::string get_sensor_service_name = "/set_initial_estimate/" + sensor_str + "/get_sensor_interactive_marker";
-        ros::ServiceClient get_sensor_client = nh.serviceClient<atom_msgs::GetSensorInteractiveMarker>(get_sensor_service_name);
-
-        atom_msgs::GetSensorInteractiveMarker get_sensor_srv;
-        //  Check http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28c%2B%2B%29
-
-        get_sensor_client.waitForExistence(); // Wait for the service to be available before calling
-        if (get_sensor_client.call(get_sensor_srv)){
-         ROS_INFO("Service %s called successfully.", get_sensor_service_name.c_str() );
-        }
-        else{
-        ROS_ERROR("Failed to call service %s", get_sensor_service_name.c_str());
-        return; // perhaps here we should do a shutdown or an exit?
-        }
-//       cout <<  << srv.response.visible << endl;
-        ROS_INFO("get_sensor_srv.response.visible=%d", get_sensor_srv.response.visible); // just for testing, return visible=1 so it should be fine
-
-        //Add row
-        ui_->initEstimateTableWidget->insertRow( ui_->initEstimateTableWidget->rowCount() );
-
-        // Table Headers
-        ui_->initEstimateTableWidget->setHorizontalHeaderItem(0,new QTableWidgetItem("Sensors"));
-        ui_->initEstimateTableWidget->setHorizontalHeaderItem(1,new QTableWidgetItem("Show/Hide"));
-        ui_->initEstimateTableWidget->setHorizontalHeaderItem(2,new QTableWidgetItem("Scale"));
-
-        // First column: sensor names
-        QTableWidgetItem *sensor_item = new QTableWidgetItem(sensor);
-        sensor_item->setFlags(sensor_item->flags() ^ Qt::ItemIsEditable);
-        ui_->initEstimateTableWidget->setItem(ui_->initEstimateTableWidget->rowCount()-1, 0, sensor_item);
-
-        // Second column of the table (checkboxes for the sensors visibility)
-        QWidget *pWidget = new QWidget();
-        QCheckBox *pCheckBox = new QCheckBox();
-        QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
-        pLayout->addWidget(pCheckBox);
-        pLayout->setAlignment(Qt::AlignCenter);
-        pLayout->setContentsMargins(0,0,0,0);
-        pWidget->setLayout(pLayout);
-        pCheckBox->setCheckState(get_sensor_srv.response.visible ? Qt::Checked : Qt::Unchecked  );
-        ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount()-1,1,pWidget);
-        connect(pCheckBox,SIGNAL(clicked()),this,SLOT(initEstimateCheckboxSpinBoxChanged()));
-
-
-        // Third column of the table  (spinbox for the scale of the marker)
-        QWidget *spinBoxWidget = new QWidget();
-        QDoubleSpinBox *pSpinBox = new QDoubleSpinBox();
-        QHBoxLayout *spinBoxLayout = new QHBoxLayout(pWidget);
-        spinBoxLayout->addWidget(pSpinBox);
-        spinBoxLayout->setContentsMargins(0,0,0,0);
-        spinBoxWidget->setLayout(spinBoxLayout);
-        pSpinBox->setDecimals(2);
-        pSpinBox->setSingleStep(0.05);
-        pSpinBox->setMinimum(0.05);
-        pSpinBox->setValue(get_sensor_srv.response.scale);
-        ui_->initEstimateTableWidget->setCellWidget(ui_->initEstimateTableWidget->rowCount()-1,2,spinBoxWidget);
-        connect(pSpinBox, SIGNAL(valueChanged(double)), this, SLOT(initEstimateCheckboxSpinBoxChanged()));
       }
     } //function initEstimateSetTable()
 

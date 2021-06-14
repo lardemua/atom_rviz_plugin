@@ -6,6 +6,7 @@
 
 #include "ui_calibration_panel.h"
 
+
 #define PFLN ROS_INFO("file %s line %d\n",__FILE__,__LINE__);
 
 namespace atom_rviz_plugin
@@ -27,6 +28,7 @@ namespace atom_rviz_plugin
 //      PFLN
       handleTabs();
       getSensors();
+
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
@@ -131,7 +133,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
-//        ui_->collectDataSensorsComboBox->addItem("3dlidar"); //TODO APAGAR ESTA LINHA
+        collectDataGetMarkersPosition();
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
@@ -167,11 +169,5 @@ namespace atom_rviz_plugin
       }
       return sensors;
     } //function getSensors()
-
-
-/*    std::vector <QString> CalibrationPanel::getSensorsContent(std::vector <QString> sensors_content)
-    {
-    } //function getSensorsContent(std::vector <QString> sensors_content)*/
-
 
 }  //namespace atom_rviz_plugin
