@@ -118,5 +118,4 @@ namespace atom_rviz_plugin
 
     } //function calibCalibrateButtonClicked()
 
-
 }  // namespace atom_rviz_plugin
