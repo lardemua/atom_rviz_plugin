@@ -193,16 +193,18 @@ namespace atom_rviz_plugin
 
       if (msg != NULL) {
         update_msg = *msg;
-//        double x = update_msg.poses[0].pose.position.x;
-//        std::string x_str = std::to_string(update_msg.poses[0].pose.position.x);
-//        ui_->lineEdit->setText(QString::fromUtf8(x_str.c_str()));
-//        ui_->lineEdit->setText("Message");
-        std::string test = update_msg.server_id;
-        ui_->lineEdit->setText(QString::fromUtf8(test.c_str()));
+
+        for (size_t i=0; i<=update_msg.markers.size(); i++) {
+          std::cout << i << std::endl;
+          std::cout << "Analysing sensor: " << update_msg.markers[i].name << std::endl;
+        }
+
+/*        std::string test = std::to_string(update_msg.poses.at(0).pose.position.x);
+        ui_->lineEdit->setText(QString::fromUtf8(test.c_str()));*/
       } else{
         ui_->lineEdit->setText("No message");
       }
-
+      PFLN
       /*try {
         std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
         PFLN
