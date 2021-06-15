@@ -1989,16 +1989,6 @@ between_msgs
         <string>Sensor:</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>230</y>
-         <width>131</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
      </widget>
      <widget class="QWidget" name="calibrationTab">
       <attribute name="title">

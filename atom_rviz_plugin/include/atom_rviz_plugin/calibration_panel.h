@@ -43,12 +43,13 @@ class CalibrationPanel: public rviz::Panel
 private Q_SLOTS:
   std::vector <QString> getSensors();
   void handleTabs();
+  void getLidarSensorPosition();
 
   void configSensorsComboBoxChange();
   void configBorderSizeSetComboBox(QString combobox_str);
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
   void configWriteButtonClicked();
-  void positionCallback();
+
 
   void initEstimateSetTable();
   void initEstimateGetSensorsCurrentPose(std::string sensor);

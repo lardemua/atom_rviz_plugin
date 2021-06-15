@@ -81,6 +81,7 @@ namespace atom_rviz_plugin
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
       connect(ui_->collectDataTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
+      connect(ui_->collectDataSensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(getLidarSensorPosition()));
 
       connect(ui_->collectDataPoseXSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
       connect(ui_->collectDataPoseYSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
@@ -183,35 +184,30 @@ namespace atom_rviz_plugin
       return sensors;
     } //function getSensors()
 
-//    void CalibrationPanel::positionCallback(const visualization_msgs::InteractiveMarkerUpdate::ConstPtr& msg){
-    void CalibrationPanel::positionCallback(){
+    void CalibrationPanel::getLidarSensorPosition(){
 ///*  // Function to get the Interactive Marker's position of the sensor in the combobox
-      boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> msg;
-      msg = ros::topic::waitForMessage<visualization_msgs::InteractiveMarkerUpdate>("/data_labeler/update", ros::Duration(100));
+      std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
 
-      visualization_msgs::InteractiveMarkerUpdate update_msg;
+      try {
+        boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> msg;
+        msg = ros::topic::waitForMessage<visualization_msgs::InteractiveMarkerUpdate>("/data_labeler/update", ros::Duration(100));
 
-      if (msg != NULL) {
-        update_msg = *msg;
+        std::string test;
+        visualization_msgs::InteractiveMarkerUpdate update_msg;
 
-        for (size_t i=0; i<update_msg.markers.size(); i++) {
-          std::cout << i << std::endl;
-          std::cout << "Analysing sensor: " << update_msg.markers[i].name << std::endl;
+        if (msg != NULL) {
+          update_msg = *msg;
+
+          for (size_t i=0; i<update_msg.markers.size(); i++) {
+            if (update_msg.markers[i].name == sensor_in_cb) {
+              ui_->collectDataPoseXSlider->setValue(update_msg.markers[i].pose.position.x*100);
+              ui_->collectDataPoseYSlider->setValue(update_msg.markers[i].pose.position.y*100);
+              ui_->collectDataPoseZSlider->setValue(update_msg.markers[i].pose.position.z*100);
+            }
+          }
         }
-
-/*        std::string test = std::to_string(update_msg.poses.at(0).pose.position.x);
-        ui_->lineEdit->setText(QString::fromUtf8(test.c_str()));*/
-      } else{
-        ui_->lineEdit->setText("No message");
-      }
-      PFLN
-      /*try {
-        std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
-        PFLN
-        ROS_INFO("I heard: [%s]", msg->server_id.c_str());
       } catch(...) {
         return;
-      }*/
-    } //  function positionCallback()
-
+      }
+    } //  function getLidarSensorPosition()
 }  //namespace atom_rviz_plugin
