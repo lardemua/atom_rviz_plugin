@@ -3,6 +3,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <atom_msgs/GetSensorInteractiveMarker.h>
+#include <visualization_msgs/InteractiveMarkerUpdate.h>
 
 #include "ui_calibration_panel.h"
 
@@ -25,7 +26,8 @@ namespace atom_rviz_plugin
     void CalibrationPanel::onInitialize()
     {
 //      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
-      data_collect_sub = nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback, this);
+//      data_collect_sub = nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback, this);
+//      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback,this));
 
 // Functions to run when rviz opens
 //      PFLN
@@ -34,6 +36,8 @@ namespace atom_rviz_plugin
 
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
+
+      ui_->calibTextBrowser->setVisible(false);
 
       ui_->paramBorderSizeXLabel->setVisible(false);
       ui_->paramBorderSizeYLabel->setVisible(false);
@@ -83,6 +87,8 @@ namespace atom_rviz_plugin
       connect(ui_->collectDataPoseYDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
       connect(ui_->collectDataPoseZDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(collectDataSpinToSlider(double)));
 
+      connect(ui_->calibHelpButton, SIGNAL(clicked()), this, SLOT(calibHelpButtonClicked()));
+      connect(ui_->calibCalibrateButton, SIGNAL(clicked()), this, SLOT(calibCalibrateButtonClicked()));
 
 
       // Set Combo Box of Data collect Tab
@@ -141,6 +147,7 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
         ui_->tabDescriptionLabel->setText("Optimization procedure");
+        calibSetTable();
 
       }
       return;
@@ -172,5 +179,17 @@ namespace atom_rviz_plugin
       }
       return sensors;
     } //function getSensors()
+
+    void CalibrationPanel::positionCallback(const visualization_msgs::InteractiveMarkerUpdate::ConstPtr& msg){
+///*  // Function to get the Interactive Marker's position of the sensor in the combobox
+      try {
+        std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
+        PFLN
+        ROS_INFO("I heard: [%s]", msg->server_id.c_str());
+//        ui_->lineEdit->setText(QString::fromUtf8(msg->server_id.c_str()));
+      } catch(...) {
+        return;
+      }
+    } //  function positionCallback()
 
 }  //namespace atom_rviz_plugin

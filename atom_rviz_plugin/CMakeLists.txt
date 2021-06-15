@@ -71,6 +71,7 @@ set(SOURCE_FILES
         src/read_write_config.cpp
         src/set_initial_estimate.cpp
         src/data_collect.cpp
+        src/optimization_procedure.cpp
   )
   
   set( QT_SOURCES

@@ -20,15 +20,6 @@ using json = nlohmann::json;
 
 namespace atom_rviz_plugin
 {
-    void CalibrationPanel::positionCallback(){
-///*  // Function to get the Interactive Marker's position of the sensor in the combobox
-      try {
-        std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
-      } catch(...) {
-        return;
-      }
-    } //  function positionCallback()
-
     void CalibrationPanel::collectDataSaveButtonClicked(){
 ///*  // Save the collection (using the SaveCollection service)
       std::string save_collection_service_name = "/collect_data/save_collection";
