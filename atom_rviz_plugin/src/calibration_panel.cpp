@@ -24,7 +24,10 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::onInitialize()
     {
-      // Functions to run when rviz opens
+//      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
+      data_collect_sub = nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback, this);
+
+// Functions to run when rviz opens
 //      PFLN
       handleTabs();
       getSensors();
