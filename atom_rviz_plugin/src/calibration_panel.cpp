@@ -35,7 +35,7 @@ namespace atom_rviz_plugin
 //      PFLN
       handleTabs();
       getSensors();
-      positionCallback();
+//      positionCallback();
 
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
@@ -194,7 +194,7 @@ namespace atom_rviz_plugin
       if (msg != NULL) {
         update_msg = *msg;
 
-        for (size_t i=0; i<=update_msg.markers.size(); i++) {
+        for (size_t i=0; i<update_msg.markers.size(); i++) {
           std::cout << i << std::endl;
           std::cout << "Analysing sensor: " << update_msg.markers[i].name << std::endl;
         }
