@@ -29,10 +29,13 @@ namespace atom_rviz_plugin
 //      data_collect_sub = nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback, this);
 //      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback,this));
 
+
+
 // Functions to run when rviz opens
 //      PFLN
       handleTabs();
       getSensors();
+      positionCallback();
 
 //      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
@@ -180,16 +183,33 @@ namespace atom_rviz_plugin
       return sensors;
     } //function getSensors()
 
-    void CalibrationPanel::positionCallback(const visualization_msgs::InteractiveMarkerUpdate::ConstPtr& msg){
+//    void CalibrationPanel::positionCallback(const visualization_msgs::InteractiveMarkerUpdate::ConstPtr& msg){
+    void CalibrationPanel::positionCallback(){
 ///*  // Function to get the Interactive Marker's position of the sensor in the combobox
-      try {
+      boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> msg;
+      msg = ros::topic::waitForMessage<visualization_msgs::InteractiveMarkerUpdate>("/data_labeler/update", ros::Duration(100));
+
+      visualization_msgs::InteractiveMarkerUpdate update_msg;
+
+      if (msg != NULL) {
+        update_msg = *msg;
+//        double x = update_msg.poses[0].pose.position.x;
+//        std::string x_str = std::to_string(update_msg.poses[0].pose.position.x);
+//        ui_->lineEdit->setText(QString::fromUtf8(x_str.c_str()));
+//        ui_->lineEdit->setText("Message");
+        std::string test = update_msg.server_id;
+        ui_->lineEdit->setText(QString::fromUtf8(test.c_str()));
+      } else{
+        ui_->lineEdit->setText("No message");
+      }
+
+      /*try {
         std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
         PFLN
         ROS_INFO("I heard: [%s]", msg->server_id.c_str());
-//        ui_->lineEdit->setText(QString::fromUtf8(msg->server_id.c_str()));
       } catch(...) {
         return;
-      }
+      }*/
     } //  function positionCallback()
 
 }  //namespace atom_rviz_plugin

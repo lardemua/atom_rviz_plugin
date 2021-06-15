@@ -34,7 +34,7 @@ namespace atom_rviz_plugin
       else{
         ROS_ERROR("Failed to call service %s", save_collection_service_name.c_str());
       }
-
+      positionCallback();
       collectDataParseJson();
     } //  function collectDataSaveButtonClicked()
 

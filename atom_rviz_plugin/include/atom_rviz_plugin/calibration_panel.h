@@ -27,7 +27,12 @@ class CalibrationPanel: public rviz::Panel
   ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   tf2_ros::Buffer tfBuffer;
 //  ros::Subscriber data_collect_sub = nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
-  boost::shared_ptr<ros::Subscriber> data_collect_sub;
+//  boost::shared_ptr<ros::Subscriber> data_collect_sub;
+
+//  boost::shared_ptr<ros::Subscriber> data_collect_sub;
+//  boost::shared_ptr<ros::Subscriber const> data_collect_sub;
+//    boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> data_collect_sub;
+
 //    ros::Subscriber data_collect_sub;
 
    CalibrationPanel(QWidget* parent = nullptr);
@@ -43,7 +48,7 @@ private Q_SLOTS:
   void configBorderSizeSetComboBox(QString combobox_str);
   void configLoadParameters(bool clicked = true, bool comboBoxChanged = false);
   void configWriteButtonClicked();
-  void positionCallback(const visualization_msgs::InteractiveMarkerUpdate::ConstPtr& msg);
+  void positionCallback();
 
   void initEstimateSetTable();
   void initEstimateGetSensorsCurrentPose(std::string sensor);
