@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -1716,7 +1716,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>238</y>
+         <y>250</y>
          <width>130</width>
          <height>41</height>
         </rect>
@@ -1729,7 +1729,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>360</x>
-         <y>238</y>
+         <y>250</y>
          <width>130</width>
          <height>41</height>
         </rect>
@@ -1744,7 +1744,7 @@ between_msgs
          <x>10</x>
          <y>10</y>
          <width>290</width>
-         <height>190</height>
+         <height>211</height>
         </rect>
        </property>
        <column>
@@ -1758,177 +1758,11 @@ between_msgs
         </property>
        </item>
       </widget>
-      <widget class="QGroupBox" name="collectDataGroupBox">
-       <property name="geometry">
-        <rect>
-         <x>310</x>
-         <y>80</y>
-         <width>260</width>
-         <height>121</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Collection Pose</string>
-       </property>
-       <widget class="QLabel" name="collectDataPoseXLabel">
-        <property name="geometry">
-         <rect>
-          <x>3</x>
-          <y>30</y>
-          <width>40</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>x:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="collectDataPoseYLabel">
-        <property name="geometry">
-         <rect>
-          <x>3</x>
-          <y>60</y>
-          <width>40</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>y:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="collectDataPoseZLabel">
-        <property name="geometry">
-         <rect>
-          <x>3</x>
-          <y>90</y>
-          <width>40</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>z:</string>
-        </property>
-       </widget>
-       <widget class="QDoubleSpinBox" name="collectDataPoseXDoubleSpinBox">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>28</y>
-          <width>65</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <double>-10.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>10.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.050000000000000</double>
-        </property>
-       </widget>
-       <widget class="QDoubleSpinBox" name="collectDataPoseYDoubleSpinBox">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>58</y>
-          <width>65</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <double>-10.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>10.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.050000000000000</double>
-        </property>
-       </widget>
-       <widget class="QDoubleSpinBox" name="collectDataPoseZDoubleSpinBox">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>88</y>
-          <width>65</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <double>-10.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>10.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.050000000000000</double>
-        </property>
-       </widget>
-       <widget class="QSlider" name="collectDataPoseXSlider">
-        <property name="geometry">
-         <rect>
-          <x>34</x>
-          <y>30</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <number>-1000</number>
-        </property>
-        <property name="maximum">
-         <number>1000</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-       <widget class="QSlider" name="collectDataPoseYSlider">
-        <property name="geometry">
-         <rect>
-          <x>34</x>
-          <y>60</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <number>-1000</number>
-        </property>
-        <property name="maximum">
-         <number>1000</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-       <widget class="QSlider" name="collectDataPoseZSlider">
-        <property name="geometry">
-         <rect>
-          <x>34</x>
-          <y>90</y>
-          <width>151</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="minimum">
-         <number>-1000</number>
-        </property>
-        <property name="maximum">
-         <number>1000</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </widget>
       <widget class="QLabel" name="collectDataSensorLabel">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>205</y>
+         <y>220</y>
          <width>151</width>
          <height>17</height>
         </rect>
@@ -1941,7 +1775,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>150</x>
-         <y>205</y>
+         <y>220</y>
          <width>191</width>
          <height>17</height>
         </rect>
@@ -1954,7 +1788,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>280</y>
+         <y>292</y>
          <width>201</width>
          <height>17</height>
         </rect>
@@ -1963,31 +1797,210 @@ between_msgs
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#cc0000;&quot;&gt;Choose a collection to delete&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="collectDataSensorsComboBox">
-       <property name="geometry">
-        <rect>
-         <x>370</x>
-         <y>30</y>
-         <width>161</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="maxVisibleItems">
-        <number>50</number>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2">
+      <widget class="QGroupBox" name="groupBox">
        <property name="geometry">
         <rect>
          <x>310</x>
-         <y>30</y>
-         <width>67</width>
-         <height>17</height>
+         <y>10</y>
+         <width>271</width>
+         <height>211</height>
         </rect>
        </property>
-       <property name="text">
-        <string>Sensor:</string>
+       <property name="title">
+        <string>Positioning of LiDARs seed points</string>
        </property>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>30</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sensor:</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="collectDataSensorsComboBox">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>30</y>
+          <width>161</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="maxVisibleItems">
+         <number>50</number>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="collectDataGroupBox">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>70</y>
+          <width>271</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Interactive Marker Position</string>
+        </property>
+        <widget class="QLabel" name="collectDataPoseXLabel">
+         <property name="geometry">
+          <rect>
+           <x>3</x>
+           <y>30</y>
+           <width>40</width>
+           <height>18</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>x:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="collectDataPoseYLabel">
+         <property name="geometry">
+          <rect>
+           <x>3</x>
+           <y>60</y>
+           <width>40</width>
+           <height>18</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>y:</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="collectDataPoseZLabel">
+         <property name="geometry">
+          <rect>
+           <x>3</x>
+           <y>90</y>
+           <width>40</width>
+           <height>18</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>z:</string>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="collectDataPoseXDoubleSpinBox">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>28</y>
+           <width>65</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <double>-10.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.050000000000000</double>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="collectDataPoseYDoubleSpinBox">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>58</y>
+           <width>65</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <double>-10.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.050000000000000</double>
+         </property>
+        </widget>
+        <widget class="QDoubleSpinBox" name="collectDataPoseZDoubleSpinBox">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>88</y>
+           <width>65</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <double>-10.000000000000000</double>
+         </property>
+         <property name="maximum">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.050000000000000</double>
+         </property>
+        </widget>
+        <widget class="QSlider" name="collectDataPoseXSlider">
+         <property name="geometry">
+          <rect>
+           <x>34</x>
+           <y>30</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QSlider" name="collectDataPoseYSlider">
+         <property name="geometry">
+          <rect>
+           <x>34</x>
+           <y>60</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QSlider" name="collectDataPoseZSlider">
+         <property name="geometry">
+          <rect>
+           <x>34</x>
+           <y>90</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="minimum">
+          <number>-1000</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="calibrationTab">
@@ -1997,10 +2010,10 @@ between_msgs
       <widget class="QPushButton" name="calibCalibrateButton">
        <property name="geometry">
         <rect>
-         <x>430</x>
-         <y>260</y>
-         <width>141</width>
-         <height>51</height>
+         <x>475</x>
+         <y>285</y>
+         <width>111</width>
+         <height>31</height>
         </rect>
        </property>
        <property name="text">
@@ -2012,7 +2025,7 @@ between_msgs
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>561</width>
+         <width>575</width>
          <height>201</height>
         </rect>
        </property>
@@ -2079,9 +2092,9 @@ between_msgs
       <widget class="QPushButton" name="calibHelpButton">
        <property name="geometry">
         <rect>
-         <x>500</x>
+         <x>510</x>
          <y>220</y>
-         <width>71</width>
+         <width>75</width>
          <height>25</height>
         </rect>
        </property>
@@ -2089,74 +2102,42 @@ between_msgs
         <string>Help</string>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="calibTextBrowser">
+      <widget class="QLineEdit" name="lineEdit">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>441</width>
-         <height>291</height>
+         <x>0</x>
+         <y>255</y>
+         <width>586</width>
+         <height>25</height>
         </rect>
        </property>
-       <property name="autoFormatting">
-        <set>QTextEdit::AutoBulletList</set>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>238</y>
+         <width>121</width>
+         <height>17</height>
+        </rect>
        </property>
-       <property name="documentTitle">
-        <string>Arguments Description</string>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;title&gt;Arguments Description&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;https://github.com/lardemua/atom&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'monospace'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;-json JSON_FILE, --json_file JSON_FILE&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Json file containing input dataset.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -vo, --view_optimization&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Displays generic total error and residuals graphs.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -v, --verbose         Be verbose&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -rv, --ros_visualization&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Publish ros visualization markers.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -si, --show_images    shows images for each camera&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -oi, --optimize_intrinsics&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Adds camera instrinsics and distortion to the optimization&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -pof, --profile_objective_function&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Runs and prints a profile of the objective function,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        then exits.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -sr SAMPLE_RESIDUALS, --sample_residuals SAMPLE_RESIDUALS&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Samples residuals&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -ss SAMPLE_SEED, --sample_seed SAMPLE_SEED&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Sampling seed&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -uic, --use_incomplete_collections&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Remove any collection which does not have a detection&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        for all sensors.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -rpd, --remove_partial_detections&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Remove detected labels which are only partial. Used or&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        the Charuco.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -ssf SENSOR_SELECTION_FUNCTION, --sensor_selection_function SENSOR_SELECTION_FUNCTION&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        A string to be evaluated into a lambda function that&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        receives a sensor name as input and returns True or&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        False to indicate if the sensor should be loaded (and&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        used in the optimization). The Syntax is lambda name:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        f(x), where f(x) is the function in python language.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        Example: lambda name: name in [&amp;quot;left_laser&amp;quot;,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        &amp;quot;frontal_camera&amp;quot;] , to load only sensors left_laser&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        and frontal_camera&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;  -csf COLLECTION_SELECTION_FUNCTION, --collection_selection_function COLLECTION_SELECTION_FUNCTION&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        A string to be evaluated into a lambda function that&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        receives a collection name as input and returns True&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        or False to indicate if the collection should be&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        loaded (and used in the optimization). The Syntax is&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        lambda name: f(x), where f(x) is the function in&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        python language. Example: lambda name: int(name) &amp;gt; 5 ,&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'monospace'; font-size:9pt;&quot;&gt;                        to load only collections 6, 7, and onward.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <property name="text">
+        <string>Command-line</string>
        </property>
       </widget>
-      <zorder>calibTextBrowser</zorder>
-      <zorder>calibCalibrateButton</zorder>
-      <zorder>calibTableWidget</zorder>
-      <zorder>calibHelpButton</zorder>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>280</y>
+         <width>51</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Copy</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
