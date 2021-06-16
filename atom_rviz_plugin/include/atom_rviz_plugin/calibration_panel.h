@@ -67,6 +67,7 @@ private Q_SLOTS:
   void calibHelpButtonClicked();
   void calibCalibrateButtonClicked();
   void calibCopyButtonClicked();
+  void calibTableChanged();
 
 protected:
   Ui::CalibUI* ui_;

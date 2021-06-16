@@ -19,7 +19,12 @@ namespace atom_rviz_plugin
         if (item0 != 0) {
           return;
         }
-        for (int i = 1; i < ui_->calibTableWidget->rowCount(); i++) {
+
+        QTableWidgetItem *item = new QTableWidgetItem;
+        item->setFlags(item->flags() | Qt::ItemIsEditable);
+        ui_->calibTableWidget->setItem(0,0,item);
+
+        for (int i = 1; i < ui_->calibTableWidget->rowCount()-2; i++) {
           QWidget *pWidget = new QWidget();
           QCheckBox *pCheckBox = new QCheckBox();
           QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
@@ -29,6 +34,7 @@ namespace atom_rviz_plugin
           pWidget->setLayout(pLayout);
           pCheckBox->setCheckState(Qt::Unchecked);
           ui_->calibTableWidget->setCellWidget(i, 0, pWidget);
+          connect(pCheckBox, SIGNAL(clicked()), this, SLOT(calibTableChanged()));
         }
 
       } catch (...) {
@@ -68,6 +74,9 @@ namespace atom_rviz_plugin
       }
     } //function calibCalibrateButtonClicked()
 
+    void CalibrationPanel::calibTableChanged(){
+      ROS_INFO_STREAM("Ola");
+    } //function calibTableCHanged()
 
     void CalibrationPanel::calibHelpButtonClicked(){
 
@@ -95,7 +104,6 @@ namespace atom_rviz_plugin
                          "function in python language. Example: lambda name: "
                          "name in [\"left_laser\",\"frontal_camera\"], to load "
                          "sensors left_laser and frontal_camera\n\n"
-
                          "  - Collection Selection Function: A string to be evaluated into a lambda function that "
                          "receives a collection name as input and returns True or False "
                          "to indicate if the collection should be loaded (and used in the optimization)."
