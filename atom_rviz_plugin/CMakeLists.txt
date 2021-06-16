@@ -73,31 +73,11 @@ set(SOURCE_FILES
         src/data_collect.cpp
         src/optimization_procedure.cpp
   )
-  
-  set( QT_SOURCES
-    src/qcustomplot.cpp
-    )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADERS} ${UIC_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION "${${PROJECT_NAME}_VERSION}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${OGRE_PREFIX_DIR}/include")
 
-# Test Json parser
-add_executable(test_json_parser src/test_json_parser.cpp)
-target_link_libraries(test_json_parser
-   ${catkin_LIBRARIES}
-)
-
-# Compile call_python.cpp
-add_executable(call_python scripts/call_python.cpp)
-target_link_libraries(call_python
-   ${catkin_LIBRARIES}
-)
-
-#[[add_executable(test_read_param_node src/test_read_param.cpp)
- target_link_libraries(test_read_param_node
-   ${catkin_LIBRARIES}
- )]]
 ###########
 # Install #
 ###########

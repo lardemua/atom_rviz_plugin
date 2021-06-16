@@ -26,14 +26,6 @@ class CalibrationPanel: public rviz::Panel
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
   ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   tf2_ros::Buffer tfBuffer;
-//  ros::Subscriber data_collect_sub = nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
-//  boost::shared_ptr<ros::Subscriber> data_collect_sub;
-
-//  boost::shared_ptr<ros::Subscriber> data_collect_sub;
-//  boost::shared_ptr<ros::Subscriber const> data_collect_sub;
-//    boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> data_collect_sub;
-
-//    ros::Subscriber data_collect_sub;
 
    CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
@@ -74,9 +66,12 @@ private Q_SLOTS:
   void calibSetTable();
   void calibHelpButtonClicked();
   void calibCalibrateButtonClicked();
+  void calibCopyButtonClicked();
 
 protected:
   Ui::CalibUI* ui_;
 
 };
+
+
 } // end namespace atom_rviz_plugin

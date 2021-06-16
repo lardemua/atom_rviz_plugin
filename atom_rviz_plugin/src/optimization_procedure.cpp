@@ -6,6 +6,8 @@
 #include <QtWidgets/QCheckBox>
 #include <QMessageBox>
 #include <QClipboard>
+#include <QSpacerItem>
+#include <QGridLayout>
 
 #include "ui_calibration_panel.h"
 
@@ -17,10 +19,7 @@ namespace atom_rviz_plugin
         if (item0 != 0) {
           return;
         }
-
-        for (int i = 0; i < ui_->calibTableWidget->rowCount(); i++) {
-//          ROS_INFO_STREAM("Adding checkbox");
-
+        for (int i = 1; i < ui_->calibTableWidget->rowCount(); i++) {
           QWidget *pWidget = new QWidget();
           QCheckBox *pCheckBox = new QCheckBox();
           QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
@@ -36,60 +35,6 @@ namespace atom_rviz_plugin
         return;
       }
     } //function calibSetTable()
-
-    void CalibrationPanel::calibHelpButtonClicked(){
-
-      QMessageBox messageBox;
-      messageBox.information(0,"Help","usage: calibrate [-h] [-sv SKIP_VERTICES] [-z Z_INCONSISTENCY_THRESHOLD]\n"
-                                      "                 [-vpv] [-vo] -json JSON_FILE [-v] [-rv] [-si] [-oi] [-pof]\n"
-                                      "                 [-sr SAMPLE_RESIDUALS] [-ss SAMPLE_SEED] [-od] [-fec] [-uic]\n"
-                                      "                 [-rpd] [-ssf SENSOR_SELECTION_FUNCTION]\n"
-                                      "                 [-csf COLLECTION_SELECTION_FUNCTION]\n"
-                                      "\n"
-                                      "optional arguments:\n"
-                                      "  -h, --help            show this help message and exit\n"
-                                      "  -json JSON_FILE, --json_file JSON_FILE\n"
-                                      "                        Json file containing input dataset.\n"
-                                      "  -vo, --view_optimization\n"
-                                      "                        Displays generic total error and residuals graphs.\n"
-                                      "  -v, --verbose         Be verbose\n"
-                                      "  -rv, --ros_visualization\n"
-                                      "                        Publish ros visualization markers.\n"
-                                      "  -si, --show_images    shows images for each camera\n"
-                                      "  -oi, --optimize_intrinsics\n"
-                                      "                        Adds camera instrinsics and distortion to the optimization\n"
-                                      "  -pof, --profile_objective_function\n"
-                                      "                        Runs and prints a profile of the objective function,\n"
-                                      "                        then exits.\n"
-                                      "  -sr SAMPLE_RESIDUALS, --sample_residuals SAMPLE_RESIDUALS\n"
-                                      "                        Samples residuals\n"
-                                      "  -ss SAMPLE_SEED, --sample_seed SAMPLE_SEED\n"
-                                      "                        Sampling seed\n"
-                                      "  -uic, --use_incomplete_collections\n"
-                                      "                        Remove any collection which does not have a detection\n"
-                                      "                        for all sensors.\n"
-                                      "  -rpd, --remove_partial_detections\n"
-                                      "                        Remove detected labels which are only partial. Used or\n"
-                                      "                        the Charuco.\n"
-                                      "  -ssf SENSOR_SELECTION_FUNCTION, --sensor_selection_function SENSOR_SELECTION_FUNCTION\n"
-                                      "                        A string to be evaluated into a lambda function that\n"
-                                      "                        receives a sensor name as input and returns True or\n"
-                                      "                        False to indicate if the sensor should be loaded (and\n"
-                                      "                        used in the optimization). The Syntax is lambda name:\n"
-                                      "                        f(x), where f(x) is the function in python language.\n"
-                                      "                        Example: lambda name: name in [\"left_laser\",\n"
-                                      "                        \"frontal_camera\"] , to load only sensors left_laser\n"
-                                      "                        and frontal_camera\n"
-                                      "  -csf COLLECTION_SELECTION_FUNCTION, --collection_selection_function COLLECTION_SELECTION_FUNCTION\n"
-                                      "                        A string to be evaluated into a lambda function that\n"
-                                      "                        receives a collection name as input and returns True\n"
-                                      "                        or False to indicate if the collection should be\n"
-                                      "                        loaded (and used in the optimization). The Syntax is\n"
-                                      "                        lambda name: f(x), where f(x) is the function in\n"
-                                      "                        python language. Example: lambda name: int(name) > 5 ,\n"
-                                      "                        to load only collections 6, 7, and onward.");
-
-    } //function calibHelpButtonClicked()
 
     void CalibrationPanel::calibCalibrateButtonClicked(){
 
@@ -116,11 +61,49 @@ namespace atom_rviz_plugin
     void CalibrationPanel::calibCopyButtonClicked(){
       try {
         QClipboard *clip = QApplication::clipboard();
-        QString input = ui_->lineEdit->text();
+        QString input = ui_->calibCommandLineEdit->text();
         clip->setText(input);
       } catch (...) {
         return;
       }
-
     } //function calibCalibrateButtonClicked()
+
+
+    void CalibrationPanel::calibHelpButtonClicked(){
+
+      QMessageBox messageBox;
+      QSpacerItem* horizontalSpacer = new QSpacerItem(5500, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+      messageBox.setIcon(QMessageBox::Information);
+      messageBox.setWindowTitle("Help");
+      messageBox.setText("                                                               Command-line arguments description            \n"
+                         "                                                               ---------------------------------------------------------             \n"
+                         "  - JSON File: Json file containing input dataset.\n\n"
+                         "  - View Optimization: Displays generic total error and residuals graphs.\n\n"
+                         "  - Verbose: Be verbose\n\n"
+                         "  - ROS Visualization: Publish ros visualization markers.\n\n"
+                         "  - Show Images: Shows images for each camera.\n\n"
+                         "  - Optimize Intrinsics: Adds camera intrinsics and distortion to the optimization.\n\n"
+                         "  - Profile Objective function: Runs and prints a profile of the objective function then exits.\n\n"
+                         "  - Sample Residuals: Samples residuals.\n\n"
+                         "  - Sample seed: Samples seed.\n\n"
+                         "  - Use Incomplete Collections: Remove any collection which does not have a detection for all sensors.\n\n"
+                         "  - Remove partial detections: Remove detected labels which are only partial. Used or the Charuco.\n\n"
+                         "  - Sensor select function: A string to be evaluated into a lambda function that "
+                         "receives a sensor name as input and returns Tru or False"
+                         " to indicate if the sensor should be loaded (and used in the optimization)."
+                         " The Syntax is lambda name: f(x), where f(x) is the "
+                         "function in python language. Example: lambda name: "
+                         "name in [\"left_laser\",\"frontal_camera\"], to load "
+                         "sensors left_laser and frontal_camera\n\n"
+
+                         "  - Collection Selection Function: A string to be evaluated into a lambda function that "
+                         "receives a collection name as input and returns True or False "
+                         "to indicate if the collection should be loaded (and used in the optimization)."
+                         " The Syntax is lambda name: f(x), where f(x) is the "
+                         "function in python language. Example: lambda name: "
+                         "int(name) > 5, to load only collections 6, 7, and onward.");
+      QGridLayout* layout = (QGridLayout*)messageBox.layout();
+      layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+      messageBox.exec();
+    } //function calibHelpButtonClicked()
 }  // namespace atom_rviz_plugin

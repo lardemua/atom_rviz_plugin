@@ -18,29 +18,17 @@ namespace atom_rviz_plugin
       int argc = 0;
       char** argv;
       ros::init(argc, NULL, "calibration_panel");
-//      PFLN
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
 
     void CalibrationPanel::onInitialize()
     {
-//      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, CalibrationPanel::positionCallback);
-//      data_collect_sub = nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback, this);
-//      data_collect_sub  = boost::shared_ptr<ros::Subscriber> new(nh.subscribe("/data_labeler/update", 1000, &CalibrationPanel::positionCallback,this));
-
-
-
 // Functions to run when rviz opens
-//      PFLN
       handleTabs();
       getSensors();
-//      positionCallback();
 
-//      configLoadParameters(false, false);
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
-
-      ui_->calibTextBrowser->setVisible(false);
 
       ui_->paramBorderSizeXLabel->setVisible(false);
       ui_->paramBorderSizeYLabel->setVisible(false);

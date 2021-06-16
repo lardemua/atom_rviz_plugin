@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>393</height>
+    <width>622</width>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2011,7 +2011,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>475</x>
-         <y>285</y>
+         <y>310</y>
          <width>111</width>
          <height>31</height>
         </rect>
@@ -2033,7 +2033,7 @@ between_msgs
         <bool>true</bool>
        </property>
        <property name="rowCount">
-        <number>6</number>
+        <number>7</number>
        </property>
        <property name="columnCount">
         <number>1</number>
@@ -2055,12 +2055,17 @@ between_msgs
        </attribute>
        <row>
         <property name="text">
+         <string>New Row</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
          <string>View Optimization</string>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>ROS Visualization</string>
+         <string>Json File</string>
         </property>
        </row>
        <row>
@@ -2102,13 +2107,13 @@ between_msgs
         <string>Help</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="calibCommandLineEdit">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>255</y>
          <width>586</width>
-         <height>25</height>
+         <height>41</height>
         </rect>
        </property>
       </widget>
@@ -2129,7 +2134,7 @@ between_msgs
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>280</y>
+         <y>295</y>
          <width>51</width>
          <height>25</height>
         </rect>
