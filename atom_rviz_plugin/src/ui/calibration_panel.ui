@@ -2090,22 +2090,22 @@ between_msgs
        </row>
        <row>
         <property name="text">
-         <string>Sample Residuals</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
-         <string>Sample Seeds</string>
-        </property>
-       </row>
-       <row>
-        <property name="text">
          <string>Use Incomplete collections</string>
         </property>
        </row>
        <row>
         <property name="text">
          <string>Remove partial detections</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Sample Residuals</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Sample Seeds</string>
         </property>
        </row>
        <row>
@@ -2125,7 +2125,7 @@ between_msgs
        </column>
        <item row="0" column="0">
         <property name="text">
-         <string>dataset_file:=</string>
+         <string/>
         </property>
        </item>
       </widget>

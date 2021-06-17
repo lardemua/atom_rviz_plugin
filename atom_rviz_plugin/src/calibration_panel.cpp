@@ -27,6 +27,7 @@ namespace atom_rviz_plugin
 // Functions to run when rviz opens
       handleTabs();
       getSensors();
+      calibSetTable();
 
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
@@ -139,8 +140,6 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
         ui_->tabDescriptionLabel->setText("Optimization procedure");
-        calibSetTable();
-
       }
       return;
     } // function handleTabs()
