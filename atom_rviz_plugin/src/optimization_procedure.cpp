@@ -15,7 +15,7 @@ namespace atom_rviz_plugin
 {
     void CalibrationPanel::calibSetTable(){
       try {
-        for (int i = 1; i < ui_->calibTableWidget->rowCount()-4; i++) {
+        for (int i = 3; i < ui_->calibTableWidget->rowCount()-7; i++) {
           QWidget *pWidget = new QWidget();
           QCheckBox *pCheckBox = new QCheckBox();
           QHBoxLayout *pLayout = new QHBoxLayout(pWidget);
@@ -69,23 +69,99 @@ namespace atom_rviz_plugin
       std::string command_line_text_box = ui_->calibCommandLineEdit->text().toUtf8().constData();
       std::string argument;
       size_t pos;
+      QWidget *pWidget;
+      QCheckBox *checkbox;
+      std::vector <std::string> checkbox_arguments = {"-vpv ","-vo ","-v ","-phased ","rv ","-si ",
+                                                      "-oi ","-pof ","-ajf ","-uic ","-rpd ","-ipg "};
+      std::string argument_to_erase;
+      QTableWidgetItem *argument_cell;
+      size_t string_argument_pos;
+      std::vector <std::string> string_arguments = {"-json ", "-sv ", "-z ","-nig ","-sr ",
+                                                    "-ss ", "-ssf ", "-csf ", "-oj ", "-ox "};
+      std::vector <int> string_arguments_idx = {0, 1, 2, 15, 16, 17, 18, 19, 20, 21};
+      std::string argument_content;
 
-      // JSON File argument
-/*      QTableWidgetItem *json_file_cell = ui_->calibTableWidget->item(0, 0);
-      QString str = json_file_cell->text();
-      std::string json_file = json_file_cell->text().toUtf8().constData();
-      if (not json_file.empty()) {
+//"""""""""""""""""""""""""""""""""""""""""
+      for (int i = 0; i < string_arguments.size(); i++) {
+        argument_to_erase = command_line_text_box;
 
-//       ui_->calibCommandLineEdit->insert(QString::fromUtf8((" -json dataset_file:=" + json_file).c_str()));
+//        std::cout<<string_arguments[i]<<std::endl;
+//        std::cout<<string_arguments_idx[i]<<std::endl;
+
+        argument = string_arguments[i];
+        pos = argument_to_erase.find(argument);
+
+        if (pos != std::string::npos) { //there is a "-... " argument in the command-line edit box
+//          std::cout<<"There is a -... here"<<std::endl;
+          argument_to_erase.erase(0, pos);
+          string_argument_pos = argument_to_erase.find("-",1);
+          if (string_argument_pos != std::string::npos) { //there is a second "-" in the line edit
+            argument_to_erase.erase(string_argument_pos, argument_to_erase.length());
+          }
+          string_argument_pos = command_line_text_box.find(argument_to_erase);
+          command_line_text_box.erase(string_argument_pos,argument_to_erase.length()); //erases the argument
+        }
+
+        argument_cell = ui_->calibTableWidget->item(string_arguments_idx[i], 0);
+        if (argument_cell){ //argument cell is not empty
+//          std::cout<<"Argument cell not empty"<<std::endl;
+          argument_content = argument_cell->text().toUtf8().constData();
+          if (not argument_content.empty()) {  //empty string in the cell
+            command_line_text_box = command_line_text_box + argument + argument_content + " ";
+          }
+        }
+//        std::cout<<"------------"<<std::endl;
+      }
+
+//"""""""""""""""""""""""""""""""""""""""""
+
+/*      std::vector <std::string> string_arguments;
+
+      for (int i=0; i<2; ++i)
+      {
+        cellItem = ui_->calibTableWidget->item(i, 0);
+        if (cellItem){
+          string_arguments.push_back(ui_->calibTableWidget->item(i, 0)->text().toUtf8().constData());
+        }
       }*/
 
-      // View Optimization argument
-      argument = "-vo ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget1 = ui_->calibTableWidget->cellWidget(1, 0);
-      QCheckBox *checkbox1 = pWidget1->findChild<QCheckBox *>();
+      // String arguments
+//"""""""""""""""""""""""""""""""""""""""""
+/*      argument_to_erase = command_line_text_box;
+      std::cout<<argument_to_erase<<std::endl;
+      argument = "-json ";
+      pos = argument_to_erase.find(argument);
 
-      if (checkbox1->isChecked()) {
+      QTableWidgetItem *json_file_cell = ui_->calibTableWidget->item(0, 0);
+      json_file = json_file_cell->text().toUtf8().constData();
+
+      if (pos != std::string::npos) { //there is a "-json " argument in the command-line edit box
+        argument_to_erase.erase(0, pos);
+        string_argument_pos = argument_to_erase.find("-",1);
+        if (string_argument_pos != std::string::npos) { //there is a second "-" in the line edit
+          argument_to_erase.erase(string_argument_pos, argument_to_erase.length());
+        }
+        string_argument_pos = command_line_text_box.find(argument_to_erase);
+        command_line_text_box.erase(string_argument_pos,argument_to_erase.length()); //erases the argument
+      }
+      if (not json_file.empty()) {  //json_file table cell is empty
+        command_line_text_box = command_line_text_box + argument + json_file + " ";
+      }*/
+//"""""""""""""""""""""""""""""""""""""""""
+
+
+
+//"""""""""""""""""""""""""""""""""""""""""
+
+
+    // Checkbox arguments
+    for (int i = 0; i < checkbox_arguments.size(); i++) {
+      argument = checkbox_arguments[i];
+      pos = command_line_text_box.find(argument);
+      pWidget = ui_->calibTableWidget->cellWidget(i+3, 0);
+      checkbox = pWidget->findChild<QCheckBox *>();
+
+      if (checkbox->isChecked()) {
         if (pos == std::string::npos) {
           command_line_text_box = command_line_text_box + argument;
         }
@@ -94,150 +170,52 @@ namespace atom_rviz_plugin
           command_line_text_box.erase(pos, argument.length());
         }
       }
-
-      // Verbose argument
-      argument = "-v ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget2 = ui_->calibTableWidget->cellWidget(2, 0);
-      QCheckBox *checkbox2 = pWidget2->findChild<QCheckBox *>();
-      if (checkbox2->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-      // ROS Visualization argument
-      argument = "-rv ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget3 = ui_->calibTableWidget->cellWidget(3, 0);
-      QCheckBox *checkbox3 = pWidget3->findChild<QCheckBox *>();
-      if (checkbox3->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-      // Show Images argument
-      argument = "-si ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget4 = ui_->calibTableWidget->cellWidget(4, 0);
-      QCheckBox *checkbox4 = pWidget4->findChild<QCheckBox *>();
-      if (checkbox4->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-
-      // Optimize Intrinsics argument
-      argument = "-oi ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget5 = ui_->calibTableWidget->cellWidget(5, 0);
-      QCheckBox *checkbox5 = pWidget5->findChild<QCheckBox *>();
-      if (checkbox5->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-
-      // Profile Objective Function argument
-      argument = "-pof ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget6 = ui_->calibTableWidget->cellWidget(6, 0);
-      QCheckBox *checkbox6 = pWidget6->findChild<QCheckBox *>();
-      if (checkbox6->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-
-      // Use Incomplete Collections argument
-      argument = "-uic ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget7 = ui_->calibTableWidget->cellWidget(7, 0);
-      QCheckBox *checkbox7 = pWidget7->findChild<QCheckBox *>();
-      if (checkbox7->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
-      // Remove Partial Detections argument
-      argument = "-rpd ";
-      pos = command_line_text_box.find(argument);
-      QWidget *pWidget8 = ui_->calibTableWidget->cellWidget(8, 0);
-      QCheckBox *checkbox8 = pWidget8->findChild<QCheckBox *>();
-      if (checkbox8->isChecked()) {
-        if (pos == std::string::npos) {
-          command_line_text_box = command_line_text_box + argument;
-        }
-      } else {
-        if (pos != std::string::npos) {
-          command_line_text_box.erase(pos, argument.length());
-        }
-      }
-
+    }
+//      std::cout<<argument_to_erase<<std::endl;
       ui_->calibCommandLineEdit->setText(QString::fromUtf8(command_line_text_box.c_str()));
     } //function calibTableCHanged()
 
     void CalibrationPanel::calibHelpButtonClicked(){
 
       QMessageBox messageBox;
-      QSpacerItem* horizontalSpacer = new QSpacerItem(5500, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+      QSpacerItem* horizontalSpacer = new QSpacerItem(20000, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
       messageBox.setIcon(QMessageBox::Information);
       messageBox.setWindowTitle("Help");
       messageBox.setText("                                                               Command-line arguments description            \n"
                          "                                                               ---------------------------------------------------------             \n"
-                         "  - JSON File: Json file path containing input dataset.\n\n"
-                         "  - View Optimization: Displays generic total error and residuals graphs.\n\n"
-                         "  - Verbose: Be verbose\n\n"
-                         "  - ROS Visualization: Publish ros visualization markers.\n\n"
-                         "  - Show Images: Shows images for each camera.\n\n"
-                         "  - Optimize Intrinsics: Adds camera intrinsics and distortion to the optimization.\n\n"
-                         "  - Profile Objective Function: Runs and prints a profile of the objective function then exits.\n\n"
-                         "  - Use Incomplete Collections: Remove any collection which does not have a detection for all sensors.\n\n"
-                         "  - Remove Partial Detections: Remove detected labels which are only partial. Used or the Charuco.\n\n"
-                         "  - Sample Residuals: Samples residuals.\n\n"
-                         "  - Sample seed: Samples seed.\n\n"
+                         "  - JSON File: Json file path containing input dataset.\n"
+                         "  - Skip Vertices: Useful for fast testing.\n"
+                         "  - Inconsistency Threshold: Threshold for max z inconsistency value.\n"
+                         "  - View Projected Vertices: Visualize Projections of vertices onto images.\n"
+                         "  - View Optimization: Displays generic total error and residuals graphs.\n"
+                         "  - Verbose: Be verbose\n"
+                         "  - Phased: Stay in a loop before calling optimization, and in another after calling the optimization. Good for debugging\n"
+                         "  - ROS Visualization: Publish ros visualization markers.\n"
+                         "  - Show Images: Shows images for each camera.\n"
+                         "  - Optimize Intrinsics: Adds camera intrinsics and distortion to the optimization.\n"
+                         "  - Profile Objective Function: Runs and prints a profile of the objective function then exits.\n"
+                         "  - All Joints Fixed: Assume all joints are fixed and because of that draw a single robot mesh. Overrides automatic detection of static robot.\n"
+                         "  - Use Incomplete Collections: Remove any collection which does not have a detection for all sensors.\n"
+                         "  - Remove Partial Detections: Remove detected labels which are only partial. Used or the Charuco.\n"
+                         "  - Initial Pose Ghost: Draw a ghost mesh with the systems initial pose. Good for debugging.\n"
+                         "  - Noisy Initial Guess: Percentage of noise to add to the initial guess atomic transformations set before.\n"
+                         "  - Sample Residuals: Samples residuals.\n"
+                         "  - Sample seed: Samples seed.\n"
                          "  - Sensor select function: A string to be evaluated into a lambda function that "
                          "receives a sensor name as input and returns Tru or False"
                          " to indicate if the sensor should be loaded (and used in the optimization)."
                          " The Syntax is lambda name: f(x), where f(x) is the "
                          "function in python language. Example: lambda name: "
                          "name in [\"left_laser\",\"frontal_camera\"], to load "
-                         "sensors left_laser and frontal_camera\n\n"
+                         "sensors left_laser and frontal_camera\n"
                          "  - Collection Selection Function: A string to be evaluated into a lambda function that "
                          "receives a collection name as input and returns True or False "
                          "to indicate if the collection should be loaded (and used in the optimization)."
                          " The Syntax is lambda name: f(x), where f(x) is the "
                          "function in python language. Example: lambda name: "
-                         "int(name) > 5, to load only collections 6, 7, and onward.");
+                         "int(name) > 5, to load only collections 6, 7, and onward.\n"
+                         "  - Output Json: Full path to output json file.\n"
+                         "  - Output Xacro: Full path to output xacro file.");
       QGridLayout* layout = (QGridLayout*)messageBox.layout();
       layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
       messageBox.exec();

@@ -43,7 +43,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
@@ -601,7 +601,7 @@ between_msgs
           <rect>
            <x>315</x>
            <y>175</y>
-           <width>225</width>
+           <width>260</width>
            <height>30</height>
           </rect>
          </property>
@@ -649,7 +649,7 @@ between_msgs
           <rect>
            <x>315</x>
            <y>135</y>
-           <width>225</width>
+           <width>260</width>
            <height>30</height>
           </rect>
          </property>
@@ -715,7 +715,7 @@ between_msgs
           <rect>
            <x>332</x>
            <y>95</y>
-           <width>90</width>
+           <width>105</width>
            <height>30</height>
           </rect>
          </property>
@@ -827,9 +827,9 @@ between_msgs
          </property>
          <property name="geometry">
           <rect>
-           <x>455</x>
+           <x>470</x>
            <y>95</y>
-           <width>90</width>
+           <width>105</width>
            <height>30</height>
           </rect>
          </property>
@@ -890,7 +890,7 @@ between_msgs
         <widget class="QLabel" name="paramCalibPatDimensionLabel_3">
          <property name="geometry">
           <rect>
-           <x>443</x>
+           <x>458</x>
            <y>102</y>
            <width>21</width>
            <height>17</height>
@@ -2033,7 +2033,7 @@ between_msgs
         <bool>true</bool>
        </property>
        <property name="rowCount">
-        <number>13</number>
+        <number>22</number>
        </property>
        <property name="columnCount">
         <number>1</number>
@@ -2060,12 +2060,32 @@ between_msgs
        </row>
        <row>
         <property name="text">
+         <string>Skip Vertices</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Z Inconsistency Threshold</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>View Projected Vertices</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
          <string>View Optimization</string>
         </property>
        </row>
        <row>
         <property name="text">
          <string>Verbose</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Phased</string>
         </property>
        </row>
        <row>
@@ -2090,12 +2110,27 @@ between_msgs
        </row>
        <row>
         <property name="text">
+         <string>All Joints Fixed</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
          <string>Use Incomplete collections</string>
         </property>
        </row>
        <row>
         <property name="text">
          <string>Remove Partial Detections</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Initial Pose Ghost</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Noisy Initial Guess</string>
         </property>
        </row>
        <row>
@@ -2116,6 +2151,16 @@ between_msgs
        <row>
         <property name="text">
          <string>Collection Selection Function</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Output Json</string>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string>Output Xacro</string>
         </property>
        </row>
        <column>
