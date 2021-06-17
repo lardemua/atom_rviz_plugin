@@ -82,6 +82,7 @@ namespace atom_rviz_plugin
 
       connect(ui_->calibHelpButton, SIGNAL(clicked()), this, SLOT(calibHelpButtonClicked()));
       connect(ui_->calibCalibrateButton, SIGNAL(clicked()), this, SLOT(calibCalibrateButtonClicked()));
+      connect(ui_->calibCopyPushButton, SIGNAL(clicked()), this, SLOT(calibCopyButtonClicked()));
       connect(ui_->calibTableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(calibTableChanged()));
 
       // Set Combo Box of Data collect Tab

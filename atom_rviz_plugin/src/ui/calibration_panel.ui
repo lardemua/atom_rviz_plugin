@@ -2085,7 +2085,7 @@ between_msgs
        </row>
        <row>
         <property name="text">
-         <string>Profile Objective function</string>
+         <string>Profile Objective Function</string>
         </property>
        </row>
        <row>
@@ -2095,7 +2095,7 @@ between_msgs
        </row>
        <row>
         <property name="text">
-         <string>Remove partial detections</string>
+         <string>Remove Partial Detections</string>
         </property>
        </row>
        <row>
@@ -2152,7 +2152,7 @@ between_msgs
         </rect>
        </property>
        <property name="text">
-        <string>rosrun atom_calibration calibrate</string>
+        <string>rosrun atom_calibration calibrate </string>
        </property>
       </widget>
       <widget class="QLabel" name="label_3">
@@ -2168,7 +2168,7 @@ between_msgs
         <string>Command-line</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="calibCopyPushButton">
        <property name="geometry">
         <rect>
          <x>0</x>
