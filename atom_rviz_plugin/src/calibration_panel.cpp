@@ -25,7 +25,7 @@ namespace atom_rviz_plugin
     void CalibrationPanel::onInitialize()
     {
 // Functions to run when rviz opens
-      handleTabs(-1);
+      handleTabs();
       getSensors();
       calibSetTable();
 
@@ -38,7 +38,7 @@ namespace atom_rviz_plugin
       ui_->paramBorderSizeScalarTextEdit->setVisible(true);
 
       // Qt events for buttons, checkboxes, labels, combobox,...
-      connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs(int)));
+      connect(ui_->mainTabs, SIGNAL(currentChanged(int)), this, SLOT(handleTabs()));
 
       // Configuration Tab
       connect(ui_->configWriteButton, SIGNAL(clicked()), this, SLOT(configWriteButtonClicked()));
@@ -90,7 +90,7 @@ namespace atom_rviz_plugin
     } //function onInitialize()
 
     // Function to control what happens every time each tab of the panel is opened
-    void CalibrationPanel::handleTabs(int i) {
+    void CalibrationPanel::handleTabs() {
       if (ui_->mainTabs->currentWidget() == ui_->configTab){
 
         ui_->tabDescriptionLabel->setText("Configuration of the calibration parameters");
@@ -98,14 +98,15 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
 
         ui_->tabDescriptionLabel->setText("Set initial estimate of the sensors' pose");
-        initEstimateSetTable();
-
+        try {
+          initEstimateSetTable();
+        } catch(...){
+          return;
+        }
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
-        if (i<0){
-          setDataCollectComboBox();
-        }
+        setDataCollectComboBox();
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 

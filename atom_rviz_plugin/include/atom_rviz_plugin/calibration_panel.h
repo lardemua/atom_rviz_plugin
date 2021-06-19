@@ -34,7 +34,7 @@ class CalibrationPanel: public rviz::Panel
 
 private Q_SLOTS:
   std::vector <QString> getSensors();
-  void handleTabs(int i);
+  void handleTabs();
   void getLidarSensorPosition();
 
   void configSensorsComboBoxChange();

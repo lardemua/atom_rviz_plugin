@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -43,7 +43,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
@@ -55,7 +55,7 @@
          </property>
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>135</x>
            <y>10</y>
            <width>430</width>
            <height>41</height>
@@ -95,33 +95,33 @@
         <widget class="QLabel" name="paramBagFileLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>70</y>
            <width>91</width>
            <height>17</height>
           </rect>
          </property>
          <property name="text">
-          <string>bag_file</string>
+          <string>Bag File</string>
          </property>
         </widget>
         <widget class="QLabel" name="paramAnchoredSensorLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>160</y>
            <width>131</width>
            <height>17</height>
           </rect>
          </property>
          <property name="text">
-          <string>anchored_sensor</string>
+          <string>Anchored Sensor</string>
          </property>
         </widget>
         <widget class="QTextEdit" name="paramWorldLinkTextEdit">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>135</x>
            <y>110</y>
            <width>430</width>
            <height>30</height>
@@ -131,7 +131,7 @@
         <widget class="QTextEdit" name="paramAnchoredSensorTextEdit">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>135</x>
            <y>155</y>
            <width>430</width>
            <height>30</height>
@@ -141,20 +141,20 @@
         <widget class="QLabel" name="paramDescriptionFileLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>20</y>
            <width>111</width>
            <height>17</height>
           </rect>
          </property>
          <property name="text">
-          <string>description_file</string>
+          <string>Description File</string>
          </property>
         </widget>
         <widget class="QTextEdit" name="paramBagFileTextEdit">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>135</x>
            <y>65</y>
            <width>430</width>
            <height>30</height>
@@ -164,20 +164,20 @@
         <widget class="QLabel" name="paramWorldLinkLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>0</x>
            <y>115</y>
            <width>81</width>
            <height>17</height>
           </rect>
          </property>
          <property name="text">
-          <string>world_link</string>
+          <string>World Link</string>
          </property>
         </widget>
         <widget class="QTextEdit" name="paramMaxDurationTextEdit">
          <property name="geometry">
           <rect>
-           <x>130</x>
+           <x>135</x>
            <y>200</y>
            <width>430</width>
            <height>30</height>
@@ -187,9 +187,9 @@
         <widget class="QLabel" name="paramMaxDurationLabel">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>200</y>
-           <width>111</width>
+           <x>0</x>
+           <y>188</y>
+           <width>131</width>
            <height>51</height>
           </rect>
          </property>
@@ -199,9 +199,8 @@
           </font>
          </property>
          <property name="text">
-          <string>max_duration_
-between_msgs
-</string>
+          <string>Maximum Duration
+Between Messages</string>
          </property>
         </widget>
        </widget>
@@ -1063,6 +1062,9 @@ between_msgs
           </rect>
          </property>
          <property name="maxVisibleItems">
+          <number>2</number>
+         </property>
+         <property name="maxCount">
           <number>2</number>
          </property>
         </widget>
