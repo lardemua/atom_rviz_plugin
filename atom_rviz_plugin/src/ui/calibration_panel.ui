@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -2012,10 +2012,10 @@ Between Messages</string>
       <widget class="QPushButton" name="calibCalibrateButton">
        <property name="geometry">
         <rect>
-         <x>475</x>
-         <y>310</y>
-         <width>111</width>
-         <height>31</height>
+         <x>445</x>
+         <y>300</y>
+         <width>141</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="text">
@@ -2028,7 +2028,7 @@ Between Messages</string>
          <x>10</x>
          <y>30</y>
          <width>575</width>
-         <height>181</height>
+         <height>121</height>
         </rect>
        </property>
        <property name="showGrid">
@@ -2180,7 +2180,7 @@ Between Messages</string>
        <property name="geometry">
         <rect>
          <x>510</x>
-         <y>210</y>
+         <y>150</y>
          <width>75</width>
          <height>25</height>
         </rect>
@@ -2189,24 +2189,11 @@ Between Messages</string>
         <string>Help</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="calibCommandLineEdit">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>267</y>
-         <width>586</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>rosrun atom_calibration calibrate </string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>250</y>
+         <x>10</x>
+         <y>173</y>
          <width>121</width>
          <height>17</height>
         </rect>
@@ -2218,8 +2205,8 @@ Between Messages</string>
       <widget class="QPushButton" name="calibCopyPushButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>297</y>
+         <x>10</x>
+         <y>290</y>
          <width>51</width>
          <height>25</height>
         </rect>
@@ -2239,6 +2226,23 @@ Between Messages</string>
        </property>
        <property name="text">
         <string>Command-line Arguments:</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="calibCommandTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>190</y>
+         <width>575</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;rosrun atom_calibration calibrate &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </widget>

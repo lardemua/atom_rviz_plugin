@@ -29,6 +29,8 @@ namespace atom_rviz_plugin
       getSensors();
       calibSetTable();
 
+      ui_->calibCommandTextEdit->setReadOnly(true);
+
       ui_->collectDataDeleteCollectionLabel->setVisible(false);
 
       ui_->paramBorderSizeXLabel->setVisible(false);
