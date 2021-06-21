@@ -18,6 +18,9 @@ namespace atom_rviz_plugin
       int argc = 0;
       char** argv;
       ros::init(argc, NULL, "calibration_panel");
+
+      sub_collect = nh.subscribe("/data_labeler/feedback", 1000, &CalibrationPanel::collectDataSubCallback, this);
+      sub_collect = nh.subscribe("/set_initial_estimate/feedback", 1000, &CalibrationPanel::initialEstimateSubCallback, this);
     }
 
     CalibrationPanel::~CalibrationPanel() = default;
@@ -72,7 +75,7 @@ namespace atom_rviz_plugin
       connect(ui_->collectDataSaveButton, SIGNAL(clicked()), this, SLOT(collectDataSaveButtonClicked()));
       connect(ui_->collectDataDeleteButton, SIGNAL(clicked()), this, SLOT(collectDataDeleteButtonClicked()));
       connect(ui_->collectDataTreeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this, SLOT(collectDataCheckItem(QTreeWidgetItem*, int)));
-      connect(ui_->collectDataSensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(getLidarSensorPosition()));
+//      connect(ui_->collectDataSensorsComboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(getLidarSensorPosition()));
 
       connect(ui_->collectDataPoseXSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
       connect(ui_->collectDataPoseYSlider, SIGNAL(valueChanged(int)), this, SLOT(collectDataSliderToSpin(int)));
@@ -93,6 +96,9 @@ namespace atom_rviz_plugin
 
     // Function to control what happens every time each tab of the panel is opened
     void CalibrationPanel::handleTabs() {
+      std::string launch_file_running = checkRunningLaunch();
+//      std::cout<< launch_file_running << std::endl;
+
       if (ui_->mainTabs->currentWidget() == ui_->configTab){
 
         ui_->tabDescriptionLabel->setText("Configuration of the calibration parameters");
@@ -100,15 +106,18 @@ namespace atom_rviz_plugin
       } else if (ui_->mainTabs->currentWidget() == ui_->initEstimateTab){
 
         ui_->tabDescriptionLabel->setText("Set initial estimate of the sensors' pose");
-        try {
+        if (launch_file_running == "set_initial_estimate") {
+//          std::cout<< launch_file_running << std::endl;
           initEstimateSetTable();
-        } catch(...){
-          return;
         }
+
       } else if (ui_->mainTabs->currentWidget() == ui_->dataCollectTab){
 
         ui_->tabDescriptionLabel->setText("Collect data from the sensors");
-        setDataCollectComboBox();
+        if (launch_file_running == "data_collect"){
+//          std::cout<< launch_file_running << std::endl;
+          setDataCollectComboBox();
+        }
 
       } else if (ui_->mainTabs->currentWidget() == ui_->calibrationTab){
 
@@ -144,70 +153,36 @@ namespace atom_rviz_plugin
       return sensors;
     } //function getSensors()
 
-    void CalibrationPanel::getLidarSensorPosition(){
-///*  // Function to get the Interactive Marker's position of the sensor in the combobox
-      std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
 
-      try {
-        boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> msg;
-        msg = ros::topic::waitForMessage<visualization_msgs::InteractiveMarkerUpdate>("/data_labeler/update", ros::Duration(100));
-
-        std::string test;
-        visualization_msgs::InteractiveMarkerUpdate update_msg;
-
-        if (msg != NULL) {
-          update_msg = *msg;
-
-          for (size_t i=0; i<update_msg.markers.size(); i++) {
-            if (update_msg.markers[i].name == sensor_in_cb) {
-              ui_->collectDataPoseXSlider->setValue(update_msg.markers[i].pose.position.x*100);
-              ui_->collectDataPoseYSlider->setValue(update_msg.markers[i].pose.position.y*100);
-              ui_->collectDataPoseZSlider->setValue(update_msg.markers[i].pose.position.z*100);
-            }
-          }
-        }
-      } catch(...) {
-        return;
-      }
-    } //  function getLidarSensorPosition()
-
-
-    void CalibrationPanel::setDataCollectComboBox(){
-    /// Set Combo Box of Data collect Tab
+    std::string CalibrationPanel::checkRunningLaunch(){
       try {
         ros::master::V_TopicInfo master_topics;
         ros::master::getTopics(master_topics);
 
-        int repeated_sensor = 0;
+        int set_initial_estimate_launch = 0;
+        int data_collect_launch = 0;
         std::string topic;
-        std::vector <std::string> lidar_topics;
+
         for (ros::master::V_TopicInfo::iterator it = master_topics.begin() ; it != master_topics.end(); it++) {
           const ros::master::TopicInfo& info = *it;
-          if (info.datatype == "sensor_msgs/PointCloud2") {
-            topic = info.name;
-            topic = topic.substr(1);
-            std::size_t pos = topic.find('/');
-            if (pos != std::string::npos)
-            {
-              topic = topic.substr(0, pos);
-            }
+          topic = info.name;
 
-            // Avoid repeated topics
-            if (lidar_topics.size()!=0){
-              for (size_t i = 0; i < lidar_topics.size(); i++) {
-                if(lidar_topics[i]==topic){
-                  repeated_sensor = repeated_sensor + 1;
-                }
-              }
-            }
-            if (repeated_sensor == 0) {
-              lidar_topics.push_back(topic);
-              ui_->collectDataSensorsComboBox->addItem(QString::fromUtf8(topic.c_str()));
-            }
+          if (topic.find("set_initial_estimate") != std::string::npos) {
+            set_initial_estimate_launch++;
+          } else if (topic.find("data_labeler") != std::string::npos) {
+            data_collect_launch++;
           }
         }
+        if (set_initial_estimate_launch>1 && data_collect_launch==1) {
+          return "set_initial_estimate";
+        } else if (data_collect_launch>1 && set_initial_estimate_launch==1) {
+          return "data_collect";
+        } else {
+          return "";
+        }
       } catch(...) {
-        return;
+        return "";
       }
-    } //  function getLidarSensorPosition()
+    }
+
 }  //namespace atom_rviz_plugin

@@ -2,6 +2,7 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include <algorithm>
 #include <atom_msgs/SetSensorInteractiveMarker.h>
 #include <atom_msgs/GetSensorInteractiveMarker.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
@@ -260,4 +261,40 @@ namespace atom_rviz_plugin
 
       initial_estimate_pub.publish(marker);
     } //  function initEstimatePubPoseMsg()
+
+
+    void CalibrationPanel::initialEstimateSubCallback(const visualization_msgs::InteractiveMarkerFeedback &data){
+      try {
+        QTableWidgetItem *item0(ui_->initEstimateTableWidget->item(0, 0));
+        if (item0 == 0) {
+          return;
+        }
+        std::vector <QString> list_of_sensors = getSensors();
+        std::string marker_moved = data.marker_name;
+        bool marker_is_one_of_the_sensors = false;
+
+        for (size_t i = 0; i < list_of_sensors.size(); i++) {
+          QString sensor = list_of_sensors[i];
+          std::string sensor_str = sensor.toUtf8().constData();
+          if (sensor_str == marker_moved)
+          {
+            marker_is_one_of_the_sensors=true;
+          }
+        }
+        if (marker_is_one_of_the_sensors){
+          ui_->initEstimateSensorLabel2->setText(QString::fromUtf8(marker_moved.c_str()));
+
+          if (data.event_type==5){
+            ui_->initEstimatePoseXSlider->setValue(data.pose.position.x*100);
+            ui_->initEstimatePoseYSlider->setValue(data.pose.position.y*100);
+            ui_->initEstimatePoseZSlider->setValue(data.pose.position.z*100);
+            ui_->initEstimatePoseRollSlider->setValue(data.pose.orientation.x*100);
+            ui_->initEstimatePosePitchSlider->setValue(data.pose.orientation.y*100);
+            ui_->initEstimatePoseYawSlider->setValue(data.pose.orientation.z*100);
+          }
+        }
+      } catch(...){
+        return;
+      }
+    }
 }  // namespace atom_rviz_plugin

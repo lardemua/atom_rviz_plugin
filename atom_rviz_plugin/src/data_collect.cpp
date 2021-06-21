@@ -208,4 +208,90 @@ namespace atom_rviz_plugin
 
       data_collect_pub.publish(marker2);
     } //  function initEstimatePubPoseMsg()
+
+
+    void CalibrationPanel::setDataCollectComboBox(){
+      /// Set Combo Box of Data collect Tab
+      try {
+        if(ui_->collectDataSensorsComboBox->count() > 0){return;}
+
+        ros::master::V_TopicInfo master_topics;
+        ros::master::getTopics(master_topics);
+
+        int repeated_sensor = 0;
+        std::string topic;
+        std::vector <std::string> lidar_topics;
+        for (ros::master::V_TopicInfo::iterator it = master_topics.begin() ; it != master_topics.end(); it++) {
+          const ros::master::TopicInfo& info = *it;
+          if (info.datatype == "sensor_msgs/PointCloud2") {
+            topic = info.name;
+            topic = topic.substr(1);
+            std::size_t pos = topic.find('/');
+            if (pos != std::string::npos)
+            {
+              topic = topic.substr(0, pos);
+            }
+
+            // Avoid repeated topics
+            if (lidar_topics.size()!=0){
+              for (size_t i = 0; i < lidar_topics.size(); i++) {
+                if(lidar_topics[i]==topic){
+                  repeated_sensor = repeated_sensor + 1;
+                }
+              }
+            }
+            if (repeated_sensor == 0) {
+              lidar_topics.push_back(topic);
+              ui_->collectDataSensorsComboBox->addItem(QString::fromUtf8(topic.c_str()));
+            }
+          }
+        }
+      } catch(...) {
+        return;
+      }
+    } //  function setDataCollectComboBox()
+
+
+//    void CalibrationPanel::getLidarSensorPosition(){
+/////*  // Function to get the Interactive Marker's position of the lidar sensor in the combobox
+//      std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
+//
+//      try {
+//        boost::shared_ptr<visualization_msgs::InteractiveMarkerUpdate const> msg;
+//        msg = ros::topic::waitForMessage<visualization_msgs::InteractiveMarkerUpdate>("/data_labeler/update", ros::Duration(100));
+//
+//        std::string test;
+//        visualization_msgs::InteractiveMarkerUpdate update_msg;
+//
+//        if (msg != NULL) {
+//          update_msg = *msg;
+//
+//          for (size_t i=0; i<update_msg.markers.size(); i++) {
+//            if (update_msg.markers[i].name == sensor_in_cb) {
+//              ui_->collectDataPoseXSlider->setValue(update_msg.markers[i].pose.position.x*100);
+//              ui_->collectDataPoseYSlider->setValue(update_msg.markers[i].pose.position.y*100);
+//              ui_->collectDataPoseZSlider->setValue(update_msg.markers[i].pose.position.z*100);
+//            }
+//          }
+//        }
+//      } catch(...) {
+//        return;
+//      }
+//    } //  function getLidarSensorPosition()
+
+
+    void CalibrationPanel::collectDataSubCallback(const visualization_msgs::InteractiveMarkerFeedback &data){
+      std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
+      std::string marker_moved = data.marker_name;
+
+      try {
+        if (marker_moved == sensor_in_cb && data.event_type==5){
+          ui_->collectDataPoseXSlider->setValue(data.pose.position.x*100);
+          ui_->collectDataPoseYSlider->setValue(data.pose.position.y*100);
+          ui_->collectDataPoseZSlider->setValue(data.pose.position.z*100);
+        }
+      } catch(...){
+        return;
+      }
+    }
 }  // namespace atom_rviz_plugin

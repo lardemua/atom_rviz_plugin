@@ -26,6 +26,8 @@ class CalibrationPanel: public rviz::Panel
   ros::Publisher initial_estimate_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/set_initial_estimate/feedback", 1);
   ros::Publisher data_collect_pub = nh.advertise<visualization_msgs::InteractiveMarkerFeedback>("/data_labeler/feedback", 1);
   tf2_ros::Buffer tfBuffer;
+  ros::Subscriber sub_collect, sub_initial_estimate;
+
 
    CalibrationPanel(QWidget* parent = nullptr);
   ~CalibrationPanel() override;
@@ -36,6 +38,9 @@ private Q_SLOTS:
   std::vector <QString> getSensors();
   void handleTabs();
   void getLidarSensorPosition();
+  std::string checkRunningLaunch();
+  void collectDataSubCallback(const visualization_msgs::InteractiveMarkerFeedback &data);
+  void initialEstimateSubCallback(const visualization_msgs::InteractiveMarkerFeedback &data);
 
   void configSensorsComboBoxChange();
   void configBorderSizeSetComboBox(QString combobox_str);

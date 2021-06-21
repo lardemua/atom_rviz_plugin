@@ -57,7 +57,9 @@ namespace atom_rviz_plugin
     void CalibrationPanel::calibCopyButtonClicked(){
       try {
         QClipboard *clip = QApplication::clipboard();
-        QString input = ui_->calibCommandLineEdit->text();
+//        QString input = ui_->calibCommandTextEdit->text();
+        QString input = ui_->calibCommandTextEdit->toPlainText();
+
         clip->setText(input);
       } catch (...) {
         return;
@@ -66,7 +68,7 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::calibTableChanged(){
 
-      std::string command_line_text_box = ui_->calibCommandLineEdit->text().toUtf8().constData();
+      std::string command_line_text_box = ui_->calibCommandTextEdit->toPlainText().toUtf8().constData();
       std::string argument;
       size_t pos;
       QWidget *pWidget;
@@ -84,15 +86,10 @@ namespace atom_rviz_plugin
 //"""""""""""""""""""""""""""""""""""""""""
       for (int i = 0; i < string_arguments.size(); i++) {
         argument_to_erase = command_line_text_box;
-
-//        std::cout<<string_arguments[i]<<std::endl;
-//        std::cout<<string_arguments_idx[i]<<std::endl;
-
         argument = string_arguments[i];
         pos = argument_to_erase.find(argument);
 
         if (pos != std::string::npos) { //there is a "-... " argument in the command-line edit box
-//          std::cout<<"There is a -... here"<<std::endl;
           argument_to_erase.erase(0, pos);
           string_argument_pos = argument_to_erase.find("-",1);
           if (string_argument_pos != std::string::npos) { //there is a second "-" in the line edit
@@ -104,54 +101,12 @@ namespace atom_rviz_plugin
 
         argument_cell = ui_->calibTableWidget->item(string_arguments_idx[i], 0);
         if (argument_cell){ //argument cell is not empty
-//          std::cout<<"Argument cell not empty"<<std::endl;
           argument_content = argument_cell->text().toUtf8().constData();
           if (not argument_content.empty()) {  //empty string in the cell
             command_line_text_box = command_line_text_box + argument + argument_content + " ";
           }
         }
-//        std::cout<<"------------"<<std::endl;
       }
-
-//"""""""""""""""""""""""""""""""""""""""""
-
-/*      std::vector <std::string> string_arguments;
-
-      for (int i=0; i<2; ++i)
-      {
-        cellItem = ui_->calibTableWidget->item(i, 0);
-        if (cellItem){
-          string_arguments.push_back(ui_->calibTableWidget->item(i, 0)->text().toUtf8().constData());
-        }
-      }*/
-
-      // String arguments
-//"""""""""""""""""""""""""""""""""""""""""
-/*      argument_to_erase = command_line_text_box;
-      std::cout<<argument_to_erase<<std::endl;
-      argument = "-json ";
-      pos = argument_to_erase.find(argument);
-
-      QTableWidgetItem *json_file_cell = ui_->calibTableWidget->item(0, 0);
-      json_file = json_file_cell->text().toUtf8().constData();
-
-      if (pos != std::string::npos) { //there is a "-json " argument in the command-line edit box
-        argument_to_erase.erase(0, pos);
-        string_argument_pos = argument_to_erase.find("-",1);
-        if (string_argument_pos != std::string::npos) { //there is a second "-" in the line edit
-          argument_to_erase.erase(string_argument_pos, argument_to_erase.length());
-        }
-        string_argument_pos = command_line_text_box.find(argument_to_erase);
-        command_line_text_box.erase(string_argument_pos,argument_to_erase.length()); //erases the argument
-      }
-      if (not json_file.empty()) {  //json_file table cell is empty
-        command_line_text_box = command_line_text_box + argument + json_file + " ";
-      }*/
-//"""""""""""""""""""""""""""""""""""""""""
-
-
-
-//"""""""""""""""""""""""""""""""""""""""""
 
 
     // Checkbox arguments
@@ -171,8 +126,7 @@ namespace atom_rviz_plugin
         }
       }
     }
-//      std::cout<<argument_to_erase<<std::endl;
-      ui_->calibCommandLineEdit->setText(QString::fromUtf8(command_line_text_box.c_str()));
+      ui_->calibCommandTextEdit->setText(QString::fromUtf8(command_line_text_box.c_str()));
     } //function calibTableCHanged()
 
     void CalibrationPanel::calibHelpButtonClicked(){
