@@ -42,9 +42,9 @@ namespace atom_rviz_plugin
         std::string command_line = "rosrun " + robotic_system + "_calibration";
         const char *command = command_line.c_str();
 
-//      system(command);
+        system(command);
 
-        ROS_INFO_STREAM(command_line);
+//        ROS_INFO_STREAM(command_line);
 
       } catch (...) {
         QMessageBox messageBox;
@@ -73,7 +73,7 @@ namespace atom_rviz_plugin
       size_t pos;
       QWidget *pWidget;
       QCheckBox *checkbox;
-      std::vector <std::string> checkbox_arguments = {"-vpv ","-vo ","-v ","-phased ","rv ","-si ",
+      std::vector <std::string> checkbox_arguments = {"-vpv ","-vo ","-v ","-phased ","-rv ","-si ",
                                                       "-oi ","-pof ","-ajf ","-uic ","-rpd ","-ipg "};
       std::string argument_to_erase;
       QTableWidgetItem *argument_cell;

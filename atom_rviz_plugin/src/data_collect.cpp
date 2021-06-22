@@ -190,11 +190,13 @@ namespace atom_rviz_plugin
 
     void CalibrationPanel::dataCollectPubPoseMsg() {
 
+      std::string sensor_in_cb = ui_->collectDataSensorsComboBox->currentText().toUtf8().constData();
+
       visualization_msgs::InteractiveMarkerFeedback marker2;
 
-      marker2.header.frame_id = "3dlidar"; // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
+      marker2.header.frame_id = sensor_in_cb; // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
       marker2.client_id = "/rviz/ManualDataLabeler-InteractiveMarkers";
-      marker2.marker_name = "3dlidar";    // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
+      marker2.marker_name = sensor_in_cb;    // TODO COLOCAR AQUI O SENSOR LIDO DA COMBOBOX
       marker2.event_type = 1;
       marker2.control_name = "";
       marker2.pose.position.x = ui_->collectDataPoseXDoubleSpinBox->value();

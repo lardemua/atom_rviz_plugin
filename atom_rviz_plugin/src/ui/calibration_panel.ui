@@ -24,7 +24,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="mainTabs">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="configTab">
       <attribute name="title">
@@ -47,7 +47,7 @@
        </property>
        <widget class="QWidget" name="miscellaneousParamsTab">
         <attribute name="title">
-         <string>Misc</string>
+         <string>General</string>
         </attribute>
         <widget class="QTextEdit" name="paramDescriptionFileTextEdit">
          <property name="enabled">
