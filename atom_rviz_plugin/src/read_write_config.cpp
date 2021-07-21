@@ -428,6 +428,8 @@ namespace atom_rviz_plugin {
 
       std::string command_str = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
       const char *command = command_str.c_str();
+      //TODO -> The command below does not work when the border_size param is a Scalar
+      //        (but it works if the exact same command is ran on the terminal).
       system(command);
       std::cout << "Running command: " << std::endl << command << std::endl;
 

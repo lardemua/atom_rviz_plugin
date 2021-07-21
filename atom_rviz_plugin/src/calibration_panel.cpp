@@ -21,6 +21,7 @@ namespace atom_rviz_plugin
 
       sub_collect = nh.subscribe("/data_labeler/feedback", 1000, &CalibrationPanel::collectDataSubCallback, this);
       sub_initial_estimate = nh.subscribe("/set_initial_estimate/feedback", 1000, &CalibrationPanel::initialEstimateSubCallback, this);
+
     }
 
     CalibrationPanel::~CalibrationPanel() = default;

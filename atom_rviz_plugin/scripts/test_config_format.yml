@@ -122,7 +122,7 @@ calibration_pattern:
   # Used for 3D sensors and lidars.
   # It can be a scalar (same border in x and y directions), or it can be {'x': ..., 'y': ,,,}
   border_size: {'x': 0.04, 'y': 0.03}
-  #  border_size: 0.04
+#  border_size: 0.04
 
   # The number of corners the pattern has in the X and Y dimensions.
   # Note: The charuco detector uses the number of squares per dimension in its detector.
