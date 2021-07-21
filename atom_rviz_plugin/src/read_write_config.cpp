@@ -178,18 +178,23 @@ namespace atom_rviz_plugin {
           ui_->paramCalibPatPatternTypeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[2].c_str()));
           ui_->paramCalibPatDictionaryTextEdit->setText(QString::fromUtf8(calib_patt_params_content[3].c_str()));
           ui_->paramCalibPatMeshFileTextEdit->setText(QString::fromUtf8(calib_patt_params_content[4].c_str()));
-          ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
-          ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
-          ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[7].c_str()));
-          ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[8].c_str()));
 
           QString border_size_scalar_dict = ui_->configBorderSizeComboBox->currentText();
+          int next_iteration;
+
           if (border_size_scalar_dict == "Scalar") {
-            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
+            next_iteration = 6;
+            ui_->paramBorderSizeScalarTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
           } else {
-            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[9].c_str()));
-            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[10].c_str()));
+            next_iteration = 7;
+            ui_->paramBorderSizeXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[5].c_str()));
+            ui_->paramBorderSizeYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[6].c_str()));
           }
+          ui_->paramCalibPatDimensionXTextEdit->setText(QString::fromUtf8(calib_patt_params_content[next_iteration].c_str()));
+          ui_->paramCalibPatDimensionYTextEdit->setText(QString::fromUtf8(calib_patt_params_content[next_iteration+1].c_str()));
+          ui_->paramCalibPatSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[next_iteration+2].c_str()));
+          ui_->paramCalibPatInnerSizeTextEdit->setText(QString::fromUtf8(calib_patt_params_content[next_iteration+3].c_str()));
+
 
           ui_->paramSensorsLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[0].c_str()));
           ui_->paramSensorsParentLinkTextEdit->setText(QString::fromUtf8(sensors_params_content[1].c_str()));
@@ -368,25 +373,41 @@ namespace atom_rviz_plugin {
           emitter << YAML::Key << "pattern_type" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[2];
           emitter << YAML::Key << "dictionary" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[3];
           emitter << YAML::Key << "mesh_file" << YAML::DoubleQuoted << YAML::Value << calib_patt_new_param_str[4];
+
+          std::cout << "mesh_file: " << calib_patt_new_param_str[4] << std::endl;
           if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+//            std::cout << "Scalar " << std::endl;
+//            std::cout << "Scalar: " << calib_patt_border_size_param << std::endl;
+//            ROS_INFO_STREAM(calib_patt_border_size_param);
             emitter << YAML::Key << "border_size" << YAML::Value << calib_patt_border_size_param;
           } else {
+//            std::cout << "Dictionary "<< std::endl;
             emitter << YAML::Key << "border_size" << YAML::Value << YAML::BeginMap;
               emitter << YAML::Key << "x" << YAML::Value << calib_patt_border_size_x_param;
               emitter << YAML::Key << "y" << YAML::Value << calib_patt_border_size_y_param;
             emitter << YAML::EndMap;
+//            std::cout << "DictionaryX: " << calib_patt_border_size_x_param << std::endl;
+//            std::cout << "DictionaryY: " << calib_patt_border_size_y_param << std::endl;
+//            ROS_INFO_STREAM(calib_patt_border_size_x_param);
+//            ROS_INFO_STREAM(calib_patt_border_size_y_param);
           }
           emitter << YAML::Key << "dimension" << YAML::Value << YAML::BeginMap;
             emitter << YAML::Key << "x" << YAML::Value << calib_patt_dimension_x_parameter;
             emitter << YAML::Key << "y" << YAML::Value << calib_patt_dimension_y_parameter;
+//            std::cout << "DimensionX: " << calib_patt_dimension_x_parameter << std::endl;
+//            std::cout << "DimensionY: " << calib_patt_dimension_y_parameter << std::endl;
           emitter << YAML::EndMap;
           emitter << YAML::Key << "size" << YAML::Value << calib_patt_size_param;
           emitter << YAML::Key << "inner_size" << YAML::Value << calib_patt_inner_size_param;
+//          std::cout << "Size: " << calib_patt_size_param << std::endl;
+//          std::cout << "Inner Size: " << calib_patt_inner_size_param << std::endl;
 
         emitter << YAML::EndMap;
 
         emitter << YAML::Key << "anchored_sensor" << YAML::DoubleQuoted << YAML::Value << misc_new_param_str[3];
         emitter << YAML::Key << "max_duration_between_msgs" << YAML::Value << misc_new_param_int;
+//        std::cout << "Anchored: " << misc_new_param_str << std::endl;
+//        std::cout << "Max Duration: " << misc_new_param_int << std::endl;
 
       emitter << YAML::EndMap;
 
@@ -394,12 +415,21 @@ namespace atom_rviz_plugin {
       fout << emitter.c_str(); // dump it back into the file
 
       std::string python_script_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/copy_content_to_yaml.py";
-      std::string yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
+      std::string yaml_format_path;
+
+      if (ui_->configBorderSizeComboBox->currentText() == "Scalar"){
+        yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format_scalar.yml";
+      } else {
+        yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
+      }
+      ROS_INFO_STREAM(yaml_format_path);
+//      yaml_format_path = ros::package::getPath("atom_rviz_plugin") + "/scripts/test_config_format.yml";
+
 
       std::string command_str = "python3 " + python_script_path + " -yc " + config_file_path + " -yf " + yaml_format_path + " -yo " + config_file_path;
       const char *command = command_str.c_str();
       system(command);
-//      std::cout << "Running command " << std::endl << command << std::endl;
+      std::cout << "Running command: " << std::endl << command << std::endl;
 
     }  // function writeButtonClicked
 
